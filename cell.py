@@ -10,3 +10,6 @@ class Cell:
         self.location.toString()
         print("Contains")
         self.type.toString()
+
+    def setType(self, type):
+        self.type = type
