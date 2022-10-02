@@ -4,6 +4,7 @@ class Cell:
     def __init__(self):
         self.type = None
         self.location = Location()
+        self.percept = Percept()
 
     def toString(self):
         print("Cell")
