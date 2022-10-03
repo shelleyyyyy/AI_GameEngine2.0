@@ -51,6 +51,7 @@ class MoveAgent:
                 Environment.cells[x][y].setType(Open())
                 Environment.cells[x+1][y].setType(truck)
                 self.agent.updateLocation(Environment.cells[x+1][y])
+                self.agent.updateLocation(Location(x+1,y))
 
             elif self.action[i] == 'west':
                 x = self.agent.location.x
@@ -58,6 +59,7 @@ class MoveAgent:
                 Environment.cells[x][y].setType(Open())
                 Environment.cells[x-1][y].setType(truck)
                 self.agent.updateLocation(Environment.cells[x-1][y])
+                self.agent.updateLocation(Location(x-1,y))
 
             else:
                 x = self.agent.location.x
@@ -65,6 +67,8 @@ class MoveAgent:
                 Environment.cells[x][y].setType(Open())
                 Environment.cells[x][y+1].setType(truck)
                 self.agent.updateLocation(Environment.cells[x][y+1])
+                self.agent.updateLocation(Location(x,y+1))
+
 
     def start(self, action):
         t = threading.Thread(target=self.move)
