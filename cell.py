@@ -1,9 +1,10 @@
 from location import Location
+from open import Open
 
 class Cell:
-    def __init__(self):
-        self.type = None
-        self.location = Location()
+    def __init__(self, x, y, cellType=Open()):
+        self.type = cellType
+        self.location = Location(x, y)
 
     def toString(self):
         print("Cell")
@@ -11,5 +12,5 @@ class Cell:
         print("Contains")
         self.type.toString()
 
-    def setType(self, type):
-        self.type = type
+    def setType(self, cellType):
+        self.type = cellType

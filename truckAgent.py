@@ -12,11 +12,7 @@ class TruckAgent:
 
 
     def toString(self):
-        print("ID:", self.ID)
-        print("location:", self.location)
-        print("direction:", self.direction)
-        print("percept: " + self.percept)
-        print("moveable", self.movable)
+        print("Truck Type")
 
 if __name__=="__main__":
     truck = TruckAgent()

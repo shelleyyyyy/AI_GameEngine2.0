@@ -6,5 +6,3 @@ class Location:
 
     def toString(self):
         print("Location: (x: ", self.x, ", y: ", self.y, ")")
-
-    

@@ -1,13 +1,11 @@
 from location import Location
 
 class Open:
-    def __init__(self, id):
+    def __init__(self, id=0):
         self.location = Location()
         self.percept = "open"
         self.id = id
 
     def toString(self):
-        print("Open")
-        print("ID: ", self.id)
-        self.location.toString()
-        print("Percept: ", self.percept)
+        print("Open Type")
+

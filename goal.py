@@ -10,12 +10,4 @@ class Goal:
         self.found = found
     
     def toString(self):
-        print("ID:", self.ID)
-        print("location:", self.location.toString())
-        print("percept: " + self.percept)
-        print("found:", self.found)
-
-if __name__=="__main__":
-    goal = Goal()
-    goal.toString()
-
+        print("Goal Type")
