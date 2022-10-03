@@ -13,7 +13,11 @@ class TruckAgent:
 
     def toString(self):
         print("Truck Type")
+        
+    def updateLocation(self, location):
+        self.location = location
 
 if __name__=="__main__":
     truck = TruckAgent()
     truck.toString()
+
