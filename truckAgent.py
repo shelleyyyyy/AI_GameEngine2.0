@@ -3,9 +3,9 @@ from location import Location
 
 class TruckAgent:
 
-    def __init__(self, location=Location(), direction=0, percept='unknown', movable=True):
+    def __init__(self, x,y, direction=0, percept='unknown', movable=True):
         self.ID = uuid.uuid4()
-        self.location = location
+        self.location = Location(x,y)
         self.direction = direction
         self.percept = percept
         self.movable = movable
