@@ -7,10 +7,9 @@ class Cell:
         self.location = Location(x, y)
 
     def toString(self):
-        print("Cell")
+        print("----------Cell----------")
         self.location.toString()
-        print("Contains")
-        self.type.toString()
+        print("Contains: ", self.type.toString())
 
     def setType(self, cellType):
         self.type = cellType

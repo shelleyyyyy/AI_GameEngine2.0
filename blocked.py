@@ -7,4 +7,4 @@ class Blocked:
         self.id = id
 
     def toString(self):
-        print("Blocked Type")
+        return("Blocked Type")

@@ -12,8 +12,5 @@ class TruckAgent:
 
 
     def toString(self):
-        print("Truck Type")
+        return("Truck Type")
 
-if __name__=="__main__":
-    truck = TruckAgent()
-    truck.toString()

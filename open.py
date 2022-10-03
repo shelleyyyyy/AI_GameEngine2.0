@@ -7,5 +7,5 @@ class Open:
         self.id = id
 
     def toString(self):
-        print("Open Type")
+        return("Open Type")
 

@@ -16,7 +16,6 @@ class Environment:
 
         self.makeCells()
         self.populateEnv()
-        self.toString()
 
     def makeCells(self):
         for x in range(self.gridSize):
@@ -31,11 +30,14 @@ class Environment:
         self.cells[2][2].setType(Blocked())
 
         self.cells[2][1].setType(Goal())
+        self.cells[4][3].setType(Blocked())
         self.cells[4][4].setType(TruckAgent())
 
     def toString(self):
         for cellRow in self.cells:
             for cell in cellRow:
-                print(cell.toString())
+                cell.toString()
+                print()
 
 c = Environment()
+c.toString()

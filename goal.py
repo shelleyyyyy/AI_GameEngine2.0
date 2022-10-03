@@ -10,4 +10,4 @@ class Goal:
         self.found = found
     
     def toString(self):
-        print("Goal Type")
+        return("Goal Type")
