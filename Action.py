@@ -13,3 +13,4 @@ def getCosts(action):
     elif action == 'east':
         return costE
     return 'incorrect input'
+

@@ -31,13 +31,15 @@ class Environment:
 
         self.cells[2][1].setType(Goal())
         self.cells[4][3].setType(Blocked())
-        self.cells[4][4].setType(TruckAgent())
+        self.cells[4][4].setType(TruckAgent(4,4))
+        self.trucks.append(self.cells[4][4].type)
 
     def toString(self):
         for cellRow in self.cells:
             for cell in cellRow:
-                cell.toString()
+                print(cell.toString())
                 print()
+                
 
-c = Environment()
-c.toString()
+    def truckHere(self):
+        print(f'truck location: {self.trucks[0].location.toString()}')
