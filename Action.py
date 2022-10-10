@@ -2,6 +2,10 @@ costN = 1
 costS = 1
 costE = 1
 costW = 1
+north = 'north'
+west = 'west'
+east = 'east'
+south = 'south'
 
 def getCosts(action):
     if action == 'north':

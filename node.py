@@ -12,9 +12,10 @@ class Node:
             self.searchType = searchType
 
         def compareType(self, searchType):
-            match searchType:
-                case "UniformedCostSearch":
-                    #do 
-                case "GreedyBestFirstSearch":
+            # match searchType:
+            #     case "UniformedCostSearch":
+            #         #do 
+            #     case "GreedyBestFirstSearch":
 
-                case "AStarSearch":
+            #     case "AStarSearch":
+            pass
