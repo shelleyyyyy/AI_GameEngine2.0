@@ -24,7 +24,7 @@ class SuccessorFunction:
         return list
 
     def successorFunction(self, parent, action, environment):
-        state = parent.state #state is a Cell Type
+        state = parent.state.type #state is a Cell Type
 
         shiftXValue = 0
         shiftYValue = 0

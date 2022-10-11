@@ -61,7 +61,7 @@ class MoveAgent:
                 self.agent.updateLocation(Environment.cells[x-1][y])
                 self.agent.updateLocation(Location(x-1,y))
 
-            else:
+            elif self.action[i] == 'south':
                 x = self.agent.location.x
                 y = self.agent.location.y
                 Environment.cells[x][y].setType(Open())

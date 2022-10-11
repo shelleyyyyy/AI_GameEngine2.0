@@ -1,10 +1,10 @@
 
 class Percept:
-    def __init__(self):
-        self.north = None
-        self.east = None
-        self.south = None
-        self.west = None
+    def __init__(self, north=0, east=0, south=0, west=0):
+        self.north = north
+        self.east = east
+        self.south = south
+        self.west = west
 
     def toString(self):
         print("North Percept: ", self.north)
