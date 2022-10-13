@@ -1,38 +1,41 @@
 import collections
 from location import Location
 from constants import constants
+from environment import Environment
+from cell import Cell
 from node import Node
   
 class SuccessorFunction:
     def __init__(self):
         pass
 
-    def goForward(self, environment, state):
+    def goForward(self, environment: Environment, state: Cell):
 
         shiftXValue = 0
         shiftYValue = 0
 
-        if state.direction == FACING_SOUTH:
-            shiftXValue = MOVING_SOUTH
-        elif state.direction == FACING_WEST:
-            shiftYValue = MOVING_WEST
-        elif state.direction == MOVING_NORTH:
-            shiftXValue = MOVING_NORTH
+        if state.direction == constants['FACING_SOUTH']:
+            shiftXValue = constants['MOVING_SOUTH']
+        elif state.direction == constants['FACING_WEST']:
+            shiftYValue = constants['MOVING_WEST']
+        elif state.direction == constants['MOVING_NORTH']:
+            shiftXValue = constants['MOVING_NORTH']
         else:
-            shiftYValue = MOVING_EAST
+            shiftYValue = constants['MOVING_EAST']
 
         i = state.location.x + shiftXValue
-        j = state.location.y + shiftXValue
+        j = state.location.y + shiftYValue
 
-        if i < 0 or i >= len(environment.trucks) or j < 0 or j >= len(environment.trucks):
+        if i < 0 or i >= len(environment.gridSize) or j < 0 or j >= len(environment.gridSize):
             return False
 
-    def turnRight(self, state):
-        pass
-    def turnLeft(self, state):
-        pass
+    def turnRight(self, state: Cell):
+        state.direction = abs((state.direction + 1) % 4)
+        
+    def turnLeft(self, state: Cell):
+        state.direction = abs((state.direction - 1 + 4) % 4)
 
-    def expand(self, node, environment):
+    def expand(self, node: Node, environment: Environment):
         list = collections.deque()
 
         parentNode = node.copyOfNode()
@@ -43,13 +46,13 @@ class SuccessorFunction:
             pass
 
         parentNode = node.copyOfNode()
-        list.append(SuccessorFunction(parentNode, GO_RIGHT, environment))
+        list.append(SuccessorFunction(parentNode, constants['GO_RIGHT'], environment))
         parentNode = node.copyOfNode()
-        list.append(SuccessorFunction(parentNode, GO_LEFT, environment))
+        list.append(SuccessorFunction(parentNode, constants['GO_LEFT'], environment))
 
         return list
 
-    def successorFunction(self, parent, action, environment):
+    def successorFunction(self, parent: Node, action, environment: Environment):
         state = parent.state.type #state is a Cell Type
 
         shiftXValue = 0
@@ -69,16 +72,16 @@ class SuccessorFunction:
                 i = state.location.x + shiftXValue
                 j = state.location.y + shiftYValue
 
-                if i < 0 or i >= len(environment.trucks) or j < 0 or j >= len(environment.trucks):
+                if i < 0 or i >= len(environment.gridSize) or j < 0 or j >= len(environment.gridSize):
                     return None
                 
                 #potentially need to set the percepts of the cell it moves to 
                 state.location = Location(i, j)
             else:
                 return None
-        elif action == TURN_RIGHT:
+        elif action == constants['TURN_RIGHT']:
             self.turnRight(state)
-        elif action == TURN_LEFT:
+        elif action == constants['TURN_LEFT']:
             self.turnLeft(state)
         else:
             pass
