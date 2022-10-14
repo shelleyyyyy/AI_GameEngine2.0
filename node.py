@@ -1,7 +1,7 @@
 from copy import deepcopy
 
 class Node:
-    def __init__(self, state, parent=None, action=None, actionsList=[], pathCost=0):
+    def __init__(self, state='', parent=None, action=None, actionsList=[], pathCost=0):
         self.state = state
         self.parent = parent
         self.action = action
@@ -15,7 +15,7 @@ class Node:
             self.actionsList.add(0, self.action)
         else:
             self.actionsList = parent.actionsList
-            self.actionsList.add(self.action);
+            self.actionsList.add(self.action)
         
 
     def copyOfNode(self):
@@ -43,16 +43,16 @@ class Node:
         return False
     
 
-class NodeComparator:
-    def __init__(self, goals, searchType):
-        self.goals = goals
-        self.searchType = searchType
-
-    def compareType(self, searchType):
-        match searchType:
-            case "UniformedCostSearch":
-                # waiting for heuristics
-            case "GreedyBestFirstSearch":
-                # waiting for heuristics
-            case "AStarSearch":
-                # waiting for heuristics
+# class NodeComparator:
+#     def __init__(self, goals, searchType):
+#         self.goals = goals
+#         self.searchType = searchType
+#
+#     def compareType(self, searchType):
+#         match searchType:
+#             case "UniformedCostSearch":
+#                 # waiting for heuristics
+#             case "GreedyBestFirstSearch":
+#                 # waiting for heuristics
+#             case "AStarSearch":
+#                 # waiting for heuristics
