@@ -8,5 +8,7 @@ env.toString()
 root_node = Node(env.cells[4][4])
 
 # expand requires a built environment and a root node identified
-test = SuccessorFunction().expand(environment=env, node=root_node)
+test = SuccessorFunction()
+list = test.expand(environment=env, node=root_node)
+print(list)
 

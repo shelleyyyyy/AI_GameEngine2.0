@@ -12,11 +12,11 @@ class Node:
         else:
             self.pathCost = self.parent.pathCost + self.action.getStepCost(action) # waiting on action class
 
-        if len(parent.actionList) == 0:
-            self.actionsList.add(0, self.action)
-        else:
-            self.actionsList = parent.actionsList
-            self.actionsList.add(self.action)
+        # if len(parent.actionList) == 0:
+        #     self.actionsList.add(0, self.action)
+        # else:
+        #     self.actionsList = parent.actionsList
+        #     self.actionsList.add(self.action)
         
 
     def copyOfNode(self):
