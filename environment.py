@@ -1,4 +1,5 @@
 from cell import Cell
+from location import Location
 from truckAgent import TruckAgent
 from constants import constants
 
@@ -30,7 +31,10 @@ class Environment:
 
         self.cells[2][1].cell_type = (constants["NON_PASSABLE"])
         self.cells[4][3].cell_type = (constants["NON_PASSABLE"])
-        self.cells[4][4].cell_type = (TruckAgent(4,4))
+        self.cells[2][3].cell_type = (constants["TRUCK"])
+        self.cells[2][3].truck = TruckAgent(x=2, y=3)
+        self.cells[3][3].cell_type = (constants["GOAL_CELL"])
+        
         self.trucks.append(self.cells[4][4].cell_type)
 
     def toString(self):

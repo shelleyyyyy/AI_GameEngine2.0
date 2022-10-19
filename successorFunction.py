@@ -26,7 +26,9 @@ class SuccessorFunction:
         i = state.location.x + shiftXValue
         j = state.location.y + shiftYValue
 
-        if i < 0 or i >= len(environment.gridSize) or j < 0 or j >= len(environment.gridSize):
+        if i < 0 or i > environment.gridSize - 1 or j < 0 or j > environment.gridSize - 1:
+            return False
+        elif environment.cells[i][j].cell_type == constants['NON_PASSABLE']:
             return False
         else:
             return True
@@ -38,7 +40,8 @@ class SuccessorFunction:
         state.direction = abs((state.direction - 1 + 4) % 4)
     
     def successorFunction(self, parent: Node, action, environment: Environment):
-        state = parent.state
+        copy_of_parent = parent.copyOfNode()
+        state = copy_of_parent.state
 
         shiftXValue = 0
         shiftYValue = 0
@@ -56,11 +59,8 @@ class SuccessorFunction:
             if self.goForward(environment, state):
                 i = state.location.x + shiftXValue
                 j = state.location.y + shiftYValue
-
-                if i < 0 or i >= len(environment.gridSize) or j < 0 or j >= len(environment.gridSize):
-                    return None
                 
-                #potentially need to set the percepts of the cell it moves to 
+                #grab existing cell from cells array
                 state.location = Location(i, j)
             else:
                 return None
@@ -70,8 +70,10 @@ class SuccessorFunction:
             self.turnLeft(state)
         else:
             pass
-
-        node = Node(state=state, parent=parent, action=action)
+    
+        parent.actionsList.append(action)
+        updated_action_list = parent.actionsList
+        node = Node(state=state, parent=parent, action=action, actionsList=updated_action_list)
         return node
 
     def expand(self, node: Node, environment: Environment):
@@ -79,15 +81,16 @@ class SuccessorFunction:
 
         parentNode = node.copyOfNode()
 
-        try:
-            list.append(successorFunction(parent=parentNode, action=constants["GO_FORWARD"], environment=environment))
-        except:
+        forward = self.successorFunction(parent=parentNode, action=constants["GO_FORWARD"], environment=environment)
+        if forward == None:
             pass
+        else:
+            list.append(forward)
 
         parentNode = node.copyOfNode()
-        list.append(successorFunction(parent=parentNode, action=constants['TURN_RIGHT'], environment=environment))
+        list.append(self.successorFunction(parent=parentNode, action=constants['TURN_RIGHT'], environment=environment))
         parentNode = node.copyOfNode()
-        list.append(successorFunction(parent=parentNode, action=constants['TURN_LEFT'], environment=environment))
+        list.append(self.successorFunction(parent=parentNode, action=constants['TURN_LEFT'], environment=environment))
 
         return list
 

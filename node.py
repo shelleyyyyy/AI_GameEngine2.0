@@ -2,15 +2,15 @@ from copy import deepcopy
 from cell import Cell
 
 class Node:
-    def __init__(self, state='', parent=None, action=None, actionsList=[], pathCost=0):
+    def __init__(self, state='', parent=None, action=None, actionsList = [], pathCost=0):
         self.state: Cell = state
         self.parent = parent
         self.action = action
-        self.actionsList = actionsList
-        if action is None and parent is None:
-            self.pathCost = pathCost
-        else:
-            self.pathCost = self.parent.pathCost + self.action.getStepCost(action) # waiting on action class
+        self.actionsList: list = actionsList
+        # if action is None and parent is None:
+        #     self.pathCost = pathCost
+        # else:
+        #     self.pathCost = self.parent.pathCost + self.action.getStepCost(action) # waiting on action class
 
         # if len(parent.actionList) == 0:
         #     self.actionsList.add(0, self.action)
