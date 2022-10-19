@@ -36,24 +36,7 @@ class SuccessorFunction:
         
     def turnLeft(self, state: Cell):
         state.direction = abs((state.direction - 1 + 4) % 4)
-
-    def expand(self, node: Node, environment: Environment):
-        list = collections.deque()
-
-        parentNode = node.copyOfNode()
-
-        try:
-            list.append(SuccessorFunction(parent=parentNode, action=constants["GO_FORWARD"], environment=environment))
-        except:
-            pass
-
-        parentNode = node.copyOfNode()
-        list.append(SuccessorFunction(parent=parentNode, action=constants['TURN_RIGHT'], environment=environment))
-        parentNode = node.copyOfNode()
-        list.append(SuccessorFunction(parent=parentNode, action=constants['TURN_LEFT'], environment=environment))
-
-        return list
-
+    
     def successorFunction(self, parent: Node, action, environment: Environment):
         state = parent.state
 
@@ -90,5 +73,23 @@ class SuccessorFunction:
 
         node = Node(state=state, parent=parent, action=action)
         return node
+
+    def expand(self, node: Node, environment: Environment):
+        list = collections.deque()
+
+        parentNode = node.copyOfNode()
+
+        try:
+            list.append(successorFunction(parent=parentNode, action=constants["GO_FORWARD"], environment=environment))
+        except:
+            pass
+
+        parentNode = node.copyOfNode()
+        list.append(successorFunction(parent=parentNode, action=constants['TURN_RIGHT'], environment=environment))
+        parentNode = node.copyOfNode()
+        list.append(successorFunction(parent=parentNode, action=constants['TURN_LEFT'], environment=environment))
+
+        return list
+
 
     
