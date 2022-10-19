@@ -1,8 +1,9 @@
 from copy import deepcopy
+from cell import Cell
 
 class Node:
     def __init__(self, state='', parent=None, action=None, actionsList=[], pathCost=0):
-        self.state = state
+        self.state: Cell = state
         self.parent = parent
         self.action = action
         self.actionsList = actionsList

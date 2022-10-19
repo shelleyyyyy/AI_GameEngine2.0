@@ -28,6 +28,8 @@ class SuccessorFunction:
 
         if i < 0 or i >= len(environment.gridSize) or j < 0 or j >= len(environment.gridSize):
             return False
+        else:
+            return True
 
     def turnRight(self, state: Cell):
         state.direction = abs((state.direction + 1) % 4)
@@ -41,19 +43,19 @@ class SuccessorFunction:
         parentNode = node.copyOfNode()
 
         try:
-            list.append(SuccessorFunction(parentNode, constants["GO_FORWARD"], environment))
+            list.append(SuccessorFunction(parent=parentNode, action=constants["GO_FORWARD"], environment=environment))
         except:
             pass
 
         parentNode = node.copyOfNode()
-        list.append(SuccessorFunction(parentNode, constants['GO_RIGHT'], environment))
+        list.append(SuccessorFunction(parent=parentNode, action=constants['TURN_RIGHT'], environment=environment))
         parentNode = node.copyOfNode()
-        list.append(SuccessorFunction(parentNode, constants['GO_LEFT'], environment))
+        list.append(SuccessorFunction(parent=parentNode, action=constants['TURN_LEFT'], environment=environment))
 
         return list
 
     def successorFunction(self, parent: Node, action, environment: Environment):
-        state = parent.state.type #state is a Cell Type
+        state = parent.state
 
         shiftXValue = 0
         shiftYValue = 0
