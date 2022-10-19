@@ -6,9 +6,10 @@ from location import Location
 from truckAgent import TruckAgent
 from environment import Environment
 from open import Open
+from constants import constants
 class MoveAgent:
     
-    def __init__(self, agent, enviroment):
+    def __init__(self, agent: TruckAgent, enviroment: Environment):
         self.agent = agent
         self.percept = None
         self.cost = []
@@ -40,34 +41,40 @@ class MoveAgent:
                 
                 x = self.agent.location.x
                 y = self.agent.location.y
-                self.enviroment.cells[x][y].setType(Open())
+                self.enviroment.cells[x][y].setType(constants['BLANK'])
                 self.enviroment.cells[x][y-1].setType(truck)
-                self.agent.updateLocation(self.enviroment.cells[x][y-1])
+                #self.agent.updateLocation(self.enviroment.cells[x][y-1])
                 self.agent.updateLocation(Location(x,y-1))
 
             elif self.action[i] == 'east':
                 x = self.agent.location.x
                 y = self.agent.location.y
-                Environment.cells[x][y].setType(Open())
+                Environment.cells[x][y].setType(constants['BLANK'])
                 Environment.cells[x+1][y].setType(truck)
-                self.agent.updateLocation(Environment.cells[x+1][y])
                 self.agent.updateLocation(Location(x+1,y))
 
             elif self.action[i] == 'west':
                 x = self.agent.location.x
                 y = self.agent.location.y
-                Environment.cells[x][y].setType(Open())
+                Environment.cells[x][y].setType(constants['BLANK'])
                 Environment.cells[x-1][y].setType(truck)
-                self.agent.updateLocation(Environment.cells[x-1][y])
                 self.agent.updateLocation(Location(x-1,y))
 
             elif self.action[i] == 'south':
                 x = self.agent.location.x
                 y = self.agent.location.y
-                Environment.cells[x][y].setType(Open())
+                Environment.cells[x][y].setType(constants['BLANK'])
                 Environment.cells[x][y+1].setType(truck)
-                self.agent.updateLocation(Environment.cells[x][y+1])
                 self.agent.updateLocation(Location(x,y+1))
+            elif self.action[i] == 'northF':
+                self.agent.direction = constants['FACING_NORTH']
+            elif self.action[i] == 'southF':
+                self.agent.direction = constants['FACING_SOUTH']
+            elif self.action[i] == 'eastF':
+                self.agent.direction = constants['FACING_EAST']
+            elif self.action[i] == 'westF':
+                self.agent.direction = constants['FACING_WEST']
+
 
 
     def start(self, action):
