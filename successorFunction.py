@@ -18,7 +18,7 @@ class SuccessorFunction:
             shiftXValue = constants['MOVING_SOUTH']
         elif state.direction == constants['FACING_WEST']:
             shiftYValue = constants['MOVING_WEST']
-        elif state.direction == constants['MOVING_NORTH']:
+        elif state.direction == constants['FACING_NORTH']:
             shiftXValue = constants['MOVING_NORTH']
         else:
             shiftYValue = constants['MOVING_EAST']
@@ -50,7 +50,7 @@ class SuccessorFunction:
             shiftXValue = constants['MOVING_SOUTH']
         elif state.direction == constants['FACING_WEST']:
             shiftYValue = constants['MOVING_WEST']
-        elif state.direction == constants['MOVING_NORTH']:
+        elif state.direction == constants['FACING_NORTH']:
             shiftXValue = constants['MOVING_NORTH']
         else:
             shiftYValue = constants['MOVING_EAST']
@@ -73,7 +73,8 @@ class SuccessorFunction:
     
         parent.actionsList.append(action)
         updated_action_list = parent.actionsList
-        node = Node(state=state, parent=parent, action=action, actionsList=updated_action_list)
+        path_cost = parent.pathCost + 1
+        node = Node(state=state, parent=parent, action=action, actionsList=updated_action_list, pathCost=path_cost)
         return node
 
     def expand(self, node: Node, environment: Environment):

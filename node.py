@@ -1,5 +1,6 @@
 from copy import deepcopy
 from cell import Cell
+import uuid
 
 class Node:
     def __init__(self, state='', parent=None, action=None, actionsList = [], pathCost=0):
@@ -7,6 +8,8 @@ class Node:
         self.parent = parent
         self.action = action
         self.actionsList: list = actionsList
+        self.pathCost = pathCost
+        self.ID = uuid.uuid4()
         # if action is None and parent is None:
         #     self.pathCost = pathCost
         # else:
