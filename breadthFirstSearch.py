@@ -18,7 +18,6 @@ def breadthFirstSearch(environment: Environment):
         list = expander.expand(environment=environment, node=node)
         for node in list:
             if check_explored(explored=explored, node=node) and check_frontier(frontier=frontier, node=node):
-                print(node.state.location.x, node.state.location.y, node.state.direction)
                 if environment.cells[node.state.location.x][node.state.location.y].cell_type == constants["GOAL_CELL"]:
                     return node.actionsList
                 else:
