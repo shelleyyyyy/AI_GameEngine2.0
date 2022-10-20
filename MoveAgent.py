@@ -5,7 +5,6 @@ from cell import Cell
 from location import Location
 from truckAgent import TruckAgent
 from environment import Environment
-from open import Open
 from constants import constants
 class MoveAgent:
     
