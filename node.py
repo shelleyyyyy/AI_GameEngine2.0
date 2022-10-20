@@ -1,21 +1,25 @@
 from copy import deepcopy
+from cell import Cell
+import uuid
 
 class Node:
-    def __init__(self, state='', parent=None, action=None, actionsList=[], pathCost=0):
-        self.state = state
+    def __init__(self, state='', parent=None, action=None, actionsList = [], pathCost=0):
+        self.state: Cell = state
         self.parent = parent
         self.action = action
-        self.actionsList = actionsList
-        if action is None and parent is None:
-            self.pathCost = pathCost
-        else:
-            self.pathCost = self.parent.pathCost + self.action.getStepCost(action) # waiting on action class
+        self.actionsList: list = actionsList
+        self.pathCost = pathCost
+        self.ID = uuid.uuid4()
+        # if action is None and parent is None:
+        #     self.pathCost = pathCost
+        # else:
+        #     self.pathCost = self.parent.pathCost + self.action.getStepCost(action) # waiting on action class
 
-        if len(parent.actionList) == 0:
-            self.actionsList.add(0, self.action)
-        else:
-            self.actionsList = parent.actionsList
-            self.actionsList.add(self.action)
+        # if len(parent.actionList) == 0:
+        #     self.actionsList.add(0, self.action)
+        # else:
+        #     self.actionsList = parent.actionsList
+        #     self.actionsList.add(self.action)
         
 
     def copyOfNode(self):

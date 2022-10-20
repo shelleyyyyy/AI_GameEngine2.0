@@ -18,7 +18,7 @@ class SuccessorFunction:
             shiftXValue = constants['MOVING_SOUTH']
         elif state.direction == constants['FACING_WEST']:
             shiftYValue = constants['MOVING_WEST']
-        elif state.direction == constants['MOVING_NORTH']:
+        elif state.direction == constants['FACING_NORTH']:
             shiftXValue = constants['MOVING_NORTH']
         else:
             shiftYValue = constants['MOVING_EAST']
@@ -26,34 +26,22 @@ class SuccessorFunction:
         i = state.location.x + shiftXValue
         j = state.location.y + shiftYValue
 
-        if i < 0 or i >= len(environment.gridSize) or j < 0 or j >= len(environment.gridSize):
+        if i < 0 or i > environment.gridSize - 1 or j < 0 or j > environment.gridSize - 1:
             return False
+        elif environment.cells[i][j].cell_type == constants['NON_PASSABLE']:
+            return False
+        else:
+            return True
 
     def turnRight(self, state: Cell):
         state.direction = abs((state.direction + 1) % 4)
         
     def turnLeft(self, state: Cell):
         state.direction = abs((state.direction - 1 + 4) % 4)
-
-    def expand(self, node: Node, environment: Environment):
-        list = collections.deque()
-
-        parentNode = node.copyOfNode()
-
-        try:
-            list.append(SuccessorFunction(parentNode, constants["GO_FORWARD"], environment))
-        except:
-            pass
-
-        parentNode = node.copyOfNode()
-        list.append(SuccessorFunction(parentNode, constants['GO_RIGHT'], environment))
-        parentNode = node.copyOfNode()
-        list.append(SuccessorFunction(parentNode, constants['GO_LEFT'], environment))
-
-        return list
-
+    
     def successorFunction(self, parent: Node, action, environment: Environment):
-        state = parent.state.type #state is a Cell Type
+        copy_of_parent = parent.copyOfNode()
+        state = copy_of_parent.state
 
         shiftXValue = 0
         shiftYValue = 0
@@ -62,7 +50,7 @@ class SuccessorFunction:
             shiftXValue = constants['MOVING_SOUTH']
         elif state.direction == constants['FACING_WEST']:
             shiftYValue = constants['MOVING_WEST']
-        elif state.direction == constants['MOVING_NORTH']:
+        elif state.direction == constants['FACING_NORTH']:
             shiftXValue = constants['MOVING_NORTH']
         else:
             shiftYValue = constants['MOVING_EAST']
@@ -71,11 +59,8 @@ class SuccessorFunction:
             if self.goForward(environment, state):
                 i = state.location.x + shiftXValue
                 j = state.location.y + shiftYValue
-
-                if i < 0 or i >= len(environment.gridSize) or j < 0 or j >= len(environment.gridSize):
-                    return None
                 
-                #potentially need to set the percepts of the cell it moves to 
+                #grab existing cell from cells array
                 state.location = Location(i, j)
             else:
                 return None
@@ -85,8 +70,30 @@ class SuccessorFunction:
             self.turnLeft(state)
         else:
             pass
-
-        node = Node(state=state, parent=parent, action=action)
+    
+        parent.actionsList.append(action)
+        updated_action_list = parent.actionsList
+        path_cost = parent.pathCost + 1
+        node = Node(state=state, parent=parent, action=action, actionsList=updated_action_list, pathCost=path_cost)
         return node
+
+    def expand(self, node: Node, environment: Environment):
+        list = collections.deque()
+
+        parentNode = node.copyOfNode()
+
+        forward = self.successorFunction(parent=parentNode, action=constants["GO_FORWARD"], environment=environment)
+        if forward == None:
+            pass
+        else:
+            list.append(forward)
+
+        parentNode = node.copyOfNode()
+        list.append(self.successorFunction(parent=parentNode, action=constants['TURN_RIGHT'], environment=environment))
+        parentNode = node.copyOfNode()
+        list.append(self.successorFunction(parent=parentNode, action=constants['TURN_LEFT'], environment=environment))
+
+        return list
+
 
     

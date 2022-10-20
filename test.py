@@ -1,8 +1,3 @@
-from blocked import Blocked
-from cell import Cell
+from constants import constants
 
-c = Cell()
-
-c.setType(Blocked(1))
-
-c.toString()
+print(constants["GO_FORWARD"])
