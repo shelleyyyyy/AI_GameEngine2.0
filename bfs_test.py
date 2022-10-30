@@ -13,7 +13,7 @@ test = SuccessorFunction()
 list = test.expand(environment=env, node=root_node)
 for node in list:
     print(node.action)
-    print(node.actionsList)
+    
     print()
 node = list[0]
 if env.cells[node.state.location.x][node.state.location.y].cell_type == constants["GOAL_CELL"]:

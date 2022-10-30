@@ -2,28 +2,44 @@ from node import Node
 from constants import constants
 from successorFunction import SuccessorFunction
 
-def breadthFirstSearch(environment):
-    node = Node()
-    if node.state == constants["GLITTER"]:
-        return node
+def breadthFirstSearch(environment, agent):
+    node = Node(state = agent)
+    if node.state.cell_type == constants["GOAL_CELL"]:
+        return node.actionsList
     
     frontier = [node]
     explored = []
 
     while True:
-        if len(frontier) is 0:
-            return 'nothing'
-        shallow = frontier.pop()
-        explored.append(shallow.state)
+        if len(frontier) == 0:
+            return []
+        shallow = frontier.pop(0)
+        explored.append(shallow)
         
         sucFunc = SuccessorFunction()
 
-        expand = sucFunc.expand(shallow, environment)
-
-        for node in expand:
-            frontier.append(node)
+        expand = sucFunc.expand(node = shallow, environment = environment)
         
+        for n in expand:
+            if checklist(n, frontier, explored) != True:
+                if environment.cells[n.state.location.x][n.state.location.y].cell_type == constants["GOAL_CELL"]:
+                    return n.actionsList
+            
+                frontier.append(n)
 
+
+def checklist(node, frontier, explored):
+    for n in frontier:
+        if n.state.location.x == node.state.location.x and n.state.location.y == node.state.location.y and n.state.direction == node.state.direction:
+            return True
+    for n in explored:
+        if n.state.location.x == node.state.location.x and n.state.location.y == node.state.location.y and n.state.direction == node.state.direction:
+            return True
+    return False
+
+def checkGoalState(node):
+    if node.state == constants['GOAL_CELL']:
+        return
         
 
       
