@@ -1,11 +1,12 @@
 from constants import constants
 from environment import Environment
 from node import Node
+from cell import Cell
 from successorFunction import SuccessorFunction
 
-def breadthFirstSearch(environment: Environment):
+def breadthFirstSearch(environment: Environment, root: Cell):
     expander = SuccessorFunction()
-    root_node: Node = Node(state = environment.cells[2][3])
+    root_node: Node = Node(state = root)
     if root_node.state.cell_type == constants["GOAL_CELL"]:
         return root_node.actionsList
     frontier: list = [root_node]
@@ -35,7 +36,7 @@ def check_frontier(frontier: list, node: Node):
             return False
     return True
 
-env = Environment()
-
-solution = breadthFirstSearch(environment=env)
-print(solution)
+""" env: Environment = Environment()
+env.toString()
+solution = breadthFirstSearch(environment=env, root=env.root)
+print(solution) """

@@ -2,4 +2,4 @@
 
 venv\Scripts\activate
 
-flask --app hello run
+flask --app server run
