@@ -33,7 +33,7 @@ class Environment:
         self.cells[4][3].cell_type = (constants["NON_PASSABLE"])
         self.cells[2][3].cell_type = (constants["TRUCK"])
         self.cells[2][3].truck = TruckAgent(x=2, y=3)
-        self.cells[0][4].cell_type = (constants["GOAL_CELL"])
+        self.cells[0][0].cell_type = (constants["GOAL_CELL"])
         
         self.trucks.append(self.cells[4][4].cell_type)
 
