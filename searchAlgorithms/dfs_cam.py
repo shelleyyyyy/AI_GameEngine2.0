@@ -3,7 +3,7 @@ from constants import constants
 from successorFunction import SuccessorFunction
 import time
 
-def breadthFirstSearch(environment, agent):
+def depthFirstSearch(environment, agent):
     t = time.time()
     node = Node(state = agent)
     if node.state.cell_type == constants["GOAL_CELL"]:
@@ -15,7 +15,7 @@ def breadthFirstSearch(environment, agent):
     while True:
         if len(frontier) == 0:
             return []
-        shallow = frontier.pop(0)
+        shallow = frontier.pop(len(frontier)-1)
         explored.append(shallow)
         
         sucFunc = SuccessorFunction()
@@ -44,5 +44,3 @@ def checkGoalState(node):
     if node.state == constants['GOAL_CELL']:
         return
         
-
-      
