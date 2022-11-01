@@ -93,6 +93,8 @@
 			y = response.data.rootY
 			dir = response.data.direction
 			sequince = response.data.solution
+			let time = response.data.time
+			console.log("Time: ", time)
 			run()
 		})
 		.catch(function (error) {
