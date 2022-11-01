@@ -1,9 +1,9 @@
 import collections
-from location import Location
+from gameEngine.location import Location
 from constants import constants
-from environment import Environment
-from cell import Cell
-from node import Node
+from gameEngine.environment import Environment
+from gameEngine.cell import Cell
+from Infrastructure.node import Node
   
 class SuccessorFunction:
     def __init__(self):

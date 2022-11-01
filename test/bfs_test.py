@@ -1,7 +1,7 @@
 from constants import constants
-from environment import Environment
-from successorFunction import SuccessorFunction
-from node import Node
+from gameEngine.environment import Environment
+from Infrastructure.successorFunction import SuccessorFunction
+from Infrastructure.node import Node
 
 env = Environment()
 env.toString()

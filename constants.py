@@ -1,8 +1,8 @@
 constants = {
 
-    "GO_FORWARD" : "goForward",
-    "TURN_LEFT" : "turnLeft",
-    "TURN_RIGHT" : "turnRight",
+    "GO_FORWARD" : "m",
+    "TURN_LEFT" : "l",
+    "TURN_RIGHT" : "r",
 
     "FACING_SOUTH" : 0,
     "FACING_WEST" : 1,
@@ -13,10 +13,10 @@ constants = {
     "MOVING_NORTH" : -1,
     "MOVING_EAST" : 1,
     "TRUCK": "Truck",
-    "NON_PASSABLE" : "Blocked",
-    "GOAL_CELL" : "GLITTER",
+    "NON_PASSABLE" : "c",
+    "GOAL_CELL" : "g",
     "BORDER" : "BUMP",
-    "BLANK" : "blank",
+    "BLANK" : "o",
     "BREADTH_FIRST_SEARCH" : "breadthFirstSearch",
     "DEPTH_FIRST_SEARCH" : "depthFirstSearch",
     "DEPTH_LIMITED_SEARCH" : "depthLimitedSearch",

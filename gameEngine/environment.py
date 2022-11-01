@@ -1,6 +1,6 @@
-from cell import Cell
-from location import Location
-from truckAgent import TruckAgent
+from gameEngine.cell import Cell
+from gameEngine.location import Location
+from gameEngine.truckAgent import TruckAgent
 from constants import constants
 import random
 
@@ -14,7 +14,7 @@ class Environment:
         self.nonPassableCount = nonPassableCount
         self.truckAgentCount = truckAgentCount
         self.goalCount = goalCount
-        self.root = ''
+        self.root: Cell = Cell()
 
         self.makeCells()
         self.populateEnv(trucks=self.truckAgentCount, blocks=self.nonPassableCount, goals=self.goalCount)
@@ -57,7 +57,6 @@ class Environment:
             while self.check_if_open(cell) == False:
                 cell = self.cells[random.randint(0, self.gridSize) - 1][random.randint(0, self.gridSize) - 1]
             cell.cell_type = constants["NON_PASSABLE"]
-            
 
     
     def populateEnvPreBuilt(self):
@@ -73,7 +72,13 @@ class Environment:
         
         self.trucks.append(self.cells[4][4].cell_type)
 
-
+    def get_cells_by_type(self):
+        cells_type = []
+        for row in range(self.cells):
+            cellRow: Cell = []
+            for cell in range(row):
+                cellRow.append(cell.cell_type)
+            cells_type.append(cellRow)
 
     def toString(self):
         for cellRow in self.cells:

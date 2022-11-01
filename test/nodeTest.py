@@ -1,4 +1,4 @@
-from node import Node
+from Infrastructure.node import Node
 
 node1 = Node()
 node2 = node1

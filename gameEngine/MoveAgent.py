@@ -1,10 +1,10 @@
-import Action
+import gameEngine.Action as Action
 # from concurrent.futures import ThreadPoolExecutor
 import threading
-from cell import Cell
-from location import Location
-from truckAgent import TruckAgent
-from environment import Environment
+from gameEngine.cell import Cell
+from gameEngine.location import Location
+from gameEngine.truckAgent import TruckAgent
+from gameEngine.environment import Environment
 from constants import constants
 class MoveAgent:
     

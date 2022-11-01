@@ -1,17 +1,19 @@
-from node import Node
+from Infrastructure.node import Node
 from constants import constants
-from successorFunction import SuccessorFunction
+from Infrastructure.successorFunction import SuccessorFunction
+from gameEngine.environment import Environment
+from gameEngine.cell import Cell
 import time
 
-def depthLimitedSearch(environment, agent, limit):
+def depthFirstSearch(environment: Environment, root: Cell):
     t = time.time()
-    node = Node(state = agent)
+    node = Node(state = root)
     if node.state.cell_type == constants["GOAL_CELL"]:
         return node.actionsList
     
     frontier = [node]
     explored = []
-    depth = 0
+
     while True:
         if len(frontier) == 0:
             return []
@@ -19,18 +21,16 @@ def depthLimitedSearch(environment, agent, limit):
         explored.append(shallow)
         
         sucFunc = SuccessorFunction()
-        if depth != limit:
-            expand = sucFunc.expand(node = shallow, environment = environment)
-            depth+=1
-            for n in expand:
-                if checklist(n, frontier, explored) != True:
-                    if environment.cells[n.state.location.x][n.state.location.y].cell_type == constants["GOAL_CELL"]:
-                        print(time.time() - t)
-                        return n.actionsList
+
+        expand = sucFunc.expand(node = shallow, environment = environment)
+        
+        for n in expand:
+            if checklist(n, frontier, explored) != True:
+                if environment.cells[n.state.location.x][n.state.location.y].cell_type == constants["GOAL_CELL"]:
+                    print(time.time() - t)
+                    return n.actionsList
             
-                    frontier.append(n)
-        else:
-            return 'limit reached with no goal'
+                frontier.append(n)
 
 
 def checklist(node, frontier, explored):

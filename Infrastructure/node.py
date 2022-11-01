@@ -1,5 +1,5 @@
 from copy import deepcopy
-from cell import Cell
+from gameEngine.cell import Cell
 import uuid
 
 class Node:

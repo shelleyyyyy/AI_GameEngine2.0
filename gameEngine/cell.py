@@ -1,7 +1,7 @@
-from location import Location
-from percept import Percept
+from gameEngine.location import Location
+from gameEngine.percept import Percept
 from constants import constants
-from truckAgent import TruckAgent
+from gameEngine.truckAgent import TruckAgent
 
 
 class Cell:

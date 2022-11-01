@@ -1,8 +1,8 @@
 from constants import constants
-from environment import Environment
-from node import Node
-from cell import Cell
-from successorFunction import SuccessorFunction
+from gameEngine.environment import Environment
+from Infrastructure.node import Node
+from gameEngine.cell import Cell
+from Infrastructure.successorFunction import SuccessorFunction
 
 def breadthFirstSearch(environment: Environment, root: Cell):
     expander = SuccessorFunction()

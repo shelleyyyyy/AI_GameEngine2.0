@@ -1,7 +1,7 @@
 from argparse import Action
 from moveAgent import MoveAgent
-from environment import Environment
-from environment import TruckAgent
+from gameEngine.environment import Environment
+from gameEngine.environment import TruckAgent
 from moveAgent import MoveAgent
 #agent = MoveAgent()
 

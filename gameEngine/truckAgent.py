@@ -1,5 +1,5 @@
 import uuid
-from location import Location
+from gameEngine.location import Location
 
 class TruckAgent:
 
