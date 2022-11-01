@@ -1,7 +1,6 @@
-from node import Node
+from Infrastructure.node import Node
 from constants import constants
-from successorFunction import SuccessorFunction
-from queue import PriorityQueue
+from Infrastructure.successorFunction import SuccessorFunction
 
 #quicksort methods
 def partition(list, low, high):
@@ -33,8 +32,8 @@ def quickSort(list, low, high):
 
 
 
-def uniformed_cost_search(environment, agent):
-    node = Node(state = agent)
+def uniformed_cost_search(environment, root):
+    node = Node(state = root)
     if node.state.cell_type == constants["GOAL_CELL"]:
         return node.actionsList
     

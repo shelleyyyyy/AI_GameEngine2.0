@@ -3,6 +3,7 @@ from gameEngine.environment import Environment
 from searchAlgorithms.breadthFirstSearch import breadthFirstSearch
 from searchAlgorithms.depthFirstSearch import depthFirstSearch
 from searchAlgorithms.depthLimitedSearch import depthLimitedSearch
+from searchAlgorithms.uniformed_cost_search import uniformed_cost_search
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -45,6 +46,10 @@ def run_sim():
         return {"solution": solution, "rootX": env.root.location.x, "rootY": env.root.location.y, "direction": (env.root.direction + 2) % 4, "grid": grid}
 
     elif search_type == "Uniform Cost Search":
-        return {"solution": "solution", "root": "env.root"}
+        print(trucks, blocks, goals, gridSize)
+        env.toString()
+        solution = uniformed_cost_search(environment=env, root=env.root)
+        print(solution)
+        return {"solution": solution, "rootX": env.root.location.x, "rootY": env.root.location.y, "direction": (env.root.direction + 2) % 4, "grid": grid}
 
     return 400
