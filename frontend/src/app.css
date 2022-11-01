@@ -1,0 +1,12 @@
+@import '@fontsource/fira-mono';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body{
+	background-color: gray;
+}
+
+div{
+	border-radius: .375rem;
+}
