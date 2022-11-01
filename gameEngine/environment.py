@@ -74,11 +74,12 @@ class Environment:
 
     def get_cells_by_type(self):
         cells_type = []
-        for row in range(self.cells):
+        for row in self.cells:
             cellRow: Cell = []
-            for cell in range(row):
+            for cell in row:
                 cellRow.append(cell.cell_type)
             cells_type.append(cellRow)
+        return cells_type
 
     def toString(self):
         for cellRow in self.cells:
