@@ -4,6 +4,7 @@ from searchAlgorithms.breadthFirstSearch import breadthFirstSearch
 from searchAlgorithms.depthFirstSearch import depthFirstSearch
 from searchAlgorithms.depthLimitedSearch import depthLimitedSearch
 from searchAlgorithms.uniformed_cost_search import uniformed_cost_search
+from searchAlgorithms.interative_depth_limited_search import iterativeDepthLimitedSearch
 from flask_cors import CORS
 import time
 
@@ -63,6 +64,17 @@ def run_sim():
         env.toString()
         start = time.time()
         solution = uniformed_cost_search(environment=env, root=env.root)
+        end = time.time()
+        elapsed = end - start
+        print(solution)
+        return {"solution": solution, "rootX": env.root.location.x, "rootY": env.root.location.y, 
+            "direction": (env.root.direction + 2) % 4, "grid": grid, "time": elapsed}
+
+    elif search_type == "Iterative Depth Limited Search":
+        print(trucks, blocks, goals, gridSize)
+        env.toString()
+        start = time.time()
+        solution = iterativeDepthLimitedSearch(environment=env, root=env.root, limit=0, t=start)
         end = time.time()
         elapsed = end - start
         print(solution)

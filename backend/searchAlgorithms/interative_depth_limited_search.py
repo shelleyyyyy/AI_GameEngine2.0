@@ -3,9 +3,9 @@ from constants import constants
 from Infrastructure.successorFunction import SuccessorFunction
 import time
 
-def iterativeDepthLimitedSearch(environment, agent, limit, t):
+def iterativeDepthLimitedSearch(environment, root, limit, t):
     
-    node = Node(state = agent)
+    node = Node(state = root)
     if node.state.cell_type == constants["GOAL_CELL"]:
         return node.actionsList
     
@@ -30,7 +30,7 @@ def iterativeDepthLimitedSearch(environment, agent, limit, t):
             
                     frontier.append(n)
         else:
-            return iterativeDepthLimitedSearch(environment, agent, limit= limit +1, t=t)
+            return iterativeDepthLimitedSearch(environment, root, limit= limit +1, t=t)
 
 
 def checklist(node, frontier, explored):

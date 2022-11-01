@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\Users\cammi\OneDrive\Documents\GitHub\AI_GameEngine2.0\venv"
+VIRTUAL_ENV="C:\Users\rasco\Documents\GitHub\AI_GameEngine2.0\backend\venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

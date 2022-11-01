@@ -122,25 +122,25 @@
 		switch(dir){
 			case 0:
 				// move up
-				console.log("up")
+				//console.log("up")
 				local_grid[x][y] = "p-u"
 				x -= 1
 				break;
 			case 1:
 				// move right
-				console.log("right")
+				//console.log("right")
 				local_grid[x][y] = "p-r"
 				y += 1
 				break;
 			case 2:
 				// move down
-				console.log("down")
+				//console.log("down")
 				local_grid[x][y] = "p-d"
 				x += 1
 				break;
 			case 3:
 				// move left
-				console.log("left")
+				//console.log("left")
 				local_grid[x][y] = "p-l"
 				y -= 1
 				break;
@@ -158,15 +158,15 @@
 			switch (sequince[i]){
 				case "l":
 					// move left
-					console.log("left")
+					//console.log("left")
 					dir = (dir + 3) % 4
-					console.log(dir)
+					//console.log(dir)
 					break;
 				case "r":
 					// move right
-					console.log("right")
+					//console.log("right")
 					dir = (dir + 1) % 4
-					console.log(dir)
+					//console.log(dir)
 					break;
 				case "m":
 					// move forward
@@ -190,7 +190,8 @@
 		"Breadth First Search",
 		"Depth First Search",
 		"Depth Limit Search",
-		"Uniform Cost Search"
+		"Uniform Cost Search",
+		"Iterative Depth Limited Search"
 	];
 
 </script>
