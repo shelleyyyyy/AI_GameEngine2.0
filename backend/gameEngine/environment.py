@@ -6,7 +6,7 @@ from constants import constants
 import random
 
 class Environment:
-    def __init__(self, gridSize=5, nonPassableCount=5, truckAgentCount=1, goalCount=1):
+    def __init__(self, gridSize=5, nonPassableCount=5, truckAgentCount=1, goalCount=1, seed=0):
         self.gridSize = gridSize
         self.cells: Cell = []
         self.trucks = []
@@ -16,8 +16,9 @@ class Environment:
         self.truckAgentCount = truckAgentCount
         self.goalCount = goalCount
         self.root: Cell = Cell()
+        self.seed = seed
 
-        self.populateEnvWithSeed(1, 1, 'AB10')
+        self.populateEnvWithSeed(trucks=1, goals=1, seed=seed)
         #self.makeCells()
         #self.populateEnv(trucks=self.truckAgentCount, blocks=self.nonPassableCount, goals=self.goalCount)
         #self.populateEnvPreBuilt()
@@ -41,7 +42,7 @@ class Environment:
             return False
     
     def populateEnvWithSeed(self, trucks, goals, seed):
-        self.cells = generateWhiteNoise(width=self.gridSize, height=self.gridSize, seed=seed)
+        self.cells, self.root = generateWhiteNoise(width=self.gridSize, height=self.gridSize, seed=seed, root=self.root)
 
     def populateEnv(self, trucks: int, blocks: int, goals: int):
         for x in range(0, trucks):

@@ -20,17 +20,16 @@ def run_sim():
     print("Trucks", request.json.get("trucks", None))
 
     trucks = int(request.json.get("trucks", None))
-    blocks = int(request.json.get("blocks", None))
+    seed = request.json.get("blocks", None)
     goals = int(request.json.get("goals", None))
     gridSize = int(request.json.get("gridsize", None))
     search_type = request.json.get("search", None)
 
-    env: Environment = Environment(gridSize=gridSize, nonPassableCount=blocks, truckAgentCount=trucks, goalCount=goals)
+    env: Environment = Environment(gridSize=gridSize, truckAgentCount=trucks, goalCount=goals, seed=seed)
     grid = env.get_cells_by_type()
-    print(grid)
 
     if search_type == "Breadth First Search":
-        print(trucks, blocks, goals, gridSize)
+        print(trucks, goals, gridSize, "seed:", seed)
         env.toString()
         start = time.time()
         solution = breadthFirstSearch(environment=env, root=env.root)
@@ -41,7 +40,7 @@ def run_sim():
             "direction": (env.root.direction + 2) % 4, "grid": grid, "time": elapsed}
     
     elif search_type == "Depth First Search":
-        print(trucks, blocks, goals, gridSize)
+        print(trucks, goals, gridSize, "seed:", seed)
         env.toString()
         start = time.time()
         solution = depthFirstSearch(environment=env, root=env.root)
@@ -52,7 +51,7 @@ def run_sim():
             "direction": (env.root.direction + 2) % 4, "grid": grid, "time": elapsed}
 
     elif search_type == "Depth Limit Search":
-        print(trucks, blocks, goals, gridSize)
+        print(trucks, goals, gridSize, "seed:", seed)
         env.toString()
         start = time.time()
         solution = depthLimitedSearch(environment=env, root=env.root, limit=30)
@@ -63,7 +62,7 @@ def run_sim():
             "direction": (env.root.direction + 2) % 4, "grid": grid, "time": elapsed}
 
     elif search_type == "Uniform Cost Search":
-        print(trucks, blocks, goals, gridSize)
+        print(trucks, goals, gridSize, "seed:", seed)
         env.toString()
         start = time.time()
         solution = uniformed_cost_search(environment=env, root=env.root)
@@ -74,7 +73,7 @@ def run_sim():
             "direction": (env.root.direction + 2) % 4, "grid": grid, "time": elapsed}
 
     elif search_type == "Iterative Depth Limited Search":
-        print(trucks, blocks, goals, gridSize)
+        print(trucks, goals, gridSize, "seed:", seed)
         env.toString()
         start = time.time()
         solution = iterativeDepthLimitedSearch(environment=env, root=env.root, limit=0, t=start)
