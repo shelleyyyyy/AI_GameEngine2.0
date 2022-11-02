@@ -11,6 +11,9 @@ import time
 app = Flask(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
+env: Environment = Environment(gridSize=10)
+env.toString()
+
 @app.route("/search", methods=['POST'])
 def run_sim():
 

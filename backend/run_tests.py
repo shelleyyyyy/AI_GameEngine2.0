@@ -1,3 +1,9 @@
-from test.test_seed import run_test_seed
+import random
 
-run_test_seed()
+random.seed("hello")
+
+x, y = random.randint(0, 10), random.randint(0, 10)
+xx, yy = random.randint(0, 10), random.randint(0, 10)
+
+print(x, y)
+print(xx, yy)

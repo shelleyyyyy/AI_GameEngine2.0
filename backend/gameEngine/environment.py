@@ -17,8 +17,9 @@ class Environment:
         self.goalCount = goalCount
         self.root: Cell = Cell()
 
-        self.makeCells()
-        self.populateEnv(trucks=self.truckAgentCount, blocks=self.nonPassableCount, goals=self.goalCount)
+        self.populateEnvWithSeed(1, 1, 'AB10')
+        #self.makeCells()
+        #self.populateEnv(trucks=self.truckAgentCount, blocks=self.nonPassableCount, goals=self.goalCount)
         #self.populateEnvPreBuilt()
         #self.toString()
 
