@@ -1,8 +1,8 @@
 <script>
 	import Row from "$lib/main/Row.svelte";
 	import Grid from "$lib/main/Grid.svelte";
-	import { GridSharp } from "svelte-ionicons";
 	import axios from 'axios'
+	// import ProgressBar from 'svelte-progress-bar'
 	
 	const data = {
 			grid: [
@@ -64,6 +64,8 @@
 			size: 50,
 	}
 
+	$: loading = false;
+
 	let sequince = data.sequince;
 
 	$: local_grid = data.grid;
@@ -76,6 +78,7 @@
 	let size = 10
 
 	function runSimulation(trucks, blocks, goals, gridsize, search) {
+		loading = true;
 		console.log("Ran call")
 		console.log(trucks, blocks, goals, gridsize)
 		axios.post('http://127.0.0.1:5000/search', {
@@ -100,6 +103,8 @@
 		.catch(function (error) {
 			console.log(error);
 		});
+
+		// loading = false;
 	}
 
 	
@@ -150,6 +155,7 @@
 	}
 
 	async function run(){
+		loading = false;
 		for(let i = 0; i < sequince.length; i++){
 
 			await new Promise(r => setTimeout(r, 200));
@@ -178,6 +184,7 @@
 	}
 
 	function pleaseWork(){
+		loading = true;
 		runSimulation(1, numberOfBlocks, 1, gridSize, search)
 		//run();
 	}
@@ -194,42 +201,53 @@
 		"Iterative Depth Limited Search"
 	];
 
+	// const progress = new ProgressBar({
+	// 	target: document.querySelector('body'),
+	// 	props: { color: '#0366d6' }
+	// })
+
 </script>
+
+
+
 
 <h1 class="text-center text-6xl my-10">TRUCK AGENT WORLD</h1>
 
-<div class="grid justify-center">
-	<div class="border-1 grid grid-cols-3 border-black">
-		<div class="p-5 grid grid-cols-2 h-40 gap-3 ">
-			<div class="flex justify-center">
-				<button  class="w-36 py-5 my-5 bg-blue-500 hover:bg-blue-700 text-white font-bold rounded" on:click={pleaseWork}>Run</button>
-			</div>
-			<div class="flex justify-center">
-				<button  class="w-36 py-5 my-5 bg-blue-500 hover:bg-blue-700 text-white font-bold rounded" on:click={reset}>Reset</button>
-			</div>
+<div class="flex justify-center gap-3">
+
+	<div class="bg-white p-3 grid gap-3 max-h-200">
+		
+
+		<div class=" grid grid-cols-2 gap-3 justify-evenly align-center">
+			
+			<button class="btn btn-primary" on:click={pleaseWork}>Run</button>
+			<button class="btn btn-secondary" on:click={reset}>Reset</button>
 		</div>
-		<div class="grid grid-cols-2">
-			<div class="grid justify-center">
-				<h1 for="gridSize" class="text-2xl text-center">Grid Size</h1>
-				<input type="text" class="w-36 py-5 my-5 bg-blue-500 hover:bg-blue-700 text-white font-bold rounded" bind:value={gridSize}>
-			</div>
-			<div class="grid justify-center">
-				<h1 for="gridSize" class="text-2xl text-center"># of Blocks</h1>
-				<input type="text" class="w-36 py-5 my-5 bg-blue-500 hover:bg-blue-700 text-white font-bold rounded" bind:value={numberOfBlocks}>
-			</div>
-		</div>
-		<div>
-			<h1 for="gridSize" class="text-2xl text-center mb-5">Select Search Type</h1>
-			<select bind:value={search}>
+		{#if loading}
+		<!-- <ProgressBar/> -->
+		<h1>Loading...</h1>
+		{/if}
+		<h1 class="text-3xl bold p-5 text-center">Set Options</h1>
+		<div class="bg-gray-500 p-2 justify-evenly">
+			<h1 class="py-3 text-center">Select Search Type</h1>
+			<select class="select w-full max-w-xs" bind:value={search}>
 				{#each searchTypes as s}
 					<option value={s}>
 						{s}
 					</option>
 				{/each}
-			</select>
+			  </select>
+		</div>
+		<div class="bg-gray-500 p-2 grid gap-3">
+			<h1 class="text-center">Grid Size</h1>
+			<input type="text" placeholder="Type here" class="input w-full" bind:value={gridSize}/>
+			<h1 class="text-center">Blocked Cells</h1>
+			<input type="text" placeholder="Type here" class="input w-full" bind:value={numberOfBlocks}/>
 		</div>
 	</div>
+
 	<div>
-		<Grid dir={dir} rows={local_grid} size={size}></Grid>
+		<Grid dir={dir} rows={local_grid} size={gridSize}></Grid>
 	</div>
 </div>
+

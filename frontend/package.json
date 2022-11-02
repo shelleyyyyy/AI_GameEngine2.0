@@ -34,6 +34,8 @@
 	"dependencies": {
 		"@fontsource/fira-mono": "^4.5.0",
 		"axios": "^1.1.3",
-		"svelte-ionicons": "^0.2.1"
+		"daisyui": "^2.38.0",
+		"svelte-ionicons": "^0.2.1",
+		"svelte-progress-bar": "^3.0.2"
 	}
 }
