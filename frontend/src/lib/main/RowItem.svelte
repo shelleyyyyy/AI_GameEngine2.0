@@ -16,10 +16,10 @@
 
     // get grid diminseions
     export let dir;
-    export let diminsions
+    export let diminsions;
     export let item;
 
-    let calc = 48/20;
+    let calc = 30/diminsions;
     let size = String(calc) + "rem"
 </script>
 

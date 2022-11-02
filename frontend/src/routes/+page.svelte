@@ -97,6 +97,7 @@
 			dir = response.data.direction
 			sequince = response.data.solution
 			let time = response.data.time
+			size = local_grid.length
 			console.log("Time: ", time)
 			run()
 		})
@@ -215,7 +216,7 @@
 
 <div class="flex justify-center gap-3">
 
-	<div class="bg-white p-3 grid gap-3 max-h-200">
+	<div class="bg-white p-3 grid gap-3" style:height={"32rem"}>
 		
 
 		<div class=" grid grid-cols-2 gap-3 justify-evenly align-center">
@@ -223,10 +224,7 @@
 			<button class="btn btn-primary" on:click={pleaseWork}>Run</button>
 			<button class="btn btn-secondary" on:click={reset}>Reset</button>
 		</div>
-		{#if loading}
-		<!-- <ProgressBar/> -->
-		<h1>Loading...</h1>
-		{/if}
+		
 		<h1 class="text-3xl bold p-5 text-center">Set Options</h1>
 		<div class="bg-gray-500 p-2 justify-evenly">
 			<h1 class="py-3 text-center">Select Search Type</h1>
@@ -247,7 +245,23 @@
 	</div>
 
 	<div>
-		<Grid dir={dir} rows={local_grid} size={gridSize}></Grid>
+		{#if loading}
+		<!-- <ProgressBar/> -->
+		<!-- <h1>Loading...</h1> -->
+		<progress class="progress"></progress>
+		{/if}
+		{#if !loading}
+		<!-- <ProgressBar/> -->
+		<!-- <h1>Loading...</h1> -->
+		<Grid dir={dir} rows={local_grid} size={size}></Grid>
+		{/if}
+		{#if loading}
+		<!-- <ProgressBar/> --3
+		<!-- <h1>Loading...</h1> -->
+		<Grid dir={dir} rows={local_grid} size={size}></Grid>
+		{/if}
+
+		
 	</div>
 </div>
 
