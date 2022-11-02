@@ -19,7 +19,7 @@
     export let diminsions
     export let item;
 
-    let calc = 48/diminsions;
+    let calc = 48/20;
     let size = String(calc) + "rem"
 </script>
 
