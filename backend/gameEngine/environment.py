@@ -1,6 +1,7 @@
 from gameEngine.cell import Cell
 from gameEngine.location import Location
 from gameEngine.truckAgent import TruckAgent
+from gameEngine.seed_generator import generateWhiteNoise
 from constants import constants
 import random
 
@@ -37,6 +38,9 @@ class Environment:
             return True
         else:
             return False
+    
+    def populateEnvWithSeed(self, trucks, goals, seed):
+        self.cells = generateWhiteNoise(width=self.gridSize, height=self.gridSize, seed=seed)
 
     def populateEnv(self, trucks: int, blocks: int, goals: int):
         for x in range(0, trucks):
