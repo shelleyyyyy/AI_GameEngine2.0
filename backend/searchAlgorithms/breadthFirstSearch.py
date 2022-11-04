@@ -10,7 +10,7 @@ def breadthFirstSearch(environment: Environment, root: Cell):
     if root_node.state.cell_type == constants["GOAL_CELL"]:
         return root_node.actionsList
     frontier: list = [root_node]
-    explored: list = []
+    explored: dict()
 
     while True:
         if len(frontier) == 0: return None
