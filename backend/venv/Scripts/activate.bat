@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=C:\Users\rasco\Documents\GitHub\AI_GameEngine2.0\backend\venv
+set VIRTUAL_ENV=C:\Users\cammi\OneDrive\Documents\GitHub\AI_GameEngine2.0\backend\venv
 
 if not defined PROMPT set PROMPT=$P$G
 
