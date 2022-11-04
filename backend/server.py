@@ -23,7 +23,7 @@ def run_sim():
     gridSize = int(request.json.get("gridsize", None))
     search_type = request.json.get("search", None)
 
-    env: Environment = Environment(gridSize=gridSize, truckAgentCount=5, goalCount=5, seed=seed)
+    env: Environment = Environment(gridSize=gridSize, truckAgentCount=trucks, goalCount=goals, seed=seed)
     grid = env.get_cells_by_type()
     return search_engine(search_type=search_type, truck=trucks, goals=goals, gridSize=gridSize, seed=seed, grid=grid, env=env)
 
