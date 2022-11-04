@@ -7,12 +7,10 @@ from searchAlgorithms.uniformed_cost_search import uniformed_cost_search
 from searchAlgorithms.interative_depth_limited_search import iterativeDepthLimitedSearch
 from flask_cors import CORS
 import time
+import threading
 
 app = Flask(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
-
-env: Environment = Environment(gridSize=10)
-env.toString()
 
 @app.route("/search", methods=['POST'])
 def run_sim():
@@ -25,22 +23,26 @@ def run_sim():
     gridSize = int(request.json.get("gridsize", None))
     search_type = request.json.get("search", None)
 
-    env: Environment = Environment(gridSize=gridSize, truckAgentCount=trucks, goalCount=goals, seed=seed)
+    env: Environment = Environment(gridSize=gridSize, truckAgentCount=5, goalCount=5, seed=seed)
     grid = env.get_cells_by_type()
+    return search_engine(search_type=search_type, truck=trucks, goals=goals, gridSize=gridSize, seed=seed, grid=grid, env=env)
 
+    """ for truck in trucks:
+        threading.Thread(target=search_engine, args=(search_type, truck, goals, gridSize, seed, grid)) """
+
+def search_engine(search_type, truck, goals, gridSize, seed, grid, env):
     if search_type == "Breadth First Search":
-        print(trucks, goals, gridSize, "seed:", seed)
         env.toString()
         start = time.time()
-        solution = breadthFirstSearch(environment=env, root=env.root)
+        solution = breadthFirstSearch(environment=env, root=env.root[0])
         end = time.time()
         elapsed = end - start
         print(solution)
-        return {"solution": solution, "rootX": env.root.location.x, "rootY": env.root.location.y, 
-            "direction": (env.root.direction + 2) % 4, "grid": grid, "time": elapsed}
+        return {"solution": solution, "rootX": env.root[0].location.x, "rootY": env.root[0].location.y, 
+            "direction": (env.root[0].direction + 2) % 4, "grid": grid, "time": elapsed}
     
     elif search_type == "Depth First Search":
-        print(trucks, goals, gridSize, "seed:", seed)
+        print(truck, goals, gridSize, "seed:", seed)
         env.toString()
         start = time.time()
         solution = depthFirstSearch(environment=env, root=env.root)
@@ -51,7 +53,7 @@ def run_sim():
             "direction": (env.root.direction + 2) % 4, "grid": grid, "time": elapsed}
 
     elif search_type == "Depth Limit Search":
-        print(trucks, goals, gridSize, "seed:", seed)
+        print(truck, goals, gridSize, "seed:", seed)
         env.toString()
         start = time.time()
         solution = depthLimitedSearch(environment=env, root=env.root, limit=30)
@@ -62,7 +64,7 @@ def run_sim():
             "direction": (env.root.direction + 2) % 4, "grid": grid, "time": elapsed}
 
     elif search_type == "Uniform Cost Search":
-        print(trucks, goals, gridSize, "seed:", seed)
+        print(truck, goals, gridSize, "seed:", seed)
         env.toString()
         start = time.time()
         solution = uniformed_cost_search(environment=env, root=env.root)
@@ -73,7 +75,7 @@ def run_sim():
             "direction": (env.root.direction + 2) % 4, "grid": grid, "time": elapsed}
 
     elif search_type == "Iterative Depth Limited Search":
-        print(trucks, goals, gridSize, "seed:", seed)
+        print(truck, goals, gridSize, "seed:", seed)
         env.toString()
         start = time.time()
         solution = iterativeDepthLimitedSearch(environment=env, root=env.root, limit=0, t=start)

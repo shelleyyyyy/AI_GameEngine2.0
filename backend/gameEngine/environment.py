@@ -15,10 +15,10 @@ class Environment:
         self.nonPassableCount = nonPassableCount
         self.truckAgentCount = truckAgentCount
         self.goalCount = goalCount
-        self.root: Cell = Cell()
+        self.root: Cell = []
         self.seed = seed
 
-        self.populateEnvWithSeed(trucks=1, goals=1, seed=seed)
+        self.populateEnvWithSeed(trucks=truckAgentCount, goals=goalCount, seed=seed)
         #self.makeCells()
         #self.populateEnv(trucks=self.truckAgentCount, blocks=self.nonPassableCount, goals=self.goalCount)
         #self.populateEnvPreBuilt()
@@ -42,7 +42,7 @@ class Environment:
             return False
     
     def populateEnvWithSeed(self, trucks, goals, seed):
-        self.cells, self.root = generateWhiteNoise(width=self.gridSize, height=self.gridSize, seed=seed, root=self.root)
+        self.cells, self.root = generateWhiteNoise(width=self.gridSize, height=self.gridSize, seed=seed, root=self.root, trucks=trucks, goals=goals)
 
     def populateEnv(self, trucks: int, blocks: int, goals: int):
         for x in range(0, trucks):
