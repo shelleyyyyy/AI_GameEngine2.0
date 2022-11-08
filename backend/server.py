@@ -25,12 +25,15 @@ def run_sim():
 
     env: Environment = Environment(gridSize=gridSize, truckAgentCount=trucks, goalCount=goals, seed=seed)
     grid = env.get_cells_by_type()
-    return search_engine(search_type=search_type, truck=trucks, goals=goals, gridSize=gridSize, seed=seed, grid=grid, env=env)
+    #return search_engine(search_type=search_type, truck=trucks, goals=goals, gridSize=gridSize, seed=seed, grid=grid, env=env)
 
-    """ for truck in trucks:
-        threading.Thread(target=search_engine, args=(search_type, truck, goals, gridSize, seed, grid)) """
+    threads=[]
+    for truck in trucks:
+        threads.append(threading.Thread(target=search_engine, args=(search_type, truck, goals, gridSize, seed, grid, env)))
+        threads[truck].start()
 
-def search_engine(search_type, truck, goals, gridSize, seed, grid, env):
+
+def search_engine(search_type, truck, goals, gridSize, seed, grid, env, results):
     if search_type == "Breadth First Search":
         env.toString()
         start = time.time()
@@ -38,8 +41,8 @@ def search_engine(search_type, truck, goals, gridSize, seed, grid, env):
         end = time.time()
         elapsed = end - start
         print(solution)
-        return {"solution": solution, "rootX": env.root[0].location.x, "rootY": env.root[0].location.y, 
-            "direction": (env.root[0].direction + 2) % 4, "grid": grid, "time": elapsed}
+        results.apend({"solution": solution, "rootX": env.root[0].location.x, "rootY": env.root[0].location.y, 
+            "direction": (env.root[0].direction + 2) % 4, "grid": grid, "time": elapsed})
     
     elif search_type == "Depth First Search":
         print(truck, goals, gridSize, "seed:", seed)
