@@ -11,6 +11,7 @@ class Cell:
         self.cell_type = cell_type
         self.truck: TruckAgent = truck
         self.percepts = percepts
+        self.found: bool = False
 
     def toString(self):
         print("----------Cell----------")
@@ -19,3 +20,9 @@ class Cell:
 
     def setType(self, cellType):
         self.type = cellType
+
+    def set_found(self, input: bool):
+        self.found = input
+    
+    def get_found(self):
+        return self.found

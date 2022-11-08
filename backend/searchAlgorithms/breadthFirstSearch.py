@@ -2,9 +2,10 @@ from constants import constants
 from gameEngine.environment import Environment
 from Infrastructure.node import Node
 from gameEngine.cell import Cell
+from threading import  Lock
 from Infrastructure.successorFunction import SuccessorFunction
 
-def breadthFirstSearch(environment: Environment, root: Cell):
+def breadthFirstSearch(environment: Environment, root: Cell, lock: Lock):
     expander = SuccessorFunction()
     root_node: Node = Node(state = root)
     if root_node.state.cell_type == constants["GOAL_CELL"]:
@@ -19,7 +20,11 @@ def breadthFirstSearch(environment: Environment, root: Cell):
         list = expander.expand(environment=environment, node=node)
         for node in list:
             if check_explored(explored=explored, node=node) and check_frontier(frontier=frontier, node=node):
-                if environment.cells[node.state.location.x][node.state.location.y].cell_type == constants["GOAL_CELL"]:
+                current_cell: Cell = environment.cells[node.state.location.x][node.state.location.y]
+                if current_cell.cell_type == constants["GOAL_CELL"] and current_cell.get_found() == False:
+                    lock.acquire()
+                    current_cell.set_found(True)
+                    lock.release()
                     return node.actionsList
                 else:
                     frontier.append(node)
