@@ -9,8 +9,6 @@ def depthFirstSearch(environment, root):
     node = Node(state = root)
     if node.state.cell_type == constants["GOAL_CELL"]:
         return node.actionsList
-    fIndex = 0
-    eIndex = 0
     frontier = [node]
     explored = dict()
     
