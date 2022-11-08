@@ -7,7 +7,7 @@ import time
 
 def depthFirstSearch(environment: Environment, root: Cell):
     t = time.time()
-    node = Node(state = root)
+    node: Node = Node(state = root)
     if node.state.cell_type == constants["GOAL_CELL"]:
         return node.actionsList
     
