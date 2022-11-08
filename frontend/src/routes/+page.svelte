@@ -66,16 +66,21 @@
 
 	$: loading = false;
 
-	let sequince = data.sequince;
+	// let sequince = data.sequince;
 
 	$: local_grid = data.grid;
-
-	let x = data.x;
-	let y = data.y;
-
-	let dir = data.dir;
-
 	let size = 10
+	let trucks = []
+
+	// let x = data.x;
+	// let y = data.y;
+
+	// let trucks = [];
+	
+
+	// let dir = data.dir;
+
+	
 
 	function runSimulation(trucks, blocks, goals, gridsize, search) {
 		loading = true;
@@ -90,16 +95,41 @@
 			"search": search
 		})
 		.then(function (response) {
-			console.log(response);
+			// console.log(response);
 			local_grid = response.data.grid
-			x = response.data.rootX
-			y = response.data.rootY
-			dir = response.data.direction
-			sequince = response.data.solution
-			let time = response.data.time
 			size = local_grid.length
-			console.log("Time: ", time)
-			run()
+			// x = response.data.rootX
+			// y = response.data.rootY
+			// dir = response.data.direction
+			// sequince = response.data.solution
+			// let time = response.data.time
+			// console.log("Time: ", time)
+
+			trucks = [
+				{
+					x: 1,
+					y: 1,
+					dir: 'd',
+					time: '1',
+					sequince: ['m', 'm', 'm']
+				},
+				{
+					x: 2,
+					y: 2,
+					dir: 'd',
+					time: '1',
+					sequince: ['m', 'm', 'm']
+				},
+				{
+					x: 2,
+					y: 2,
+					dir: 'd',
+					time: '1',
+					sequince: ['m', 'm', 'm']
+				},
+			]
+
+			multiAgentRun(trucks)
 		})
 		.catch(function (error) {
 			console.log(error);
@@ -108,6 +138,22 @@
 		// loading = false;
 	}
 
+	function multiAgentRun(trucks){
+		loading = false;
+		// for(let i = 0; i < trucks.lenght; i++){
+		// 	let x = trucks[i].x
+		// 	let y = trucks[i].y
+		// 	let dir = trucks[i].dir
+		// 	let sequince = trucks[i].sequince
+		// 	run(x, y, sequince, dir)
+		// }
+
+		let x = trucks[0].x
+		let y = trucks[0].y
+		let dir = trucks[0].dir
+		let sequince = trucks[0].sequince
+		run(x, y, sequince, dir)
+	}
 	
 	function reset(){
 
@@ -124,7 +170,7 @@
 		size = 10
 	}
 
-	function move(){
+	function move(x, y, dir){
 		switch(dir){
 			case 0:
 				// move up
@@ -155,8 +201,7 @@
 		
 	}
 
-	async function run(){
-		loading = false;
+	async function run(x, y, sequince, dir){
 		for(let i = 0; i < sequince.length; i++){
 
 			await new Promise(r => setTimeout(r, 200));
@@ -177,7 +222,7 @@
 					break;
 				case "m":
 					// move forward
-					move()
+					move(x, y, dir)
 					break;
 					
 			}
@@ -253,12 +298,12 @@
 		{#if !loading}
 		<!-- <ProgressBar/> -->
 		<!-- <h1>Loading...</h1> -->
-		<Grid dir={dir} rows={local_grid} size={size}></Grid>
+		<Grid dir={'d'} rows={local_grid} size={size}></Grid>
 		{/if}
 		{#if loading}
 		<!-- <ProgressBar/> --3
 		<!-- <h1>Loading...</h1> -->
-		<Grid dir={dir} rows={local_grid} size={size}></Grid>
+		<Grid dir={0} rows={local_grid} size={size}></Grid>
 		{/if}
 
 		
