@@ -5,13 +5,11 @@ from gameEngine.environment import Environment
 from gameEngine.cell import Cell
 import time
 
-def depthFirstSearch(environment: Environment, root: Cell):
+def depthFirstSearch(environment, root):
     t = time.time()
     node = Node(state = root)
     if node.state.cell_type == constants["GOAL_CELL"]:
         return node.actionsList
-    fIndex = 0
-    eIndex = 0
     frontier = [node]
     explored = dict()
     
@@ -21,7 +19,7 @@ def depthFirstSearch(environment: Environment, root: Cell):
         shallow = frontier.pop(len(frontier)-1)
         #explored.append(shallow)
         #explored[shallow] = {shallow.state.location.x, shallow.state.location.y, shallow.state.direction}
-        explored[{shallow.state.location.x, shallow.state.location.y, shallow.state.direction}] = shallow
+        explored[shallow.state.location.x, shallow.state.location.y, shallow.state.direction] = shallow
         sucFunc = SuccessorFunction()
         expand = sucFunc.expand(node = shallow, environment = environment)
         
@@ -35,7 +33,7 @@ def depthFirstSearch(environment: Environment, root: Cell):
 
 
 def checklist(node, frontier, explored):
-    key = {node.state.location.x, node.state.location.y, node.state.direction}
+    key = node.state.location.x, node.state.location.y, node.state.direction
     for n in frontier:
         if n.state.location.x == node.state.location.x and n.state.location.y == node.state.location.y and n.state.direction == node.state.direction:
             return True
