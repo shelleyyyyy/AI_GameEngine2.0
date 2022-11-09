@@ -15,7 +15,6 @@
     } from "svelte-ionicons";
 
     // get grid diminseions
-    export let dir;
     export let diminsions;
     export let item;
 
@@ -35,7 +34,7 @@
         </div>
 {/if}
 
-{#if "a" == item}
+<!-- {#if "a" == item}
 
     {#if dir == 0}
         <div style:height={size} style:width={size} class="p-1 flex justify-center bg-red-700 text-white shadow-xl w-full">
@@ -59,7 +58,33 @@
     {/if}
 
 
-{/if}  
+{/if}   -->
+
+
+{#if "a-u" == item}
+    <div style:height={size} style:width={size} class="p-1 flex justify-center bg-red-700 text-white shadow-xl w-full">
+        <ArrowUpOutline size="fit" rotate={2}/>
+    </div>
+{/if}
+
+{#if "a-r" == item}
+    <div style:height={size} style:width={size} class="p-1 flex justify-center bg-red-700 text-white shadow-xl w-full">
+        <ArrowForwardOutline size="fit" rotate={2}/>
+    </div>
+{/if}
+
+{#if "a-d" == item}
+    <div style:height={size} style:width={size} class="p-1 flex justify-center bg-red-700 text-white shadow-xl w-full">
+        <ArrowDownOutline size="fit" rotate={2}/>
+    </div>
+{/if}
+
+{#if "a-l" == item}
+    <div style:height={size} style:width={size} class="p-1 flex justify-center bg-red-700 text-white shadow-xl w-full">
+        <ArrowBackOutline size="fit" rotate={2}/>
+    </div>
+{/if}
+
 
 {#if "p-u" == item}
     <div style:height={size} style:width={size} class="flex justify-center bg-gray-400 text-white shadow-xl w-full">

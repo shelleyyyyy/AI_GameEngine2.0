@@ -7,10 +7,10 @@
 	const data = {
 			grid: [
 				[
-					"c",
-					"c",
-					"c",
-					"c",
+					"o",
+					"a-d",
+					"a-d",
+					"a-d",
 					"c"
 				],
 				[
@@ -83,57 +83,59 @@
 	
 
 	function runSimulation(trucks, blocks, goals, gridsize, search) {
-		loading = true;
-		console.log("Ran call")
-		console.log(trucks, blocks, goals, gridsize)
-		axios.post('http://127.0.0.1:5000/search', {
+		// loading = true;
+		// console.log("Ran call")
+		// console.log(trucks, blocks, goals, gridsize)
+		// axios.post('http://127.0.0.1:5000/search', {
 			
-			"trucks": trucks,
-			"blocks": blocks,
-			"goals": goals,
-			"gridsize": gridsize,
-			"search": search
-		})
-		.then(function (response) {
-			// console.log(response);
-			local_grid = response.data.grid
-			size = local_grid.length
-			// x = response.data.rootX
-			// y = response.data.rootY
-			// dir = response.data.direction
-			// sequince = response.data.solution
-			// let time = response.data.time
-			// console.log("Time: ", time)
+		// 	"trucks": trucks,
+		// 	"blocks": blocks,
+		// 	"goals": goals,
+		// 	"gridsize": gridsize,
+		// 	"search": search
+		// })
+		// .then(function (response) {
+		// 	// console.log(response);
+		// 	local_grid = response.data.grid
+		// 	size = local_grid.length
+		// 	// x = response.data.rootX
+		// 	// y = response.data.rootY
+		// 	// dir = response.data.direction
+		// 	// sequince = response.data.solution
+		// 	// let time = response.data.time
+		// 	// console.log("Time: ", time)
 
-			trucks = [
+			
+		// })
+		// .catch(function (error) {
+		// 	console.log(error);
+		// });
+		console.log("RUNNING SIMULATION")
+
+		trucks = [
 				{
-					x: 1,
+					x: 0,
 					y: 1,
-					dir: 'd',
+					dir: 2,
 					time: '1',
 					sequince: ['m', 'm', 'm']
 				},
 				{
-					x: 2,
+					x: 0,
 					y: 2,
-					dir: 'd',
+					dir: 2,
 					time: '1',
 					sequince: ['m', 'm', 'm']
 				},
 				{
-					x: 2,
-					y: 2,
-					dir: 'd',
+					x: 0,
+					y: 3,
+					dir: 2,
 					time: '1',
 					sequince: ['m', 'm', 'm']
 				},
 			]
-
 			multiAgentRun(trucks)
-		})
-		.catch(function (error) {
-			console.log(error);
-		});
 
 		// loading = false;
 	}
@@ -155,50 +157,53 @@
 		run(x, y, sequince, dir)
 	}
 	
-	function reset(){
+	// function reset(){
 
-		sequince = data.sequince;
+	// 	sequince = data.sequince;
 
-		local_grid = data.grid;
+	// 	local_grid = data.grid;
 
-		x = data.x;
+	// 	x = data.x;
 
-		y = data.y;
+	// 	y = data.y;
 
-		dir = data.dir;
+	// 	dir = data.dir;
 
-		size = 10
-	}
+	// 	size = 10
+	// }
 
-	function move(x, y, dir){
-		switch(dir){
-			case 0:
+	function move(x, y){
+		console.log(local_grid[x][y])
+		switch(local_grid[y][x]){
+			case 'a-u':
 				// move up
 				//console.log("up")
 				local_grid[x][y] = "p-u"
 				x -= 1
+				local_grid[x][y] = "a-u"
 				break;
-			case 1:
+			case 'a-r':
 				// move right
 				//console.log("right")
 				local_grid[x][y] = "p-r"
 				y += 1
+				local_grid[x][y] = "a-r"
 				break;
-			case 2:
+			case 'a-d':
 				// move down
-				//console.log("down")
+				console.log("down")
 				local_grid[x][y] = "p-d"
 				x += 1
+				local_grid[x][y] = "a-d"
 				break;
-			case 3:
+			case 'a-l':
 				// move left
 				//console.log("left")
 				local_grid[x][y] = "p-l"
 				y -= 1
+				local_grid[x][y] = "a-l"
 				break;
 		}
-		local_grid[x][y] = "a"
-		
 	}
 
 	async function run(x, y, sequince, dir){
@@ -222,9 +227,25 @@
 					break;
 				case "m":
 					// move forward
-					move(x, y, dir)
+					console.log("moveing")
+					move(x, y)
 					break;
 					
+			}
+
+			switch(dir){
+				case 0:
+					local_grid[x][y] = "a-u"
+					break;
+				case 1:
+					local_grid[x][y] = "a-r"
+					break;
+				case 2:
+					local_grid[x][y] = "a-d"
+					break;
+				case 3:
+					local_grid[x][y] = "a-l"
+					break;
 			}
 		}
 	}
@@ -254,9 +275,6 @@
 
 </script>
 
-
-
-
 <h1 class="text-center text-6xl my-10">TRUCK AGENT WORLD</h1>
 
 <div class="flex justify-center gap-3">
@@ -267,7 +285,7 @@
 		<div class=" grid grid-cols-2 gap-3 justify-evenly align-center">
 			
 			<button class="btn btn-primary" on:click={pleaseWork}>Run</button>
-			<button class="btn btn-secondary" on:click={reset}>Reset</button>
+			<button class="btn btn-secondary" >Reset</button>
 		</div>
 		
 		<h1 class="text-3xl bold p-5 text-center">Set Options</h1>
@@ -291,22 +309,16 @@
 
 	<div>
 		{#if loading}
-		<!-- <ProgressBar/> -->
-		<!-- <h1>Loading...</h1> -->
-		<progress class="progress"></progress>
+			<progress class="progress"></progress>
 		{/if}
 		{#if !loading}
-		<!-- <ProgressBar/> -->
-		<!-- <h1>Loading...</h1> -->
-		<Grid dir={'d'} rows={local_grid} size={size}></Grid>
+			<Grid rows={local_grid} size={size}></Grid>
 		{/if}
 		{#if loading}
-		<!-- <ProgressBar/> --3
-		<!-- <h1>Loading...</h1> -->
-		<Grid dir={0} rows={local_grid} size={size}></Grid>
+			<Grid rows={local_grid} size={size}></Grid>
 		{/if}
 
-		
+		<!-- <Grid rows={local_grid} size={size}></Grid> -->
 	</div>
 </div>
 
