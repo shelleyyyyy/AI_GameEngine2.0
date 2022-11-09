@@ -12,10 +12,11 @@
             ["c", "c", "c", "c", "c"],
             ["c", "c", "c", "c", "c"]
         ],
-        size: 5,
-        longestPath: 5,
-        shortestPath: 5,
-        time: 5,
+        stats: {
+            size: 5,
+            longestPath: 5,
+            shortestPath: 5,
+        },
         agents: [
             {
                 position: {
@@ -23,32 +24,40 @@
                     y: 1,
                 },
                 status: "a-d",
-                sequince: ['l', 'r  ', 'm']
+                sequince: ['l', 'r  ', 'm'],
+                stats: {
+                    id: 1,
+                    time: 5,
+                    path: 5,
+                }
             },
             {
                 position: {
-                    x: 1,
-                    y: 1,
+                    x: 0,
+                    y: 2,
                 },
                 status: "a-d",
-                sequince: ['r', 'l', 'm']
+                sequince: ['l', 'r  ', 'm'],
+                stats: {
+                    id: 2,
+                    time: 5,
+                    path: 5,
+                }
             },
             {
                 position: {
-                    x: 2,
-                    y: 1,
+                    x: 0,
+                    y: 3,
                 },
                 status: "a-d",
-                sequince: ['m', 'm', 'm']
+                sequince: ['l', 'r  ', 'm'],
+                stats: {
+                    id: 3,
+                    time: 5,
+                    path: 5,
+                }
             },
-            {
-                position: {
-                    x: 3,
-                    y: 1,
-                },
-                status: "a-d",
-                sequince: ['m', 'm', 'm']
-            },
+            
         ], 
         searchTypes: [
             "Breadth First Search",
@@ -61,8 +70,8 @@
 
     $: local_grid = to_be_fetched.grid;
 
-    $: size = to_be_fetched.size;
-    let longestPath = to_be_fetched.longestPath;
+    $: size = to_be_fetched.stats.size;
+    let longestPath = to_be_fetched.stats.longestPath;
     $: agents = to_be_fetched.agents
 
     function moveAgent(position, status, iter){
@@ -216,24 +225,49 @@
 		<!-- <Grid rows={local_grid} size={size}></Grid> -->
 	</div>
 
-    <div class="bg-white p-3 grid gap-3" style:height={"32rem"}>
+    <div class="bg-white p-3">
 		<h1 class="text-3xl bold p-5 text-center">Stats</h1>
-		<div class="bg-gray-500 p-2 justify-evenly text-center">
-			<h1 class="py-3 text-center">Longest Path</h1>
-			<div class="bg-white p-5">
-                {to_be_fetched.longestPath}
+		<div>
+            <div class="stats shadow">
+                <div class="stat">
+                    <div class="stat-title">Longest Path</div>
+                    <div class="stat-value text-primary">25.6K</div>
+                </div>
+
+                <div class="stat">
+                    <div class="stat-title">Shortest Path</div>
+                    <div class="stat-value text-primary">25.6K</div>
+                </div>
+
+                <div class="stat">
+                    <div class="stat-title">Longest Time</div>
+                    <div class="stat-value text-primary">25.6K</div>
+                </div>
             </div>
-		</div>
-		<div class="bg-gray-500 p-2 grid gap-3 text-center">
-			<h1 class="text-center">Shortest Path</h1>
-			<div class="bg-white p-5">
-                {to_be_fetched.shortestPath}
+        </div>
+
+        <h1 class="text-center p-5 text-3xl">Individual Trucks</h1>
+		<div class="grid gap-5">
+            {#each to_be_fetched.agents as agent}
+
+            <div class="stats shadow">
+                <div class="stat">
+                    <div class="stat-title">Truck ID</div>
+                    <div class="stat-value text-primary">Truck {agent.stats.id}</div>
+                </div>
+                
+                <div class="stat">
+                    <div class="stat-title">Path Lenght</div>
+                    <div class="stat-value text-primary">{agent.stats.path}</div>
+                </div>
+
+                <div class="stat">
+                    <div class="stat-title">Time to solve</div>
+                    <div class="stat-value text-primary">{agent.stats.time}s</div>
+                </div>
             </div>
-			<h1 class="text-center">Times</h1>
-			<div class="bg-white p-5">
-                {to_be_fetched.time}
-            </div>
-		</div>
+            {/each}
+        </div>  
 	</div>
 
 </div>
