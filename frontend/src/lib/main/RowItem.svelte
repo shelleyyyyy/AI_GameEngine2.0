@@ -15,11 +15,10 @@
     } from "svelte-ionicons";
 
     // get grid diminseions
-    export let dir;
-    export let diminsions
+    export let diminsions;
     export let item;
 
-    let calc = 48/20;
+    let calc = 30/diminsions;
     let size = String(calc) + "rem"
 </script>
 
@@ -35,31 +34,35 @@
         </div>
 {/if}
 
-{#if "a" == item}
+{#if "a-u" == item}
+    <div style:height={size} style:width={size} class="p-1 flex justify-center bg-red-700 text-white shadow-xl w-full">
+        <!-- <ArrowUpOutline size="fit" rotate={2}/> -->
+        <img  class="h-20 rotate-90" src="https://www.vmi.edu/media/content-assets/images/people/faculty/LRamoni.jpg"/>
+    </div>
+    <!-- <img  class="h-20 rotate-90" src="https://www.vmi.edu/media/content-assets/images/people/faculty/LRamoni.jpg"/> -->
+{/if}
 
-    {#if dir == 0}
-        <div style:height={size} style:width={size} class="p-1 flex justify-center bg-red-700 text-white shadow-xl w-full">
-            <ArrowUpOutline size="fit" rotate={2}/>
-        </div>
-    {/if}
-    {#if dir == 1}
-        <div style:height={size} style:width={size} class="p-1 flex justify-center bg-red-700 text-white shadow-xl w-full">
-            <ArrowForwardOutline size="fit" rotate={2}/>
-        </div>
-    {/if}
-    {#if dir == 2}
-        <div style:height={size} style:width={size} class="p-1 flex justify-center bg-red-700 text-white shadow-xl w-full">
-            <ArrowDownOutline size="fit" rotate={2}/>
-        </div>
-    {/if}
-    {#if dir == 3}
-        <div style:height={size} style:width={size} class="p-1 flex justify-center bg-red-700 text-white shadow-xl w-full">
-            <ArrowBackOutline size="fit" rotate={2}/>
-        </div>
-    {/if}
+{#if "a-r" == item}
+    <div style:height={size} style:width={size} class="p-1 flex justify-center bg-red-700 text-white shadow-xl w-full">
+        <!-- <ArrowForwardOutline size="fit" rotate={2}/> -->
+        <img  class=" rotate-90" src="https://www.vmi.edu/media/content-assets/images/people/faculty/LRamoni.jpg"/>
+    </div>
+{/if}
 
+{#if "a-d" == item}
+    <div style:height={size} style:width={size} class="p-1 flex justify-center bg-red-700 text-white shadow-xl w-full">
+        <!-- <ArrowDownOutline size="fit" rotate={2}/> -->
+        <img  class="h-20 rotate-180" src="https://www.vmi.edu/media/content-assets/images/people/faculty/LRamoni.jpg"/>
+    </div>
+{/if}
 
-{/if}  
+{#if "a-l" == item}
+    <div style:height={size} style:width={size} class="p-1 flex justify-center bg-red-700 text-white shadow-xl w-full">
+        <!-- <ArrowBackOutline size="fit" rotate={2}/> -->
+        <img  class="h-20 rotate-270" src="https://www.vmi.edu/media/content-assets/images/people/faculty/LRamoni.jpg"/>
+    </div>
+{/if}
+
 
 {#if "p-u" == item}
     <div style:height={size} style:width={size} class="flex justify-center bg-gray-400 text-white shadow-xl w-full">
