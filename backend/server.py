@@ -18,9 +18,9 @@ def run_sim():
 
     print("Trucks", request.json.get("trucks", None))
 
-    trucks = 5
-    seed = request.json.get("blocks", None)
-    goals = 5
+    trucks = request.json.get("trucks", None)
+    seed = request.json.get("seed", None)
+    goals = request.json.get("trucks", None)
     gridSize = int(request.json.get("gridsize", None))
     search_type = request.json.get("search", None)
 
@@ -41,7 +41,9 @@ def run_sim():
     for thread in threads:
         thread.join()
 
-    return results
+    longest, shortest = post_process(results)
+
+    return {"data": results, "longest_path": longest, "shortest_path": shortest }
 
 
 def search_engine(search_type, truck, goals, gridSize, seed, grid, env, root, results, lock):
@@ -99,3 +101,15 @@ def search_engine(search_type, truck, goals, gridSize, seed, grid, env, root, re
             "direction": (env.root.direction + 2) % 4, "grid": grid, "time": elapsed}
 
     return 400
+
+def post_process(results):
+    longest_path = 0
+    shortest_path = 500
+    for solution in results:
+        print(solution)
+        """ if len(solution['solution']) > longest_path:
+            longest_path = len(solution['solution'])
+        elif len(solution['solution']) < shortest_path:
+            shortest_path = len(solution['solution']) """
+    return longest_path, shortest_path
+

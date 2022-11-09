@@ -1,8 +1,30 @@
 
 <script>
 	import Grid from "$lib/main/Grid.svelte";
+    import axios from 'axios'
 	
     let loading = false;
+
+    const fetchData = () => {
+        axios.post('http://127.0.0.1:5000/search', {
+            "trucks": trucks,
+            "blocks": blocks,
+            "goals": goals,
+            "gridsize": gridsize,
+            "search": search
+        })
+        .then(function (response) {
+            console.log(response);
+            local_grid = response.data.grid
+            size = local_grid.length
+            x = response.data.rootX
+            y = response.data.rootY
+            dir = response.data.direction
+            sequince = response.data.solution
+            let time = response.data.time
+            console.log("Time: ", time)
+        })
+    }
 
     const to_be_fetched = {
         grid: [
@@ -173,7 +195,8 @@
     
     // user input
 	let gridSize = 0;
-	let numberOfBlocks = 0;
+	let seed = 0;
+    let numberOfTrucks = 0;
 	let search = ""
 
 	let searchTypes = to_be_fetched.searchTypes;
@@ -206,8 +229,10 @@
 		<div class="bg-gray-500 p-2 grid gap-3">
 			<h1 class="text-center">Grid Size</h1>
 			<input type="text" placeholder="Type here" class="input w-full" bind:value={gridSize}/>
-			<h1 class="text-center">Blocked Cells</h1>
-			<input type="text" placeholder="Type here" class="input w-full" bind:value={numberOfBlocks}/>
+			<h1 class="text-center">Seed</h1>
+			<input type="text" placeholder="Type here" class="input w-full" bind:value={seed}/>
+			<h1 class="text-center">Number of Trucks</h1>
+			<input type="text" placeholder="Type here" class="input w-full" bind:value={numberOfTrucks}/>
 		</div>
 	</div>
 
