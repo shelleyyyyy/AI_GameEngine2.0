@@ -3,7 +3,7 @@
 	import Grid from "$lib/main/Grid.svelte";
     import axios from 'axios'
 
-    let to_be_fetched = {
+    $: to_be_fetched = {
         grid: [
             ["c", "c", "c", "c", "c"],
             ["a-d", "a-d", "a-d", "c", "c"],
@@ -23,39 +23,13 @@
                     y: 1,
                 },
                 status: "a-d",
-                sequince: ['l', 'r  ', 'm', 'm', 'l', 'm', 'm'],
+                sequence: ['l', 'r  ', 'm', 'm', 'l', 'm', 'm'],
                 stats: {
                     id: 1,
                     time: 5,
                     path: 5,
                 }
             },
-            // {
-            //     position: {
-            //         x: 1,
-            //         y: 1,
-            //     },
-            //     status: "a-d",
-            //     sequince: ['l', 'r  ', 'm'],
-            //     stats: {
-            //         id: 2,
-            //         time: 5,
-            //         path: 5,
-            //     }
-            // },
-            // {
-            //     position: {
-            //         x: 2,
-            //         y: 1,
-            //     },
-            //     status: "a-d",
-            //     sequince: ['l', 'r  ', 'm'],
-            //     stats: {
-            //         id: 3,
-            //         time: 5,
-            //         path: 5,
-            //     }
-            // },
             
         ], 
         searchTypes: [
@@ -66,14 +40,16 @@
             "Iterative Depth Limited Search"
         ]
     }
+
+    var newData = {}
 	
-    let loading = false;
-    let searchTypes = to_be_fetched.searchTypes
+    $: loading = false;
+    $: searchTypes = to_be_fetched.searchTypes
 
     $: local_grid = to_be_fetched.grid
 
     $: size = to_be_fetched.stats.size
-    let longestPath = to_be_fetched.stats.longestPath
+    $: longestPath = to_be_fetched.stats.longestPath
     $: agents = to_be_fetched.agents
 
     const fetchData = () => {
@@ -88,6 +64,7 @@
         .then(function (response) {
             console.log(response)
             to_be_fetched = response.data
+            
             loading = false
             runAgents()
         })
@@ -96,35 +73,30 @@
     function moveAgent(position, status, iter){
         let x = position.x;
         let y = position.y;
-        console.log(status)
         switch(status){
             case "a-u":
-                console.log("agent up")
-                local_grid[y][x] = "p-u";
-                agents[iter].position.y -= 1;
-                y -= 1;
-                local_grid[y][x] = "a-u";
+                local_grid[x][y] = "p-u";
+                agents[iter].position.x -= 1;
+                x -= 1;
+                local_grid[x][y] = "a-u";
                 break;
             case "a-r":
-                console.log("agent right")
-                local_grid[y][x] = "p-r";
-                agents[iter].position.x += 1;
-                x += 1;
-                local_grid[y][x] = "a-r";
+                local_grid[x][y] = "p-r";
+                agents[iter].position.y += 1;
+                y += 1;
+                local_grid[x][y] = "a-r";
                 break;
             case "a-d":
-                console.log("agent down")
-                local_grid[y][x] = "p-d";
-                agents[iter].position.y += 1;
-                y += 1
-                local_grid[y][x] = "a-d";
+                local_grid[x][y] = "p-d";
+                agents[iter].position.x += 1;
+                x += 1
+                local_grid[x][y] = "a-d";
                 break;
             case "a-l":
-                console.log("agent left")
-                local_grid[y][x] = "p-l";
-                agents[iter].position.x -= 1;
-                x -= 1
-                local_grid[y][x] = "a-l";
+                local_grid[x][y] = "p-l";
+                agents[iter].position.y -= 1;
+                y -= 1
+                local_grid[x][y] = "a-l";
                 break;
         }
     }
@@ -132,44 +104,41 @@
     function turnAgent(position, status, turn, iter){
         let x = position.x;
         let y = position.y;
-        // console.log(status)
 
         switch(status){
             case "a-u":
                 if(turn == "l"){
-                    local_grid[y][x] = "a-l";
+                    local_grid[x][y] = "a-l";
                     agents[iter].status = "a-l"
                 }else{
-                    local_grid[y][x] = "a-r";
+                    local_grid[x][y] = "a-r";
                     agents[iter].status = "a-r"
                 }
                 break;
             case "a-r":
-                console.log("agent right")
                 if(turn == "l"){
-                    local_grid[y][x] = "a-u";
+                    local_grid[x][y] = "a-u";
                     agents[iter].status = "a-u"
                 }else{
-                    local_grid[y][x] = "a-d";
+                    local_grid[x][y] = "a-d";
                     agents[iter].status = "a-d"
                 }
                 break;
             case "a-d":
-                console.log("agent down")
                 if(turn == "l"){
-                    local_grid[y][x] = "a-r"
+                    local_grid[x][y] = "a-r"
                     agents[iter].status = "a-r"
                 }else{
-                    local_grid[y][x] = "a-l";
+                    local_grid[x][y] = "a-l";
                     agents[iter].status = "a-l"
                 }
                 break;
             case "a-l":
                 if(turn == "l"){
-                    local_grid[y][x] = "a-d"
+                    local_grid[x][y] = "a-d"
                     agents[iter].status = "a-d"
                 }else{
-                    local_grid[y][x] = "a-u";
+                    local_grid[x][y] = "a-u";
                     agents[iter].status = "a-u"
                 }
                 break;
@@ -177,8 +146,7 @@
     }
 
     async function runAgents(){
-        console.log("runAgents")
-        for(let i = 0; i < longestPath; i++){
+        for(let i = -1; i < longestPath; i++){
             for(let j = 0; j < agents.length; j++){
                 run(agents[j], agents[j].sequence[i], j)
             }
@@ -187,7 +155,6 @@
     }
 
     function run(agent, cmd, iter){
-        console.log(cmd)
         if(cmd == 'm'){
             moveAgent(agent.position, agent.status, iter)
         } else{
