@@ -5,6 +5,12 @@
 	
     let loading = false;
 
+    $: local_grid = to_be_fetched.grid;
+
+    $: size = to_be_fetched.stats.size;
+    let longestPath = to_be_fetched.stats.longestPath;
+    $: agents = to_be_fetched.agents
+
     const fetchData = () => {
         axios.post('http://127.0.0.1:5000/search', {
             "trucks": trucks,
@@ -14,20 +20,13 @@
             "search": search
         })
         .then(function (response) {
-            console.log(response);
-            local_grid = response.data.grid
-            size = local_grid.length
-            x = response.data.rootX
-            y = response.data.rootY
-            dir = response.data.direction
-            sequince = response.data.solution
-            let time = response.data.time
-            console.log("Time: ", time)
+            local_grid = response.grid
+            
         })
     }
 
-    const to_be_fetched = {
-        grid: [
+    let to_be_fetched = {
+       /*  grid: [
             ["c", "c", "c", "c", "c"],
             ["a-d", "a-d", "a-d", "a-d", "a-u"],
             ["c", "c", "c", "c", "c"],
@@ -87,14 +86,8 @@
             "Depth Limit Search",
             "Uniform Cost Search",
             "Iterative Depth Limited Search"
-        ]
+        ] */
     }
-
-    $: local_grid = to_be_fetched.grid;
-
-    $: size = to_be_fetched.stats.size;
-    let longestPath = to_be_fetched.stats.longestPath;
-    $: agents = to_be_fetched.agents
 
     function moveAgent(position, status, iter){
         let x = position.x;

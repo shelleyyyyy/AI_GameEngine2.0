@@ -43,7 +43,18 @@ def run_sim():
 
     longest, shortest = post_process(results)
 
-    return {"data": results, "longest_path": longest, "shortest_path": shortest }
+    return { 
+        "grid": grid, 
+        "stats": {"size": gridSize, "longestPath": longest, "shortestPath": shortest}, 
+        "agents": results,
+        "searchTypes": [
+            "Breadth First Search",
+            "Depth First Search",
+            "Depth Limit Search",
+            "Uniform Cost Search",
+            "Iterative Depth Limited Search"
+        ]
+        }
 
 
 def search_engine(search_type, truck, goals, gridSize, seed, grid, env, root, results, lock):
@@ -53,8 +64,16 @@ def search_engine(search_type, truck, goals, gridSize, seed, grid, env, root, re
         end = time.time()
         elapsed = end - start
         print(solution)
-        results.append({"solution": solution, "rootX": root.location.x, "rootY": root.location.y, 
-            "direction": (root.direction + 2) % 4, "grid": grid, "time": elapsed})
+        results.append({
+            "position": {"x": env.root.location.x, "y": env.root.location.y}, 
+            "status": get_status(env.root.direction),
+            "sequence": solution,  
+            "stats": {
+                "id": 1,
+                "time": elapsed,
+                "path": len(solution),
+            } 
+        })
     
     elif search_type == "Depth First Search":
         print(truck, goals, gridSize, "seed:", seed)
@@ -64,8 +83,16 @@ def search_engine(search_type, truck, goals, gridSize, seed, grid, env, root, re
         end = time.time()
         elapsed = end - start
         print(solution)
-        return {"solution": solution, "rootX": env.root.location.x, "rootY": env.root.location.y, 
-            "direction": (env.root.direction + 2) % 4, "grid": grid, "time": elapsed}
+        results.append({
+            "position": {"x": env.root.location.x, "y": env.root.location.y}, 
+            "status": get_status(env.root.direction),
+            "sequence": solution,  
+            "stats": {
+                "id": 1,
+                "time": elapsed,
+                "path": len(solution),
+            } 
+        })
 
     elif search_type == "Depth Limit Search":
         print(truck, goals, gridSize, "seed:", seed)
@@ -75,8 +102,16 @@ def search_engine(search_type, truck, goals, gridSize, seed, grid, env, root, re
         end = time.time()
         elapsed = end - start
         print(solution)
-        return {"solution": solution, "rootX": env.root.location.x, "rootY": env.root.location.y, 
-            "direction": (env.root.direction + 2) % 4, "grid": grid, "time": elapsed}
+        results.append({
+            "position": {"x": env.root.location.x, "y": env.root.location.y}, 
+            "status": get_status(env.root.direction),
+            "sequence": solution,  
+            "stats": {
+                "id": 1,
+                "time": elapsed,
+                "path": len(solution),
+            } 
+        })
 
     elif search_type == "Uniform Cost Search":
         print(truck, goals, gridSize, "seed:", seed)
@@ -86,8 +121,16 @@ def search_engine(search_type, truck, goals, gridSize, seed, grid, env, root, re
         end = time.time()
         elapsed = end - start
         print(solution)
-        return {"solution": solution, "rootX": env.root.location.x, "rootY": env.root.location.y, 
-            "direction": (env.root.direction + 2) % 4, "grid": grid, "time": elapsed}
+        results.append({
+            "position": {"x": env.root.location.x, "y": env.root.location.y}, 
+            "status": get_status(env.root.direction),
+            "sequence": solution,  
+            "stats": {
+                "id": 1,
+                "time": elapsed,
+                "path": len(solution),
+            } 
+        })
 
     elif search_type == "Iterative Depth Limited Search":
         print(truck, goals, gridSize, "seed:", seed)
@@ -97,8 +140,16 @@ def search_engine(search_type, truck, goals, gridSize, seed, grid, env, root, re
         end = time.time()
         elapsed = end - start
         print(solution)
-        return {"solution": solution, "rootX": env.root.location.x, "rootY": env.root.location.y, 
-            "direction": (env.root.direction + 2) % 4, "grid": grid, "time": elapsed}
+        results.append({
+            "position": {"x": env.root.location.x, "y": env.root.location.y}, 
+            "status": get_status(env.root.direction),
+            "sequence": solution,  
+            "stats": {
+                "id": 1,
+                "time": elapsed,
+                "path": len(solution),
+            } 
+        })
 
     return 400
 
@@ -112,4 +163,15 @@ def post_process(results):
         elif len(solution['solution']) < shortest_path:
             shortest_path = len(solution['solution']) """
     return longest_path, shortest_path
+
+def get_status(direction):
+    direction = (direction + 2) % 4
+    if direction == 0:
+        return 'a-u'
+    elif direction == 1:
+        return 'a-r'
+    elif direction == 2:
+        return 'a-d'
+    else:
+        return 'a-l'
 
