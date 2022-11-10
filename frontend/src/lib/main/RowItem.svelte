@@ -37,30 +37,30 @@
 
 {#if "a-u" == item}
     <div style:height={size} style:width={size} class="p-1 flex justify-center bg-red-700 text-white shadow-xl w-full">
-        <!-- <ArrowUpOutline size="fit" rotate={2}/> -->
-        <img  class="h-20 rotate-90" src=""/>
+        <ArrowUpOutline size="fit" rotate={2}/>
+        <!-- <img  class="h-20 rotate-90" src=""/> -->
     </div>
     <!-- <img  class="h-20 rotate-90" src="https://www.vmi.edu/media/content-assets/images/people/faculty/LRamoni.jpg"/> -->
 {/if}
 
 {#if "a-r" == item}
     <div style:height={size} style:width={size} class="p-1 flex justify-center bg-red-700 text-white shadow-xl w-full">
-        <!-- <ArrowForwardOutline size="fit" rotate={2}/> -->
-        <img  class=" rotate-90" src=""/>
+        <ArrowForwardOutline size="fit" rotate={2}/>
+        <!-- <img  class=" rotate-90" src=""/> -->
     </div>
 {/if}
 
 {#if "a-d" == item}
     <div style:height={size} style:width={size} class="p-1 flex justify-center bg-red-700 text-white shadow-xl w-full">
-        <!-- <ArrowDownOutline size="fit" rotate={2}/> -->
-        <img  class="h-20 rotate-180" src=""/>
+        <ArrowDownOutline size="fit" rotate={2}/>
+        <!-- <img  class="h-20 rotate-180" src=""/> -->
     </div>
 {/if}
 
 {#if "a-l" == item}
     <div style:height={size} style:width={size} class="p-1 flex justify-center bg-red-700 text-white shadow-xl w-full">
-        <!-- <ArrowBackOutline size="fit" rotate={2}/> -->
-        <img  class="h-20 rotate-270" src=""/>
+        <ArrowBackOutline size="fit" rotate={2}/>
+        <!-- <img  class="h-20 rotate-270" src=""/> -->
     </div>
 {/if}
 

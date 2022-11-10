@@ -12,7 +12,7 @@ constants = {
     "MOVING_WEST" : -1,
     "MOVING_NORTH" : -1,
     "MOVING_EAST" : 1,
-    "TRUCK": "a",
+    "TRUCK": "a-d",
     "NON_PASSABLE" : "c",
     "GOAL_CELL" : "g",
     "BORDER" : "BUMP",

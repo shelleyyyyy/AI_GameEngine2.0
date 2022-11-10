@@ -18,11 +18,13 @@ def run_sim():
 
     print("Trucks", request.json.get("trucks", None))
 
-    trucks = request.json.get("trucks", None)
+    trucks = int(request.json.get("trucks", None))
     seed = request.json.get("seed", None)
-    goals = request.json.get("trucks", None)
+    goals = int(request.json.get("trucks", None))
     gridSize = int(request.json.get("gridsize", None))
     search_type = request.json.get("search", None)
+
+    print("trucks", trucks, "seed", seed, "goals", goals, "gridSize", gridSize, "searchType", search_type)
 
     env: Environment = Environment(gridSize=gridSize, truckAgentCount=trucks, goalCount=goals, seed=seed)
     grid = env.get_cells_by_type()
@@ -65,8 +67,8 @@ def search_engine(search_type, truck, goals, gridSize, seed, grid, env, root, re
         elapsed = end - start
         print(solution)
         results.append({
-            "position": {"x": env.root.location.x, "y": env.root.location.y}, 
-            "status": get_status(env.root.direction),
+            "position": {"x": root.location.x, "y": root.location.y}, 
+            "status": get_status(root.direction),
             "sequence": solution,  
             "stats": {
                 "id": 1,
@@ -84,8 +86,8 @@ def search_engine(search_type, truck, goals, gridSize, seed, grid, env, root, re
         elapsed = end - start
         print(solution)
         results.append({
-            "position": {"x": env.root.location.x, "y": env.root.location.y}, 
-            "status": get_status(env.root.direction),
+            "position": {"x": root.location.x, "y": root.location.y}, 
+            "status": get_status(root.direction),
             "sequence": solution,  
             "stats": {
                 "id": 1,
@@ -103,8 +105,8 @@ def search_engine(search_type, truck, goals, gridSize, seed, grid, env, root, re
         elapsed = end - start
         print(solution)
         results.append({
-            "position": {"x": env.root.location.x, "y": env.root.location.y}, 
-            "status": get_status(env.root.direction),
+            "position": {"x": root.location.x, "y": root.location.y}, 
+            "status": get_status(root.direction),
             "sequence": solution,  
             "stats": {
                 "id": 1,
@@ -122,8 +124,8 @@ def search_engine(search_type, truck, goals, gridSize, seed, grid, env, root, re
         elapsed = end - start
         print(solution)
         results.append({
-            "position": {"x": env.root.location.x, "y": env.root.location.y}, 
-            "status": get_status(env.root.direction),
+            "position": {"x": root.location.x, "y": root.location.y}, 
+            "status": get_status(root.direction),
             "sequence": solution,  
             "stats": {
                 "id": 1,
@@ -141,8 +143,8 @@ def search_engine(search_type, truck, goals, gridSize, seed, grid, env, root, re
         elapsed = end - start
         print(solution)
         results.append({
-            "position": {"x": env.root.location.x, "y": env.root.location.y}, 
-            "status": get_status(env.root.direction),
+            "position": {"x": root.location.x, "y": root.location.y}, 
+            "status": get_status(root.direction),
             "sequence": solution,  
             "stats": {
                 "id": 1,
@@ -158,10 +160,10 @@ def post_process(results):
     shortest_path = 500
     for solution in results:
         print(solution)
-        """ if len(solution['solution']) > longest_path:
-            longest_path = len(solution['solution'])
-        elif len(solution['solution']) < shortest_path:
-            shortest_path = len(solution['solution']) """
+        if len(solution['sequence']) > longest_path:
+            longest_path = len(solution['sequence'])
+        if len(solution['sequence']) < shortest_path:
+            shortest_path = len(solution['sequence'])
     return longest_path, shortest_path
 
 def get_status(direction):
