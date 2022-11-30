@@ -24,8 +24,11 @@ def iterativeDepthLimitedSearch(environment, root, limit, t):
             depth+=1
             for n in expand:
                 if checklist(n, frontier, explored) != True:
-                    if environment.cells[n.state.location.x][n.state.location.y].cell_type == constants["GOAL_CELL"]:
-                        print(time.time() - t)
+                    current_cell: Cell = environment.cells[node.state.location.x][node.state.location.y]
+                    if current_cell.cell_type == constants["GOAL_CELL"] and current_cell.get_found() == False:
+                        lock.acquire()
+                        current_cell.set_found(True)
+                        lock.release()
                         return n.actionsList
             
                     frontier.append(n)
@@ -37,10 +40,10 @@ def checklist(node, frontier, explored):
     key = node.state.location.x, node.state.location.y, node.state.direction
     for n in frontier:
         if n.state.location.x == node.state.location.x and n.state.location.y == node.state.location.y and n.state.direction == node.state.direction:
-            return True
+            return False
     if key in explored.keys():
-            return True
-    return False
+            return False
+    return True
 def checkGoalState(node):
     if node.state == constants['GOAL_CELL']:
         return
