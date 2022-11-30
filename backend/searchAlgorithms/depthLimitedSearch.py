@@ -3,10 +3,10 @@ from constants import constants
 from Infrastructure.successorFunction import SuccessorFunction
 from gameEngine.environment import Environment
 from gameEngine.cell import Cell
-from threading import  Lock
+from threading import Lock
 import time
 
-def depthLimitedSearch(environment: Environment, root: Cell, limit):
+def depthLimitedSearch(environment: Environment, root: Cell, lock: Lock, limit):
     t = time.time()
     node = Node(state = root)
     if node.state.cell_type == constants["GOAL_CELL"]:
@@ -15,16 +15,17 @@ def depthLimitedSearch(environment: Environment, root: Cell, limit):
     frontier = [node]
     explored = dict()
     depth = 0
+    sucFunc = SuccessorFunction()
+
     while True:
         if len(frontier) == 0:
             return []
         shallow = frontier.pop(len(frontier)-1)
-        explored[shallow.state.location.x, shallow.state.location.y, shallow.state.direction] = shallow
+        explored[(shallow.state.location.x, shallow.state.location.y, shallow.state.direction)] = shallow
         
-        sucFunc = SuccessorFunction()
         if depth != limit:
             expand = sucFunc.expand(node = shallow, environment = environment)
-            depth+=1
+            depth = depth + 1
             for n in expand:
                 if checklist(n, frontier, explored) != True:
                     current_cell: Cell = environment.cells[node.state.location.x][node.state.location.y]
@@ -41,11 +42,11 @@ def depthLimitedSearch(environment: Environment, root: Cell, limit):
 
 
 def checklist(node, frontier, explored):
-    key = node.state.location.x, node.state.location.y, node.state.direction
+    key = (node.state.location.x, node.state.location.y, node.state.direction)
+    if key in explored:
+            return True
     for n in frontier:
         if n.state.location.x == node.state.location.x and n.state.location.y == node.state.location.y and n.state.direction == node.state.direction:
-            return True
-    if key in explored.keys():
             return True
     return False
 

@@ -1,9 +1,10 @@
 from Infrastructure.node import Node
 from constants import constants
 from Infrastructure.successorFunction import SuccessorFunction
+from threading import Lock
 import time
 
-def iterativeDepthLimitedSearch(environment, root, limit, t):
+def iterativeDepthLimitedSearch(lock: Lock, environment, root, limit, t):
     
     node = Node(state = root)
     if node.state.cell_type == constants["GOAL_CELL"]:
@@ -33,7 +34,7 @@ def iterativeDepthLimitedSearch(environment, root, limit, t):
             
                     frontier.append(n)
         else:
-            return iterativeDepthLimitedSearch(environment, root, limit= limit +1, t=t)
+            return iterativeDepthLimitedSearch(lock=lock, environment=environment, root=root, limit= limit +1, t=t)
 
 
 def checklist(node, frontier, explored):
