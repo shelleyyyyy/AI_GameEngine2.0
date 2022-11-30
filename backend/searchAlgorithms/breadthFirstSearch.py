@@ -33,8 +33,8 @@ def check_explored(explored: list, node: Node):
     key = (node.state.location.x, node.state.location.y, node.state.direction)
     
     if key in explored:
-            return True
-    return False
+            return False
+    return True
 
 def check_frontier(frontier: list, node: Node):
     for x in frontier:
