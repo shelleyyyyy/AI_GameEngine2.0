@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from gameEngine.environment import Environment
- 
+from searchAlgorithms.breadthFirstSearch import breadthFirstSearch
 from searchAlgorithms.depthFirstSearch import depthFirstSearch
 from searchAlgorithms.depthLimitedSearch import depthLimitedSearch
 from searchAlgorithms.uniformed_cost_search import uniformed_cost_search

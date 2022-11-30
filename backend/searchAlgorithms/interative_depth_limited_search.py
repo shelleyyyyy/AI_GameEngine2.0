@@ -40,10 +40,10 @@ def checklist(node, frontier, explored):
     key = node.state.location.x, node.state.location.y, node.state.direction
     for n in frontier:
         if n.state.location.x == node.state.location.x and n.state.location.y == node.state.location.y and n.state.direction == node.state.direction:
-            return False
+            return True
     if key in explored.keys():
-            return False
-    return True
+            return True
+    return False
 def checkGoalState(node):
     if node.state == constants['GOAL_CELL']:
         return
