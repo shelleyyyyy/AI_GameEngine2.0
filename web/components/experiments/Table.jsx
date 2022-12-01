@@ -192,8 +192,8 @@ export default function Table({ d }){
     }
 
     return(
-        <div className="overflow-x-auto w-full">
-            <table className="table w-full">
+        <div className="m-0 p-0 w-full">
+            <table className="table w-full m-0 p-0">
                 <thead>
                     <tr>
                         <th>
@@ -221,7 +221,7 @@ export default function Table({ d }){
                             <td>
                                 <div className="flex gap-2">
                                     <div className="tooltip" data-tip="copy to clipboard">
-                                        <FiCopy onClick={() => handleCopy(item.id)} className="h-full w-full cursor-pointer hover:text-gray-200 transition"/>
+                                        <FiCopy onClick={() => handleCopy(item.id)} className="h-full w-full cursor-pointer hover:text-gray-200 transition text-xl"/>
                                     </div>
                                     <div>
                                         {item.id}
