@@ -19,12 +19,17 @@ export default function Experiments(){
                 sort: '-created',
             });
             
+            return res
+
             setData(res)
             setLoading(false)
         }
 
         fetchData()
-            .then(() => console.log("Data fetched"))
+            .then((res) => {
+                setData(res)
+                setLoading(false)
+            })
     }, []) 
 
     if(loading){

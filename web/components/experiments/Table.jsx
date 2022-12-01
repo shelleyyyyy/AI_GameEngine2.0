@@ -162,8 +162,6 @@ export default function Table({ d }){
 
     const Modal = ({ data }) => {
 
-        console.log(data)
-
         return(
             <>
                 <label htmlFor="my-modal-4" className="btn btn-ghost btn-xs">Details</label>
@@ -172,13 +170,13 @@ export default function Table({ d }){
                 <label htmlFor="my-modal-4" className="modal cursor-pointer">
                     <div className="bg-gray-500 grid gap-5 p-5 rounded-xl">
                         <h3 className="text-3xl font-bold text-center">Info</h3>
-                        <BlockGeneral one={data.time} two={data.shortestPath} three={data.longestPath} />
+                        <BlockGeneral one={data.search.stats.size} two={data.search.stats.shortestPath} three={data.search.stats.longestPath} />
                         <h3 className="text-3xl font-bold text-center">Trucks</h3>
-                        {/* {data.search.trucks_info.map((truck, index) => {
+                        {data.search.agents.map((truck, index) => {
                             return(
-                                <Block key={index} one={truck.id} two={truck.path} three={truck.time} />
+                                <Block key={index} one={truck.stats.id} two={truck.stats.path} three={truck.stats.time} />
                             )
-                        })} */}
+                        })}
                     </div>  
                 </label>
             </>
