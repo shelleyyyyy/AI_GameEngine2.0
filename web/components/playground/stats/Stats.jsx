@@ -1,5 +1,8 @@
 
 
+import PocketBase from 'pocketbase'
+import { useEffect, useState } from 'react'
+
 export default function Stats({ data }){
     
     const BlockGeneral = ({ one, two, three }) => {
@@ -61,7 +64,23 @@ export default function Stats({ data }){
             </div>
         )
     }
-    
+
+    const save = () => {
+
+        const createData = {
+            "search": data,
+        }
+
+        console.log(createData)
+
+        const fetchData = async () => {
+            const pb = new PocketBase('http://localhost:8090')
+            const authData = await pb.admins.authWithPassword('shelleywr23@mail.vmi.edu', 'rootrootroot');
+            const record = await pb.collection('searchRecords').create(createData);
+        }
+        fetchData()
+    }
+
     return(
         <div className="grid justify-center">
 
@@ -70,7 +89,7 @@ export default function Stats({ data }){
                     <h1 className="text-center text-4xl p-10">Overview</h1>
                 </div>
                 <div className=" flex items-center justify-center">
-                    <button className="btn">Save</button>
+                    <button className="btn" onClick={save}>Save</button>
                 </div>
             </div>
             <BlockGeneral one={data.stats.size} two={data.stats.longestPath} three={data.stats.shortestPath}/>

@@ -1,21 +1,31 @@
 import {React, useState} from "react"
 import GameEngine from "./gameEngine/GameEngine"
 import Stats from "./stats/Stats"
+import PocketBase from 'pocketbase'
+import axios from 'axios'
+
 export default function Tabs({ tabs }){
 
-    
-    const data = {
+    const original = {
         grid: [
             ["c", "c", "c", "c", "c"],
-            ["a-d", "a-d", "a-d", "c", "c"],
             ["c", "c", "c", "c", "c"],
-            ["c", "c", "c", "g", "c"],
-            ["c", "c", "c", "c", "c"]
+            ["c", "c", "c", "c", "c"],
+            ["c", "c", "c", "c", "c"],
+            ["c", "c", "c", "c", "c"],
+            ["c", "c", "c", "c", "c"],
+            ["c", "c", "c", "c", "c"],
+            ["c", "c", "c", "c", "c"],
+
         ],
         stats: {
             size: 5,
-            longestPath: 7,
+            longestPath: 9,
             shortestPath: 5,
+            trucks: 2,
+            longestTime: 5,
+            shortestTime: 2,
+            search: "Breadth First Search"
         },
         agents: [
             {
@@ -24,7 +34,7 @@ export default function Tabs({ tabs }){
                     y: 1,
                 },
                 status: "a-d",
-                sequence: ['l', 'r  ', 'm', 'm', 'l', 'm', 'm'],
+                sequence: ['l', 'r', 'm', 'm', 'l', 'm', 'm'],
                 stats: {
                     id: 1,
                     time: 5,
@@ -34,39 +44,57 @@ export default function Tabs({ tabs }){
             {
                 position: {
                     x: 0,
-                    y: 1,
+                    y: 0,
                 },
                 status: "a-d",
-                sequence: ['l', 'r  ', 'm', 'm', 'l', 'm', 'm'],
+                sequence: ['l', 'r', 'm', 'm', 'm', 'l', 'm', 'm'],
                 stats: {
                     id: 1,
                     time: 5,
                     path: 5,
                 }
             },
-            
-        ], 
-        searchTypes: [
-            "Breadth First Search",
-            "Depth First Search",
-            "Depth Limit Search",
-            "Uniform Cost Search",
-            "Iterative Depth Limited Search"
         ]
     }
-    
-    
+
+    const [data, setData] = useState(original)
+    const [loading, setLoading] = useState(false)
+
+    const [grid, setGrid] = useState(data.grid)
+    const [agents, setAgents] = useState(data.agents)
+
+    const loadOld = () => {
+        setLoading(true)
+        const fetchData = async () => {
+            const pb = new PocketBase('http://localhost:8090')
+
+            const authData = await pb.admins.authWithPassword('shelleywr23@mail.vmi.edu', 'rootrootroot');
+            
+            const record = await pb.collection('searchRecords').getOne('wva3h954oig61ah');
+            
+            setData(record.search)
+            setLoading(false)
+            console.log(record)
+        }
+        
+        fetchData()
+            .then(() => console.log("Data fetched"))
+    }   
+
+    const reset = () => {
+        console.log("Reset")
+        setGrid(original.grid)
+        setData(original)
+    }
     
     const [activeTab, setActiveTab] = useState(tabs[0])
-
-
 
     const TabSwitch = () => {
         // define swithc function
         if(activeTab == "GameEngine"){
             return(
                 <div>
-                    <GameEngine data={data}/>
+                    <GameEngine agents={agents} setAgents={setAgents} grid={grid} setGrid={setGrid} setData={setData} reset={reset} loadOld={loadOld} data={data}/>
                 </div>
             )
         } else if(activeTab == "Stats"){

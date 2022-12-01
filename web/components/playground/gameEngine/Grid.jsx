@@ -1,46 +1,87 @@
 
-export default function Grid(){
 
-    const grid = [
-        [0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,'a',0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0],
-        [0,0,'c',0,0,0,0,0,0,0]
-    ]
+import { BsTruck } from 'react-icons/bs';
+import { AiOutlineArrowRight } from 'react-icons/ai';
+import { IoMdArrowDropright } from 'react-icons/io';
+import { IconContext } from "react-icons";
+import { BsFillEmojiHeartEyesFill } from 'react-icons/bs';
+
+export default function Grid({ grid }){
 
     console.log(grid.length)
 
-    const itemSize = grid.length * 1
-    const height = "h-[" + itemSize + "em]"
-    const width = " w-[" + itemSize + "em]"
+    const itemSize = 40 / grid.length 
     const s = itemSize + "rem"
-    console.log(s)
-
 
     const Item = ({item}) => {
-        if(item == "a"){
+        if(item == "a-u"){
             return(
-                <div style={{width: s, height: s}} className={"gap bg-red-400 shadow-xl text-black rounded-xl"} >
-
+                <div style={{width: s, height: s}} className={"gap bg-red-400 shadow-xl text-black rounded-xl p-3 flex justify-center place-items-center"} >
+                     <BsTruck className="h-full w-full" style={{transform: 'rotate(270deg)' }}/>
+                </div>
+            )
+        } else if(item == "a-r"){
+            return(
+                <div style={{width: s, height: s}} className={"gap bg-red-400 shadow-xl text-black rounded-xl p-3 flex justify-center "} >
+                    <BsTruck className="h-full w-full"/>
+                </div>
+            )
+        }
+        else if(item == "a-d"){
+            return(
+                <div style={{width: s, height: s}} className={"gap bg-red-400 shadow-xl text-black rounded-xl p-3 flex justify-center p-3"} >
+                    <BsTruck className="h-full w-full" style={{transform: 'rotate(90deg)' }}/>
+                </div>
+            )
+        } else if(item == "a-l"){
+            return(
+                <div style={{width: s, height: s}} className={"gap bg-red-400 shadow-xl text-black rounded-xl p-3 flex justify-center"} >
+                    <BsTruck className="h-full w-full" style={{transform: 'rotate(180deg)' }}/>
                 </div>
             )
         } else if(item == "c"){
             return(
-                <div style={{width: s, height: s}} className="gap bg-black shadow-xl w-20 h-20 text-black rounded-xl">
-
+                <div style={{width: s, height: s}} className="gap bg-black shadow-xl text-black rounded-xl p-3">
+                    <BsTruck className="h-full w-full" style={{transform: 'rotate(90deg)' }}/>
                 </div>
             )
-        } else if(item == "p"){
+        } else if(item == "p-u"){
             return(
-                <div style={{width: s, height: s}} className="gap bg-white shadow-xl w-20 h-20 text-black rounded-xl">
-
+                <div style={{width: s, height: s}} className="gap bg-white shadow-xl text-black rounded-xl p-3">
+                    <IoMdArrowDropright className="h-full w-full" style={{transform: 'rotate(90deg)' }}/>
+                </div>
+            )
+        }
+        else if(item == "p-r"){
+            return(
+                <div style={{width: s, height: s}} className="gap bg-white shadow-xl text-black rounded-xl p-3">
+                    <IoMdArrowDropright className="h-full w-full"/>
+                </div>
+            )
+        }
+        else if(item == "p-d"){
+            return(
+                <div style={{width: s, height: s}} className="gap bg-white shadow-xl text-black rounded-xl p-3">
+                    <IoMdArrowDropright className="h-full w-full" style={{transform: 'rotate(90deg)' }}/>
+                </div>
+            )
+        }
+        else if(item == "p-l"){
+            return(
+                <div style={{width: s, height: s}} className="gap bg-white shadow-xl text-black rounded-xl p-3">
+                    <IoMdArrowDropright className="h-full w-full" style={{transform: 'rotate(90deg)' }}/>
+                </div>
+            )
+        } else if(item == "g"){
+            return(
+                <div style={{width: s, height: s}} className="gap bg-pink-500 shadow-xl text-black rounded-xl p-3">
+                    <BsFillEmojiHeartEyesFill className="h-full w-full "/>
                 </div>
             )
         } else {
             return(
-                <div style={{width: s, height: s}} className="gap bg-white shadow-xl w-20 h-20 text-black rounded-xl">
-                    
+                <div style={{width: s, height: s}} className="gap bg-white shadow-xl text-black rounded-xl p-3">
+                
                 </div>
             )
         }

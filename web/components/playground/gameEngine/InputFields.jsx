@@ -1,6 +1,6 @@
 import {React, useState} from "react"
 
-export default function InputFields(){
+export default function InputFields({ reset, loadOld, test }){
 
     const TextBox = ({ field }) => {
         return(
@@ -35,8 +35,6 @@ export default function InputFields(){
         )
     }
 
-    
-
     const [activeTab, setActiveTab] = useState("new")
 
     const TabSwitch = () => {
@@ -53,7 +51,8 @@ export default function InputFields(){
 
                     <DropDown/>
 
-                    <button className="btn btn-primary m-5">Load</button>
+                    <button onClick={test} className="btn btn-primary m-5">Load</button>
+                    <button onClick={reset} className="btn btn-primary m-5">Reset</button>
                 </div>
             )
         } else if(activeTab == "old"){
@@ -66,7 +65,7 @@ export default function InputFields(){
                         <TextBox field={field}/>
                     ))}
 
-                    <button className="btn btn-primary m-5">Load</button>
+                    <button className="btn btn-primary m-5" onClick={loadOld}>Load</button>
 
                 </div>
             )
