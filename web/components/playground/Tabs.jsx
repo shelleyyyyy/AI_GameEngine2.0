@@ -59,9 +59,12 @@ export default function Tabs({ tabs }){
 
     const [data, setData] = useState(original)
     const [loading, setLoading] = useState(false)
+    const [oldID, setOldID] = useState("")
 
     const [grid, setGrid] = useState(data.grid)
     const [agents, setAgents] = useState(data.agents)
+
+    const [activeSubTab, setActiveSubTab] = useState("new")
 
     const loadOld = () => {
         setLoading(true)
@@ -69,16 +72,16 @@ export default function Tabs({ tabs }){
             const pb = new PocketBase('http://localhost:8090')
 
             const authData = await pb.admins.authWithPassword('shelleywr23@mail.vmi.edu', 'rootrootroot');
-            
-            const record = await pb.collection('searchRecords').getOne('wva3h954oig61ah');
+            console.log("OLD ID", oldID)
+            const record = await pb.collection('searchRecords').getOne(oldID);
             
             setData(record.search)
             setLoading(false)
-            console.log(record)
+            console.log(record.search)
         }
         
         fetchData()
-            .then(() => console.log("Data fetched"))
+            .then((res) => console.log(res))
     }   
 
     const reset = () => {
@@ -94,7 +97,7 @@ export default function Tabs({ tabs }){
         if(activeTab == "GameEngine"){
             return(
                 <div>
-                    <GameEngine agents={agents} setAgents={setAgents} grid={grid} setGrid={setGrid} setData={setData} reset={reset} loadOld={loadOld} data={data}/>
+                    <GameEngine activeTab={activeSubTab} setActiveTab={setActiveSubTab} oldID={oldID} setOldID={setOldID} setData={setData} reset={reset} loadOld={loadOld} data={data}/>
                 </div>
             )
         } else if(activeTab == "Stats"){

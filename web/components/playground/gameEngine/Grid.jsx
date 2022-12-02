@@ -8,7 +8,7 @@ import { BsFillEmojiHeartEyesFill } from 'react-icons/bs';
 
 export default function Grid({ grid }){
 
-    console.log(grid.length)
+    // console.log(grid.length)
 
     const itemSize = 40 / grid.length 
     const s = itemSize + "rem"

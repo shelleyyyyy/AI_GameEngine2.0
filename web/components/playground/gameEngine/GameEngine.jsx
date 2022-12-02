@@ -3,25 +3,19 @@ import Grid from "./Grid"
 import InputFields from "./InputFields"
 import axios from 'axios'
 
-export default function GameEngine({ setData, reset, loadOld, data }){
+export default function GameEngine({ activeTab, setActiveTab, oldID, setOldID, setData, reset, loadOld, data }){
 
-
-    // // const [grid, setGrid] = useState(data.grid)
-    // let searchTypes = data.searchTypes
-
-    // let local_grid = data.grid
-
-    // let size = data.stats.size
     let longestPath = data.stats.longestPath
     const [grid, setGrid] = useState(data.grid)
     const [agents, setAgents] = useState(data.agents)
+
+    // console.log(data)
 
     const [loading, setLoading] = useState(false)
 
     function updateGrid(x, y, status){
         let newGrid = grid
         newGrid[x][y] = status
-        console.log(newGrid)
         setGrid([...newGrid])
     }
 
@@ -103,14 +97,14 @@ export default function GameEngine({ setData, reset, loadOld, data }){
     const fetchData = () => {
         setLoading(true)
         axios.post('http://127.0.0.1:5000/search', {
-            "trucks": 1,
-            "seed": "seed",
-            "goals": 2,
-            "gridsize": 5,
+            "trucks": 3,
+            "seed": "joe",
+            "goals": 4,
+            "gridsize": 10,
             "search": "Breadth First Search"
         })
         .then(function (response) {
-            console.log(response)
+            // console.log(response)
             setData(response.data)
             // setAgents(response.data.agents)
             // setGrid(response.data.grid)
@@ -121,11 +115,9 @@ export default function GameEngine({ setData, reset, loadOld, data }){
     }
 
     async function runAgents(){
-        // let agents = data.agents
-        // console.log(agents)
         for(let i = 0; i < longestPath; i++){
-            for(let j = 0; j < agents.length; j++){
-                run(agents[j], agents[j].sequence[i], j)
+            for(let j = 0; j < data.agents.length; j++){
+                run(data.agents[j], data.agents[j].sequence[i], j)
             }
             await new Promise(r => setTimeout(r, 1000));
         }
@@ -145,7 +137,7 @@ export default function GameEngine({ setData, reset, loadOld, data }){
 
     return(
         <div className="flex justify-center gap-10">
-            <InputFields reset={reset} loadOld={loadOld} test={fetchData}/>
+            <InputFields activeTab={activeTab} setActiveTab={setActiveTab} oldID={oldID} setOldID={setOldID} reset={reset} loadOld={loadOld} test={fetchData}/>
             <Grid grid={grid}/>
         </div>
     )

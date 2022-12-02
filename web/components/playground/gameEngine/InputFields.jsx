@@ -1,6 +1,6 @@
 import {React, useState} from "react"
 
-export default function InputFields({ reset, loadOld, test }){
+export default function InputFields({ activeTab, setActiveTab, oldID, setOldID, reset, loadOld, test }){
 
     const TextBox = ({ field }) => {
         return(
@@ -35,7 +35,7 @@ export default function InputFields({ reset, loadOld, test }){
         )
     }
 
-    const [activeTab, setActiveTab] = useState("new")
+    
 
     const TabSwitch = () => {
         // define swithc function
@@ -56,17 +56,10 @@ export default function InputFields({ reset, loadOld, test }){
                 </div>
             )
         } else if(activeTab == "old"){
-            const fields = ["Grid ID"]
-
             return(
                 <div className="rounded-xl shadow-xl py-5 grid justify-center">
-                    
-                    {fields.map((field, k) => (
-                        <TextBox field={field}/>
-                    ))}
-
+                    <input value={oldID} onChange={(e) => setOldID(e.target.value)} type="text" placeholder="Grid ID" className="input input-bordered input-error w-full max-w-xs" />
                     <button className="btn btn-primary m-5" onClick={loadOld}>Load</button>
-
                 </div>
             )
         }
