@@ -13,7 +13,9 @@ export default function Layout({ children }) {
                 </div>
             </div>            */}
 
-            <div className="navbar bg-base-100">
+            
+
+            <div className="navbar bg-base-100" >
                 <div className="flex-1">
                     <Link href="/" className="btn btn-ghost normal-case text-xl">Trucks</Link>
                 </div>
@@ -24,6 +26,8 @@ export default function Layout({ children }) {
                     </ul>
                 </div>
             </div>
+
+            {/* <h1 className='text-5xl text-center'>Truck Agent World</h1> */}
             
             {children}
         </> 

@@ -11,6 +11,7 @@ export default function Playground() {
 
   return (
     <div>
+      <h1 className='text-5xl text-center pb-10'>Playground</h1>
       <Tabs tabs={tabs}/>
     </div>
   )
