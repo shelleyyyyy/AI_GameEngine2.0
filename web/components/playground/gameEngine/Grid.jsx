@@ -10,7 +10,7 @@ export default function Grid({ grid }){
 
     // console.log(grid.length)
 
-    const itemSize = 40 / grid.length 
+    const itemSize = 30 / grid.length 
     const s = itemSize + "rem"
 
     const Item = ({item}) => {
@@ -93,14 +93,12 @@ export default function Grid({ grid }){
                 {row.map((item, k) => (
                     <Item item={item} key={k}/>
                 ))}
-
             </div>
         )
     }
 
     return(
         <div className="gap-5 grid justify-center">
-
             {grid.map((row, k) => (
                 <Row row={row} key={k}/>
             ))}

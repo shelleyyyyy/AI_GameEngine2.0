@@ -2,21 +2,29 @@ import {React, useState} from 'react';
 import Grid from "./Grid"
 import InputFields from "./InputFields"
 import axios from 'axios'
+import PocketBase from 'pocketbase'
 
-export default function GameEngine({ activeTab, setActiveTab, oldID, setOldID, setData, reset, loadOld, data }){
+export default function GameEngine({ activeTab, setActiveTab, oldID, setOldID, setData, reset, data }){
 
     let longestPath = data.stats.longestPath
     const [grid, setGrid] = useState(data.grid)
-    const [agents, setAgents] = useState(data.agents)
+    let agents = data.agents
 
     // console.log(data)
 
     const [loading, setLoading] = useState(false)
 
+    function nestedCopy(array) {
+        return JSON.parse(JSON.stringify(array));
+    }
+
     function updateGrid(x, y, status){
         let newGrid = grid
-        newGrid[x][y] = status
-        setGrid([...newGrid])
+        // newGrid[x][y] = status
+        
+        // // console.log({newGrid})
+        console.log(grid)
+        // setGrid([...newGrid])
     }
 
     function moveAgent(position, status, iter){
@@ -94,24 +102,14 @@ export default function GameEngine({ activeTab, setActiveTab, oldID, setOldID, s
         }
     }
 
-    const fetchData = () => {
-        setLoading(true)
-        axios.post('http://127.0.0.1:5000/search', {
-            "trucks": 3,
-            "seed": "joe",
-            "goals": 4,
-            "gridsize": 10,
-            "search": "Breadth First Search"
-        })
-        .then(function (response) {
-            // console.log(response)
-            setData(response.data)
-            // setAgents(response.data.agents)
-            // setGrid(response.data.grid)
-            // console.log(response.data.agents)
-            setLoading(false)
-            runAgents()
-        })
+    
+
+    function run(agent, cmd, iter){
+        if(cmd == 'm'){
+            moveAgent(agent.position, agent.status, iter)
+        } else{
+            turnAgent(agent.position, agent.status, cmd, iter)
+        }
     }
 
     async function runAgents(){
@@ -123,12 +121,44 @@ export default function GameEngine({ activeTab, setActiveTab, oldID, setOldID, s
         }
     }
 
-    function run(agent, cmd, iter){
-        if(cmd == 'm'){
-            moveAgent(agent.position, agent.status, iter)
-        } else{
-            turnAgent(agent.position, agent.status, cmd, iter)
+
+    const [gridSize, setGridSize] = useState(10)
+    const [seed, setSeed] = useState(0)
+    const [trucks, setTrucks] = useState(1)
+    const [searchType, setSearchType] = useState("Breadth First Search")
+
+    const fetchData = () => {
+        setLoading(true)
+        axios.post('http://127.0.0.1:5000/search', {
+            "trucks": 3,
+            "seed": "joe",
+            "goals": 4,
+            "gridsize": 10,
+            "search": "Breadth First Search"
+        })
+        .then(function (response) {
+            setData(response.data)
+            setLoading(false)
+            runAgents()
+        })
+    }
+
+    const loadOld = () => {
+        setLoading(true)
+        const fetchData = async () => {
+            const pb = new PocketBase('http://localhost:8090')
+
+            const authData = await pb.admins.authWithPassword('shelleywr23@mail.vmi.edu', 'rootrootroot');
+            console.log("OLD ID", oldID)
+            const record = await pb.collection('searchRecords').getOne(oldID);
+            
+            setData(record.search)
+            setLoading(false)
+            console.log(record.search)
         }
+        
+        fetchData()
+            .then(runAgents())
     }
 
     if(loading){
@@ -137,7 +167,7 @@ export default function GameEngine({ activeTab, setActiveTab, oldID, setOldID, s
 
     return(
         <div className="flex justify-center gap-10">
-            <InputFields activeTab={activeTab} setActiveTab={setActiveTab} oldID={oldID} setOldID={setOldID} reset={reset} loadOld={loadOld} test={fetchData}/>
+            <InputFields setGridSize={setGridSize} setSeed={setSeed} setTrucks={setTrucks} setSearchType={setSearchType} runAgents={runAgents} activeTab={activeTab} setActiveTab={setActiveTab} oldID={oldID} setOldID={setOldID} reset={reset} loadOld={loadOld} fetchData={fetchData}/>
             <Grid grid={grid}/>
         </div>
     )

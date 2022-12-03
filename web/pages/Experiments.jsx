@@ -37,7 +37,7 @@ export default function Experiments(){
     }
 
     return(
-        <div className="mx-96">
+        <div className="mx-10">
             <h1 className='text-5xl text-center pb-10'>Experiments</h1>
             <Table d={data}/>
         </div>

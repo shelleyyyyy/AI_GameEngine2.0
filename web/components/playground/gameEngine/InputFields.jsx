@@ -1,8 +1,9 @@
 import {React, useState} from "react"
 
-export default function InputFields({ activeTab, setActiveTab, oldID, setOldID, reset, loadOld, test }){
+export default function InputFields(props){
 
     const TextBox = ({ field }) => {
+
         return(
             <div className="form-control px-5 py-2">
                 <label className="label">
@@ -27,7 +28,7 @@ export default function InputFields({ activeTab, setActiveTab, oldID, setOldID, 
                 <div className="input-group ">
                     <select className="select select-bordered w-full">
                         {options.map((option, k) => (
-                            <option>{option}</option>
+                            <option key={k}>{option}</option>
                         ))}
                     </select>
                 </div>
@@ -35,31 +36,37 @@ export default function InputFields({ activeTab, setActiveTab, oldID, setOldID, 
         )
     }
 
-    
-
     const TabSwitch = () => {
         // define swithc function
-        if(activeTab == "new"){
-            const fields = ["Grid Size", "Seed", "Trucks"]
-
+        if(props.activeTab == "new"){
+            const fields = ["GridSize", "Seed", "Trucks"]
+            
             return(
                 <div className="rounded-xl shadow-xl py-5 grid justify-center">
-                    
-                    {fields.map((field, k) => (
-                        <TextBox field={field}/>
-                    ))}
+
+                    <TextBox field="Grid Size" setValue={props.setGridSize}/>
+                    <TextBox field="Seed" setValue={props.setSeed}/>
+                    <TextBox field="Trucks" setValue={props.setTrucks}/>
 
                     <DropDown/>
 
-                    <button onClick={test} className="btn btn-primary m-5">Load</button>
-                    <button onClick={reset} className="btn btn-primary m-5">Reset</button>
+                    <button onClick={props.fetchData} className="btn btn-primary m-5">Load</button>
+                    <button onClick={props.reset} className="btn btn-primary m-5">Reset</button>
                 </div>
             )
-        } else if(activeTab == "old"){
+        } else if(props.activeTab == "old"){
             return(
                 <div className="rounded-xl shadow-xl py-5 grid justify-center">
-                    <input value={oldID} onChange={(e) => setOldID(e.target.value)} type="text" placeholder="Grid ID" className="input input-bordered input-error w-full max-w-xs" />
-                    <button className="btn btn-primary m-5" onClick={loadOld}>Load</button>
+                    {/* <input value={oldID} onChange={(e) => setOldID(e.target.value)} type="text" placeholder="Grid ID" className="input input-bordered input-error w-full max-w-xs" /> */}
+                    <div className="form-control px-5 py-2">
+                        <label className="label">
+                            <span className="label-text">Grid ID</span>
+                        </label>
+                        <label className="input-group">
+                            <input value={props.oldID} onChange={(e) => props.setOldID(e.target.value)} type="text" placeholder={"dqw2z2490pananx"} className="input input-bordered" />
+                        </label>
+                    </div>
+                    <button className="btn btn-primary m-5" onClick={props.loadOld}>Load</button>
                 </div>
             )
         }
@@ -67,10 +74,10 @@ export default function InputFields({ activeTab, setActiveTab, oldID, setOldID, 
     return(
 
         
-        <div>
+        <div className="h-40">
             <div className="tabs tabs-boxed flex justify-center m-10">
-                <div onClick={() => setActiveTab("new")} className={activeTab === "new" ? "tab-active tab" : "tab"}>New</div> 
-                <div onClick={() => setActiveTab("old")} className={activeTab === "old" ? "tab-active tab" : "tab"}>Old</div> 
+                <div onClick={() => props.setActiveTab("new")} className={props.activeTab === "new" ? "tab-active tab" : "tab"}>New</div> 
+                <div onClick={() => props.setActiveTab("old")} className={props.activeTab === "old" ? "tab-active tab" : "tab"}>Old</div> 
             </div>
 
             <h1 className="text-xl bold text-center p-5">Input Fields</h1>

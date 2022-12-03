@@ -1,7 +1,6 @@
 import {React, useState} from "react"
 import GameEngine from "./gameEngine/GameEngine"
 import Stats from "./stats/Stats"
-import PocketBase from 'pocketbase'
 import axios from 'axios'
 
 export default function Tabs({ tabs }){
@@ -12,10 +11,7 @@ export default function Tabs({ tabs }){
             ["c", "c", "c", "c", "c"],
             ["c", "c", "c", "c", "c"],
             ["c", "c", "c", "c", "c"],
-            ["c", "c", "c", "c", "c"],
-            ["c", "c", "c", "c", "c"],
-            ["c", "c", "c", "c", "c"],
-            ["c", "c", "c", "c", "c"],
+            ["c", "c", "c", "c", "c"]
 
         ],
         stats: {
@@ -66,23 +62,7 @@ export default function Tabs({ tabs }){
 
     const [activeSubTab, setActiveSubTab] = useState("new")
 
-    const loadOld = () => {
-        setLoading(true)
-        const fetchData = async () => {
-            const pb = new PocketBase('http://localhost:8090')
-
-            const authData = await pb.admins.authWithPassword('shelleywr23@mail.vmi.edu', 'rootrootroot');
-            console.log("OLD ID", oldID)
-            const record = await pb.collection('searchRecords').getOne(oldID);
-            
-            setData(record.search)
-            setLoading(false)
-            console.log(record.search)
-        }
-        
-        fetchData()
-            .then((res) => console.log(res))
-    }   
+    
 
     const reset = () => {
         console.log("Reset")
@@ -97,7 +77,7 @@ export default function Tabs({ tabs }){
         if(activeTab == "GameEngine"){
             return(
                 <div>
-                    <GameEngine activeTab={activeSubTab} setActiveTab={setActiveSubTab} oldID={oldID} setOldID={setOldID} setData={setData} reset={reset} loadOld={loadOld} data={data}/>
+                    <GameEngine activeTab={activeSubTab} setActiveTab={setActiveSubTab} oldID={oldID} setOldID={setOldID} setData={setData} reset={reset} data={data}/>
                 </div>
             )
         } else if(activeTab == "Stats"){

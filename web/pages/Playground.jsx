@@ -4,10 +4,7 @@ import Tabs from '../components/playground/Tabs';
 export default function Playground() {
 
 
-    const tabs = ["GameEngine", "Stats"]
-
-    
-
+  const tabs = ["GameEngine", "Stats"]
 
   return (
     <div>
