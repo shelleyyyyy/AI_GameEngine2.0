@@ -100,7 +100,7 @@ def search_engine(search_type, truck, goals, gridSize, seed, grid, env, root, re
         print(truck, goals, gridSize, "seed:", seed)
         env.toString()
         start = time.time()
-        solution = depthLimitedSearch(environment=env, root=root, lock=lock, limit=30)
+        solution = depthLimitedSearch(environment=env, root=root, lock=lock, limit=300)
         end = time.time()
         elapsed = end - start
         print(solution)
