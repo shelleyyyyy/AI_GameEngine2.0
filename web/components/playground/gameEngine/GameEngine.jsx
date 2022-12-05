@@ -1,4 +1,4 @@
-import {React, useState} from 'react';
+import {React, useState, useEffect} from 'react';
 import Grid from "./Grid"
 import InputFields from "./InputFields"
 import axios from 'axios'
@@ -19,12 +19,11 @@ export default function GameEngine({ activeTab, setActiveTab, oldID, setOldID, s
     }
 
     function updateGrid(x, y, status){
-        let newGrid = grid
-        // newGrid[x][y] = status
+        var newGrid = grid
+        newGrid[x][y] = status
         
-        // // console.log({newGrid})
-        console.log(grid)
-        // setGrid([...newGrid])
+        setGrid(newGrid)
+        console.log(grid[0])
     }
 
     function moveAgent(position, status, iter){
@@ -138,6 +137,7 @@ export default function GameEngine({ activeTab, setActiveTab, oldID, setOldID, s
         })
         .then(function (response) {
             setData(response.data)
+            console.log(data)
             setLoading(false)
             runAgents()
         })
@@ -160,6 +160,7 @@ export default function GameEngine({ activeTab, setActiveTab, oldID, setOldID, s
         fetchData()
             .then(runAgents())
     }
+    
 
     if(loading){
         return <div>Loading...</div>

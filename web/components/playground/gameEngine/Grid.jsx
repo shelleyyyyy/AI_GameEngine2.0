@@ -5,10 +5,11 @@ import { AiOutlineArrowRight } from 'react-icons/ai';
 import { IoMdArrowDropright } from 'react-icons/io';
 import { IconContext } from "react-icons";
 import { BsFillEmojiHeartEyesFill } from 'react-icons/bs';
+import { useEffect } from 'react';
 
 export default function Grid({ grid }){
 
-    // console.log(grid.length)
+    // console.log(grid.length)  
 
     const itemSize = 30 / grid.length 
     const s = itemSize + "rem"
