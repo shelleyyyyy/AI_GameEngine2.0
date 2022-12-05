@@ -233,7 +233,7 @@ export default function GameEngine({ setSavedData, activeTab, setActiveTab, setD
                     // setSeed(seed)
                     // setTrucks(trucks)
                     // setSearchType(searchType)
-                    fetchData(nestedTrucks, nestedSeed, nestedGridSize, "Breadth First Search")
+                    fetchData(nestedTrucks, nestedSeed, nestedGridSize, nestedSearchType)
                 }
                     
                 const handleGridSizeChange = (e) => {
@@ -288,18 +288,30 @@ export default function GameEngine({ setSavedData, activeTab, setActiveTab, setD
                         </div>
 
                         {/* <DropDown/> */}
-                        <div className="form-control px-5 py-2">
+                        {/* <div className="form-control px-5 py-2">
                             <label className="label">
                                 <span className="label-text">Search Type</span>
                             </label>
                             <div className="input-group ">
                                 <select onChange={handleDropChange} className="select select-bordered w-full">
-                                    <option >{"Breadth First Search"}</option>
-                                    <option >{"Depth First Search"}</option>
-                                    <option >{"Dijkstra's Algorithm"}</option>
+                                    <option>{"Breadth First Search"}</option>
+                                    <option>{"Depth First Search"}</option>
+                                    <option>{"Dijkstra's Algorithm"}</option>
                                 </select>
                             </div>
+                        </div> */}
+                        <div className="dropdown flex justify-center my-5">
+                            <label tabIndex={0} className="btn align-center">{nestedSearchType}</label>
+                            <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+                                <li onClick={() => setNestedSearchType("Breadth First Search")}><a>Breadth First Search</a></li>
+                                <li onClick={() => setNestedSearchType("Depth First Search")}><a>Depth First Search</a></li>
+                                <li onClick={() => setNestedSearchType("Depth Limit Search")}><a>Depth Limit Search</a></li>
+                                <li onClick={() => setNestedSearchType("Uniform Cost Search")}><a>Uniform Cost Search</a></li>
+                                <li onClick={() => setNestedSearchType("Iterative Depth Limited Search")}><a>Iterative Depth Limited Search</a></li>
+                            </ul>
                         </div>
+
+                        {/* {nestedSearchType} */}
     
                         <button onClick={setValuesAndLoad} className="btn btn-primary m-5">Load</button>
                         <button onClick={reset} className="btn btn-primary m-5">Reset</button>
@@ -324,15 +336,15 @@ export default function GameEngine({ setSavedData, activeTab, setActiveTab, setD
         }
         return(
             <div className="h-40">
-            <div className="tabs tabs-boxed flex justify-center m-10">
-                <div onClick={() => setActiveTab("new")} className={activeTab === "new" ? "tab-active tab" : "tab"}>New</div> 
-                <div onClick={() => setActiveTab("old")} className={activeTab === "old" ? "tab-active tab" : "tab"}>Old</div> 
+                <div className="tabs tabs-boxed flex justify-center m-10">
+                    <div onClick={() => setActiveTab("new")} className={activeTab === "new" ? "tab-active tab" : "tab"}>New</div> 
+                    <div onClick={() => setActiveTab("old")} className={activeTab === "old" ? "tab-active tab" : "tab"}>Old</div> 
+                </div>
+
+                <h1 className="text-xl bold text-center p-5">Input Fields</h1>
+
+                <TabSwitch />
             </div>
-
-            <h1 className="text-xl bold text-center p-5">Input Fields</h1>
-
-            <TabSwitch />
-        </div>
         )
     }
 
