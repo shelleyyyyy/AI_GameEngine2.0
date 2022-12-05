@@ -1,9 +1,12 @@
 from Infrastructure.node import Node
 from constants import constants
 from Infrastructure.successorFunction import SuccessorFunction
+from threading import Lock
 import time
 
-def iterativeDepthLimitedSearch(environment, root, limit, t):
+def iterativeDepthLimitedSearch(lock: Lock, environment, root, limit, t):
+
+    t = time.time()
     
     node = Node(state = root)
     if node.state.cell_type == constants["GOAL_CELL"]:
@@ -19,18 +22,22 @@ def iterativeDepthLimitedSearch(environment, root, limit, t):
         explored[shallow.state.location.x, shallow.state.location.y, shallow.state.direction] = shallow
         
         sucFunc = SuccessorFunction()
-        if depth != limit:
+        if depth < limit:
             expand = sucFunc.expand(node = shallow, environment = environment)
-            depth+=1
+            depth = depth + 1
             for n in expand:
                 if checklist(n, frontier, explored) != True:
-                    if environment.cells[n.state.location.x][n.state.location.y].cell_type == constants["GOAL_CELL"]:
+                    current_cell: Cell = environment.cells[n.state.location.x][n.state.location.y]
+                    if current_cell.cell_type == constants["GOAL_CELL"] and current_cell.get_found() == False:
+                        lock.acquire()
+                        current_cell.set_found(True)
+                        lock.release()
                         print(time.time() - t)
                         return n.actionsList
             
                     frontier.append(n)
         else:
-            return iterativeDepthLimitedSearch(environment, root, limit= limit +1, t=t)
+            return iterativeDepthLimitedSearch(lock=lock, environment=environment, root=root, limit= limit +1, t=t)
 
 
 def checklist(node, frontier, explored):

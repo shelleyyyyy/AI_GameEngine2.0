@@ -19,7 +19,7 @@ def breadthFirstSearch(environment: Environment, root: Cell, lock: Lock):
         explored[(node.state.location.x, node.state.location.y, node.state.direction)] = node
         list = expander.expand(environment=environment, node=node)
         for node in list:
-            if check_explored(explored=explored, node=node) and check_frontier(frontier=frontier, node=node):
+            if check_explored(explored=explored, node=node) or check_frontier(frontier=frontier, node=node):
                 current_cell: Cell = environment.cells[node.state.location.x][node.state.location.y]
                 if current_cell.cell_type == constants["GOAL_CELL"] and current_cell.get_found() == False:
                     lock.acquire()

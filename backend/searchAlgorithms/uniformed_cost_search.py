@@ -1,6 +1,8 @@
 from Infrastructure.node import Node
 from constants import constants
 from Infrastructure.successorFunction import SuccessorFunction
+from threading import Lock
+import time
 
 #quicksort methods
 def partition(list, low, high):
@@ -32,7 +34,10 @@ def quickSort(list, low, high):
 
 
 
-def uniformed_cost_search(environment, root):
+def uniformed_cost_search(environment, root, lock):
+
+    t = time.time()
+
     node = Node(state = root)
     if node.state.cell_type == constants["GOAL_CELL"]:
         return node.actionsList
@@ -59,7 +64,12 @@ def uniformed_cost_search(environment, root):
                 except:
                     pass
 
-                if environment.cells[n.state.location.x][n.state.location.y].cell_type == constants["GOAL_CELL"]:
+                current_cell: Cell = environment.cells[n.state.location.x][n.state.location.y]
+                if current_cell.cell_type == constants["GOAL_CELL"] and current_cell.get_found() == False:
+                    lock.acquire()
+                    current_cell.set_found(True)
+                    lock.release()
+                    print(time.time() - t)
                     return n.actionsList
 
 

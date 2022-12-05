@@ -81,7 +81,7 @@ def search_engine(search_type, truck, goals, gridSize, seed, grid, env, root, re
         print(truck, goals, gridSize, "seed:", seed)
         env.toString()
         start = time.time()
-        solution = depthFirstSearch(environment=env, root=env.root)
+        solution = depthFirstSearch(environment=env, root=root, lock=lock)
         end = time.time()
         elapsed = end - start
         print(solution)
@@ -100,7 +100,7 @@ def search_engine(search_type, truck, goals, gridSize, seed, grid, env, root, re
         print(truck, goals, gridSize, "seed:", seed)
         env.toString()
         start = time.time()
-        solution = depthLimitedSearch(environment=env, root=env.root, limit=30)
+        solution = depthLimitedSearch(environment=env, root=root, lock=lock, limit=300)
         end = time.time()
         elapsed = end - start
         print(solution)
@@ -119,7 +119,7 @@ def search_engine(search_type, truck, goals, gridSize, seed, grid, env, root, re
         print(truck, goals, gridSize, "seed:", seed)
         env.toString()
         start = time.time()
-        solution = uniformed_cost_search(environment=env, root=env.root)
+        solution = uniformed_cost_search(environment=env, root=root, lock=lock)
         end = time.time()
         elapsed = end - start
         print(solution)
@@ -138,7 +138,7 @@ def search_engine(search_type, truck, goals, gridSize, seed, grid, env, root, re
         print(truck, goals, gridSize, "seed:", seed)
         env.toString()
         start = time.time()
-        solution = iterativeDepthLimitedSearch(environment=env, root=env.root, limit=0, t=start)
+        solution = iterativeDepthLimitedSearch(environment=env, root=root, lock=lock, limit=0, t=start)
         end = time.time()
         elapsed = end - start
         print(solution)
