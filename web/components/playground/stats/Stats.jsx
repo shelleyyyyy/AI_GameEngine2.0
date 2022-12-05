@@ -3,8 +3,12 @@
 import PocketBase from 'pocketbase'
 import { useEffect, useState } from 'react'
 
-export default function Stats({ data }){
+export default function Stats(){
     
+    const data = JSON.parse(localStorage.getItem('search'));
+    console.log("SAVED DATA", data)
+
+
     const BlockGeneral = ({ one, two, three }) => {
         return(
             <div className="stats shadow">
@@ -52,10 +56,8 @@ export default function Stats({ data }){
         console.log(data)
 
         const createData = {
-            "search": data,
+            "search": JSON.parse(localStorage.getItem('search'))
         }
-
-        // console.log(createData)
 
         const fetchData = async () => {
             const pb = new PocketBase('http://localhost:8090')
@@ -63,6 +65,7 @@ export default function Stats({ data }){
             const record = await pb.collection('searchRecords').create(createData);
         }
         fetchData()
+
     }
 
     return(

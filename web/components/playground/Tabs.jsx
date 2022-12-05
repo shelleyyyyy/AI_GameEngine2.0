@@ -7,12 +7,16 @@ export default function Tabs({ tabs }){
 
     const original = {
         grid: [
-            ["c", "c", "c", "c", "c"],
-            ["c", "c", "c", "c", "c"],
-            ["c", "c", "c", "c", "c"],
-            ["c", "c", "c", "c", "c"],
-            ["c", "c", "c", "c", "c"]
-
+            ["c", "c", "c", "c", "c", "c", "c", "c", "c", "c"],
+            ["c", "c", "c", "c", "c", "c", "c", "c", "c", "c"],
+            ["c", "c", "c", "c", "c", "c", "c", "c", "c", "c"],
+            ["c", "c", "c", "c", "c", "c", "c", "c", "c", "c"],
+            ["c", "c", "c", "c", "c", "c", "c", "c", "c", "c"],
+            ["c", "c", "c", "c", "c", "c", "c", "c", "c", "c"],
+            ["c", "c", "c", "c", "c", "c", "c", "c", "c", "c"],
+            ["c", "c", "c", "c", "c", "c", "c", "c", "c", "c"],
+            ["c", "c", "c", "c", "c", "c", "c", "c", "c", "c"],
+            ["c", "c", "c", "c", "c", "c", "c", "c", "c", "c"],
         ],
         stats: {
             size: 5,
@@ -54,20 +58,23 @@ export default function Tabs({ tabs }){
     }
 
     const [data, setData] = useState(original)
-    const [loading, setLoading] = useState(false)
     const [oldID, setOldID] = useState("")
-
-    const [grid, setGrid] = useState(data.grid)
-    const [agents, setAgents] = useState(data.agents)
+    const [savedData, setSavedData] = useState(original)
 
     const [activeSubTab, setActiveSubTab] = useState("new")
 
-    
+    // const updateStuff = (data) => {
+    //     console.log({"SET":data})
+    //     setData(data)
+    //     setAgents(data.agents)
+    //     setLongestPath(data.stats.longestPath)
+    //     setGrid(data.grid)
+    // }
 
     const reset = () => {
         console.log("Reset")
-        setGrid(original.grid)
-        setData(original)
+        // setGrid(original.grid)
+        setData({...original})
     }
     
     const [activeTab, setActiveTab] = useState(tabs[0])
@@ -77,13 +84,13 @@ export default function Tabs({ tabs }){
         if(activeTab == "GameEngine"){
             return(
                 <div>
-                    <GameEngine activeTab={activeSubTab} setActiveTab={setActiveSubTab} oldID={oldID} setOldID={setOldID} setData={setData} reset={reset} data={data}/>
+                    <GameEngine setSavedData={setSavedData} activeTab={activeSubTab} setActiveTab={setActiveSubTab} oldID={oldID} setOldID={setOldID} setData={setData} reset={reset} data={data}/>
                 </div>
             )
         } else if(activeTab == "Stats"){
             return(
                 <div>
-                    <Stats data={data}/>
+                    <Stats data={savedData}/>
                 </div>
             )
         }
