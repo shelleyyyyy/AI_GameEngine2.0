@@ -43,5 +43,5 @@ def checklist(node, frontier, explored):
 
 def checkGoalState(node):
     if node.state == constants['GOAL_CELL']:
-        return
+        return True
         
