@@ -116,7 +116,7 @@ export default function Table({ d }){
                                     </div>
                                 </div>
                             </td>
-                            <td>{item.search.stats.search}</td>
+                            <td>{item.search.stats.searchType}</td>
                             
                             {/* time */}
                             <td>{item.search.stats.longestTime}</td>
@@ -127,7 +127,7 @@ export default function Table({ d }){
                             <td>{item.search.stats.shortestPath}</td>
 
                             {/* trucks */}
-                            <td>{item.search.stats.trucks}</td>
+                            <td>{item.search.stats.numTrucks}</td>
 
                             {/* size */}
                             <td>{item.search.stats.size}</td>
