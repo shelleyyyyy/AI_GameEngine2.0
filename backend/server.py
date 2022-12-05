@@ -165,7 +165,7 @@ def post_process(results):
             longest_time = solution['stats']['time']
         if solution['stats']['time'] < shortest_time:
             shortest_time = solution['stats']['time']
-    return longest_path, shortest_path, longest_path, shortest_time
+    return longest_path, shortest_path, longest_time, shortest_time
 
 def get_status(direction):
     direction = (direction + 2) % 4
