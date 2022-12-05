@@ -34,7 +34,10 @@ def quickSort(list, low, high):
 
 
 
-def uniformed_cost_search(environment, root):
+def uniformed_cost_search(environment, root, lock):
+
+    t = time.time()
+
     node = Node(state = root)
     if node.state.cell_type == constants["GOAL_CELL"]:
         return node.actionsList
@@ -61,7 +64,7 @@ def uniformed_cost_search(environment, root):
                 except:
                     pass
 
-                current_cell: Cell = environment.cells[node.state.location.x][node.state.location.y]
+                current_cell: Cell = environment.cells[n.state.location.x][n.state.location.y]
                 if current_cell.cell_type == constants["GOAL_CELL"] and current_cell.get_found() == False:
                     lock.acquire()
                     current_cell.set_found(True)

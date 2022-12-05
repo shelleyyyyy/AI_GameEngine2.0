@@ -5,6 +5,8 @@ from threading import Lock
 import time
 
 def iterativeDepthLimitedSearch(lock: Lock, environment, root, limit, t):
+
+    t = time.time()
     
     node = Node(state = root)
     if node.state.cell_type == constants["GOAL_CELL"]:
@@ -20,16 +22,17 @@ def iterativeDepthLimitedSearch(lock: Lock, environment, root, limit, t):
         explored[shallow.state.location.x, shallow.state.location.y, shallow.state.direction] = shallow
         
         sucFunc = SuccessorFunction()
-        if depth != limit:
+        if depth < limit:
             expand = sucFunc.expand(node = shallow, environment = environment)
-            depth+=1
+            depth = depth + 1
             for n in expand:
                 if checklist(n, frontier, explored) != True:
-                    current_cell: Cell = environment.cells[node.state.location.x][node.state.location.y]
+                    current_cell: Cell = environment.cells[n.state.location.x][n.state.location.y]
                     if current_cell.cell_type == constants["GOAL_CELL"] and current_cell.get_found() == False:
                         lock.acquire()
                         current_cell.set_found(True)
                         lock.release()
+                        print(time.time() - t)
                         return n.actionsList
             
                     frontier.append(n)
