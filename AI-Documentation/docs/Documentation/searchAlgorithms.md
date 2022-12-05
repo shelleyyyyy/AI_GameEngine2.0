@@ -2,7 +2,7 @@
 sidebar_label: 'Search-Algorithms'
 sidebar_position: 3
 ---
-
+import { Mermaid } from 'mdx-mermaid/Mermaid';
 <Mermaid chart = 'classDiagram
 class BFS{
 breadFirstSearch(Environment, Cell, Lock): list
