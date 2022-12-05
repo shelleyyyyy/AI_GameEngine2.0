@@ -51,7 +51,7 @@ export default function Grid({ grid }){
         } else if(item == "p-u"){
             return(
                 <div style={{width: s, height: s}} className="gap bg-white shadow-xl text-black rounded-xl p-3">
-                    <IoMdArrowDropright className="h-full w-full" style={{transform: 'rotate(90deg)' }}/>
+                    <IoMdArrowDropright className="h-full w-full" style={{transform: 'rotate(270deg)' }}/>
                 </div>
             )
         }
@@ -72,7 +72,7 @@ export default function Grid({ grid }){
         else if(item == "p-l"){
             return(
                 <div style={{width: s, height: s}} className="gap bg-white shadow-xl text-black rounded-xl p-3">
-                    <IoMdArrowDropright className="h-full w-full" style={{transform: 'rotate(90deg)' }}/>
+                    <IoMdArrowDropright className="h-full w-full" style={{transform: 'rotate(180deg)' }}/>
                 </div>
             )
         } else if(item == "g"){

@@ -1,8 +1,18 @@
 import {React, useState} from "react"
 
-export default function InputFields(props){
+export default function InputFields(props, { box1 }){
 
-    const TextBox = ({ field }) => {
+    const [gridSize, setGridSize] = useState(10)
+    const [trucks, setTrucks] = useState(1)
+    const [seed, setSeed] = useState(0)
+    const [searchType, setSearchType] = useState("dfs")
+
+    const TextBox = ({ field, setValue }) => {
+
+        const handleChange = (e) => {
+            console.log(e.target.value)
+            setValue(e.target.value)
+        }
 
         return(
             <div className="form-control px-5 py-2">
@@ -10,7 +20,7 @@ export default function InputFields(props){
                     <span className="label-text">{field}</span>
                 </label>
                 <label className="input-group">
-                    <input type="text" placeholder={field} className="input input-bordered" />
+                    <input onChange={handleChange} type="text" placeholder={field} className="input input-bordered" />
                 </label>
             </div>
         )
@@ -38,19 +48,32 @@ export default function InputFields(props){
 
     const TabSwitch = () => {
         // define swithc function
+
+        const setValuesAndLoad = () => {
+            props.setGridSize(gridSize)
+            props.setSeed(seed)
+            props.setTrucks(trucks)
+            props.setSearchType(searchType)
+            props.fetchData()
+        }
+
         if(props.activeTab == "new"){
             const fields = ["GridSize", "Seed", "Trucks"]
             
             return(
                 <div className="rounded-xl shadow-xl py-5 grid justify-center">
 
-                    <TextBox field="Grid Size" setValue={props.setGridSize}/>
-                    <TextBox field="Seed" setValue={props.setSeed}/>
-                    <TextBox field="Trucks" setValue={props.setTrucks}/>
+                    {/* <TextBox field="Grid Size" setValue={setGridSize}/>
+                    <TextBox field="Seed" setValue={setSeed}/>
+                    <TextBox field="Trucks" setValue={setTrucks}/> */}
+                    {box1}
+                    {TextBox({field: "Grid Size", setValue: setGridSize})}
+                    {TextBox({field: "Seed", setValue: setSeed})}
+                    {TextBox({field: "Trucks", setValue: setTrucks})}
 
                     <DropDown/>
 
-                    <button onClick={props.fetchData} className="btn btn-primary m-5">Load</button>
+                    <button onClick={setValuesAndLoad} className="btn btn-primary m-5">Load</button>
                     <button onClick={props.reset} className="btn btn-primary m-5">Reset</button>
                 </div>
             )
@@ -72,8 +95,6 @@ export default function InputFields(props){
         }
     }
     return(
-
-        
         <div className="h-40">
             <div className="tabs tabs-boxed flex justify-center m-10">
                 <div onClick={() => props.setActiveTab("new")} className={props.activeTab === "new" ? "tab-active tab" : "tab"}>New</div> 
@@ -84,8 +105,5 @@ export default function InputFields(props){
 
             <TabSwitch />
         </div>
-
-
-
     )
 }
