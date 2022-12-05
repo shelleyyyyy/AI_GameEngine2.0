@@ -43,19 +43,13 @@ def run_sim():
     for thread in threads:
         thread.join()
 
-    longest, shortest = post_process(results)
+    longest_path, shortest_path, longest_time, shortest_time = post_process(results)
 
     return { 
         "grid": grid, 
-        "stats": {"size": gridSize, "longestPath": longest, "shortestPath": shortest}, 
-        "agents": results,
-        "searchTypes": [
-            "Breadth First Search",
-            "Depth First Search",
-            "Depth Limit Search",
-            "Uniform Cost Search",
-            "Iterative Depth Limited Search"
-        ]
+        "stats": {"size": gridSize, "longestPath": longest_path, "shortestPath": shortest_path, "longestTime": longest_time, 
+            "shortestTime": shortest_time, "numTrucks": trucks, "searchType": search_type}, 
+        "agents": results
         }
 
 
@@ -158,13 +152,20 @@ def search_engine(search_type, truck, goals, gridSize, seed, grid, env, root, re
 def post_process(results):
     longest_path = 0
     shortest_path = 500
+    longest_time = 0
+    shortest_time = 5000
+
     for solution in results:
         print(solution)
         if len(solution['sequence']) > longest_path:
             longest_path = len(solution['sequence'])
         if len(solution['sequence']) < shortest_path:
             shortest_path = len(solution['sequence'])
-    return longest_path, shortest_path
+        if solution['stats']['time'] > longest_time:
+            longest_time = solution['stats']['time']
+        if solution['stats']['time'] < shortest_time:
+            shortest_time = solution['stats']['time']
+    return longest_path, shortest_path, longest_path, shortest_time
 
 def get_status(direction):
     direction = (direction + 2) % 4
