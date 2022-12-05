@@ -28,7 +28,8 @@ export default function InputFields(props, { box1 }){
 
     const DropDown = () => {
 
-        const options = ["Breadth First Search", "Depth First Search", "Dijkstra's Algorithm", "A* Search"]
+        const options = ["Breadth First Search", "Depth First Search", "Depth Limit Search", "Uniform Cost Search",
+        "Iterative Depth Limited Search", "Dijkstra's Algorithm", "A* Search"]
 
         return(
             <div className="form-control px-5 py-2">
