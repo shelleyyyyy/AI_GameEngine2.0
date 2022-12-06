@@ -300,7 +300,7 @@ export default function GameEngine({ setSavedData, activeTab, setActiveTab, setD
                                 </select>
                             </div>
                         </div> */}
-                        <div className="dropdown flex justify-center my-5">
+                        <div className="dropdown dropdown-bottom flex justify-center my-5">
                             <label tabIndex={0} className="btn align-center">{nestedSearchType}</label>
                             <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
                                 <li onClick={() => setNestedSearchType("Breadth First Search")}><a>Breadth First Search</a></li>
