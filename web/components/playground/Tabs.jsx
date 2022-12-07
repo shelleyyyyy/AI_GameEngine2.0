@@ -63,17 +63,7 @@ export default function Tabs({ tabs }){
 
     const [activeSubTab, setActiveSubTab] = useState("new")
 
-    // const updateStuff = (data) => {
-    //     console.log({"SET":data})
-    //     setData(data)
-    //     setAgents(data.agents)
-    //     setLongestPath(data.stats.longestPath)
-    //     setGrid(data.grid)
-    // }
-
     const reset = () => {
-        console.log("Reset")
-        // setGrid(original.grid)
         setData({...original})
     }
     

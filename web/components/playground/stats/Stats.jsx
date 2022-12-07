@@ -6,7 +6,6 @@ import { useEffect, useState } from 'react'
 export default function Stats(){
     
     const data = JSON.parse(localStorage.getItem('search'));
-    console.log("SAVED DATA", data)
 
 
     const BlockGeneral = ({ one, two, three }) => {
@@ -52,8 +51,6 @@ export default function Stats(){
     }
 
     const save = () => {
-
-        console.log(data)
 
         const createData = {
             "search": JSON.parse(localStorage.getItem('search'))

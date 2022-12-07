@@ -5,24 +5,26 @@ import Table from "../components/experiments/Table"
 
 export default function Experiments(){
 
+    const PB_HOST = process.env.NEXT_PUBLIC_PB_IP;
+    const PB_PORT = process.env.NEXT_PUBLIC_PB_PORT;
+    const PB_USER = process.env.NEXT_PUBLIC_PB_USER;
+    const PB_PASS = process.env.NEXT_PUBLIC_PB_PASS;
+
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         setLoading(true)
         const fetchData = async () => {
-            const pb = new PocketBase('http://localhost:8090')
+            const pb = new PocketBase(`http://${PB_HOST}:${PB_PORT}`)
 
-            const authData = await pb.admins.authWithPassword('shelleywr23@mail.vmi.edu', 'rootrootroot');
+            const authData = await pb.admins.authWithPassword(PB_USER, PB_PASS);
             
             const res = await pb.collection('searchRecords').getFullList(200, {
                 sort: '-created',
             });
             
             return res
-
-            setData(res)
-            setLoading(false)
         }
 
         fetchData()
