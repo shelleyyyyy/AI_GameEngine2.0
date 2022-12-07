@@ -7,6 +7,9 @@ export default function Stats(){
     
     const data = JSON.parse(localStorage.getItem('search'));
 
+    const PB_HOST = process.env.NEXT_PUBLIC_PB_IP;
+    const PB_PORT = process.env.NEXT_PUBLIC_PB_PORT;
+
 
     const BlockGeneral = ({ one, two, three }) => {
         return(
@@ -57,7 +60,7 @@ export default function Stats(){
         }
 
         const fetchData = async () => {
-            const pb = new PocketBase('http://localhost:8090')
+            const pb = new PocketBase(`http://${PB_HOST}:${PB_PORT}`)
             const authData = await pb.admins.authWithPassword('shelleywr23@mail.vmi.edu', 'rootrootroot');
             const record = await pb.collection('searchRecords').create(createData);
         }
