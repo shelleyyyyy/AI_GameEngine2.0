@@ -10,7 +10,6 @@ export default function InputFields(props, { box1 }){
     const TextBox = ({ field, setValue }) => {
 
         const handleChange = (e) => {
-            console.log(e.target.value)
             setValue(e.target.value)
         }
 

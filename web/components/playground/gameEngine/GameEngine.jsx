@@ -4,17 +4,24 @@ import Grid from "./Grid"
 import axios from 'axios'
 import PocketBase from 'pocketbase'
 
+
 export default function GameEngine({ setSavedData, activeTab, setActiveTab, setData, reset, data }){
 
+    const PB_HOST = process.env.NEXT_PUBLIC_PB_IP;
+    const PB_PORT = process.env.NEXT_PUBLIC_PB_PORT;
+    const PB_USER = process.env.NEXT_PUBLIC_PB_USER;
+    const PB_PASS = process.env.NEXT_PUBLIC_PB_PASS;
+    const FLASK_HOST = process.env.NEXT_PUBLIC_FLASK_IP;
+    const FLASK_PORT = process.env.NEXT_PUBLIC_FLASK_PORT;
+
+
     const [loading, setLoading] = useState(false)
-    // const [grid, setGrid] = useState(data.grid)
 
     function nestedCopy(array) {
         return JSON.parse(JSON.stringify(array));
     }
 
     function updateGrid(x, y, status, passed){
-        console.log("RUNNING RUNNING RUNNING")
         let newData = passed
         newData.grid[x][y] = status
         setData(nestedCopy(newData))
@@ -104,9 +111,7 @@ export default function GameEngine({ setSavedData, activeTab, setActiveTab, setD
     }
 
     async function runAgents(passed){
-        console.log("RUNNING AGENTS", passed)
         setData({...passed})
-        console.log(passed)
         for(let i = 0; i < passed.stats.longestPath; i++){
             for(let j = 0; j < passed.agents.length; j++){
                 run(passed.agents, passed.agents[j], passed.agents[j].sequence[i], j, passed)
@@ -122,7 +127,7 @@ export default function GameEngine({ setSavedData, activeTab, setActiveTab, setD
 
     const fetchData = (trucks, seed, gridSize, searchType) => {
         setLoading(true)
-        axios.post('http://127.0.0.1:5000/search', {
+        axios.post(`http://${FLASK_HOST}:${FLASK_PORT}/search`, {
             "trucks": trucks,
             "seed": seed,
             "goals": trucks,
@@ -130,9 +135,7 @@ export default function GameEngine({ setSavedData, activeTab, setActiveTab, setD
             "search": searchType
         })
         .then(function (response) {
-            console.log(response.data)
             setData({...response.data})
-            // setSavedData({...response.data})
             localStorage.setItem('search', JSON.stringify(response.data));
             setLoading(false)
             runAgents(response.data)
@@ -144,15 +147,13 @@ export default function GameEngine({ setSavedData, activeTab, setActiveTab, setD
     const loadOld = () => {
         setLoading(true)
         const fetchOld = async () => {
-            const pb = new PocketBase('http://localhost:8090')
+            const pb = new PocketBase(`http://${PB_HOST}:${PB_PORT}`)
 
-            const authData = await pb.admins.authWithPassword('shelleywr23@mail.vmi.edu', 'rootrootroot');
-            console.log("OLD ID", oldID)
+            const authData = await pb.admins.authWithPassword(PB_USER, PB_PASS);
             const record = await pb.collection('searchRecords').getOne(oldID);
             
             setData({...record.search})
             setLoading(false)
-            console.log({"records": record.search})
             return record.search
         }
         
@@ -171,7 +172,6 @@ export default function GameEngine({ setSavedData, activeTab, setActiveTab, setD
         const TextBox = ({ field, setValue }) => {
 
             const handleChange = (e) => {
-                console.log(e.target.value)
                 setValue(e.target.value)
             }
     
@@ -192,7 +192,6 @@ export default function GameEngine({ setSavedData, activeTab, setActiveTab, setD
             const options = ["Breadth First Search", "Depth First Search", "Dijkstra's Algorithm", "A* Search"]
 
             const handleChange = (e) => {
-                console.log(e.target.value)
                 setSearchType(e.target.value)
             }
 
@@ -237,22 +236,18 @@ export default function GameEngine({ setSavedData, activeTab, setActiveTab, setD
                 }
                     
                 const handleGridSizeChange = (e) => {
-                    console.log(e.target.value)
                     setNestedGridSize(e.target.value)
                 }
 
                 const handleSeedChange = (e) => {
-                    console.log(e.target.value)
                     setNestedSeed(e.target.value)
                 }
 
                 const handleTrucksChange = (e) => {
-                    console.log(e.target.value)
                     setNestedTrucks(e.target.value)
                 }
 
                 const handleDropChange = (e) => {
-                    console.log(e.target.value)
                     setSearchType(e.target.value)
                 }
 

@@ -5,8 +5,6 @@ import { FiCopy } from "react-icons/fi"
 
 export default function Table({ d }){
 
-    // console.log(d[0].search)
-
     const BlockGeneral = ({ one, two, three }) => {
         return(
             <div className="stats shadow">

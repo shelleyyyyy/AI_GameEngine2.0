@@ -9,10 +9,6 @@ import { useEffect } from 'react';
 
 export default function Grid({ grid }){
 
-    console.log(grid)
-
-    // console.log(grid.length)  
-
     const itemSize = 30 / grid.length 
     const s = itemSize + "rem"
 
