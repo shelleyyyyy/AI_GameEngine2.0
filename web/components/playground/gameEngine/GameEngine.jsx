@@ -9,8 +9,6 @@ export default function GameEngine({ setSavedData, activeTab, setActiveTab, setD
 
     const PB_HOST = process.env.NEXT_PUBLIC_PB_IP;
     const PB_PORT = process.env.NEXT_PUBLIC_PB_PORT;
-    const PB_USER = process.env.NEXT_PUBLIC_PB_USER;
-    const PB_PASS = process.env.NEXT_PUBLIC_PB_PASS;
     const FLASK_HOST = process.env.NEXT_PUBLIC_FLASK_IP;
     const FLASK_PORT = process.env.NEXT_PUBLIC_FLASK_PORT;
 
@@ -149,7 +147,6 @@ export default function GameEngine({ setSavedData, activeTab, setActiveTab, setD
         const fetchOld = async () => {
             const pb = new PocketBase(`http://${PB_HOST}:${PB_PORT}`)
 
-            const authData = await pb.admins.authWithPassword(PB_USER, PB_PASS);
             const record = await pb.collection('searchRecords').getOne(oldID);
             
             setData({...record.search})
@@ -161,7 +158,6 @@ export default function GameEngine({ setSavedData, activeTab, setActiveTab, setD
             .then((data) => { 
                 runAgents(data)
             })
-            
     }
     
     if(loading){

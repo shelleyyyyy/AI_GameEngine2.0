@@ -107,7 +107,7 @@ export default function Table({ d }){
                             <td>
                                 <div className="flex gap-2">
                                     <div className="tooltip" data-tip="copy to clipboard">
-                                        <FiCopy onClick={() => handleCopy(item.id)} className="h-full w-full cursor-pointer hover:text-gray-200 transition text-xl"/>
+                                        <FiCopy onClick={() => handleCopy(item.id)} className="h-full w-4 cursor-pointer hover:text-gray-200 transition text-xl"/>
                                     </div>
                                     <div>
                                         {item.id}
