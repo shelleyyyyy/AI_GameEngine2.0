@@ -50,6 +50,8 @@ export default function Table({ d }){
 
     const Modal = ({ data }) => {
 
+        console.log(data.search.agents)
+
         return(
             <>
                 <label htmlFor="my-modal-4" className="btn btn-ghost btn-xs">Details</label>
@@ -93,7 +95,7 @@ export default function Table({ d }){
                         <th>Shortest Path</th>
                         <th>Trucks</th>
                         <th>Size</th>
-                        <th></th>
+                        {/* <th></th> */}
                     </tr>
                 </thead>
                 <tbody>
@@ -130,9 +132,9 @@ export default function Table({ d }){
                             {/* size */}
                             <td>{item.search.stats.size}</td>
 
-                            <td>
+                            {/* <td>
                                 <Modal data={item}/>
-                            </td>
+                            </td> */}
                         </tr>
                     ))} 
                 </tbody>

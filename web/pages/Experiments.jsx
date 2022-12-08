@@ -27,6 +27,7 @@ export default function Experiments(){
             .then((res) => {
                 setData(res)
                 setLoading(false)
+                console.log({res})
             })
     }, []) 
 
