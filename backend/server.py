@@ -59,7 +59,7 @@ def search_engine(search_type, truck, goals, gridSize, seed, grid, env, root, re
         solution = breadthFirstSearch(environment=env, root=root, lock=lock)
         end = time.time()
         elapsed = end - start
-        print(solution)
+        path = len(solution) if solution != None else None
         results.append({
             "position": {"x": root.location.x, "y": root.location.y}, 
             "status": get_status(root.direction),
@@ -67,10 +67,10 @@ def search_engine(search_type, truck, goals, gridSize, seed, grid, env, root, re
             "stats": {
                 "id": 1,
                 "time": elapsed,
-                "path": len(solution),
+                "path": solution,
             } 
         })
-    
+
     elif search_type == "Depth First Search":
         print(truck, goals, gridSize, "seed:", seed)
         env.toString()
@@ -155,12 +155,16 @@ def post_process(results):
     longest_time = 0
     shortest_time = 5000
 
+    if results == []:
+        return 0, 0, 0, 0
+
     for solution in results:
-        print(solution)
-        if len(solution['sequence']) > longest_path:
-            longest_path = len(solution['sequence'])
-        if len(solution['sequence']) < shortest_path:
-            shortest_path = len(solution['sequence'])
+        if solution['sequence'] != None:
+            print(solution)
+            if len(solution['sequence']) > longest_path:
+                longest_path = len(solution['sequence'])
+            if len(solution['sequence']) < shortest_path:
+                shortest_path = len(solution['sequence'])
         if solution['stats']['time'] > longest_time:
             longest_time = solution['stats']['time']
         if solution['stats']['time'] < shortest_time:
@@ -168,7 +172,7 @@ def post_process(results):
     return longest_path, shortest_path, longest_time, shortest_time
 
 def get_status(direction):
-    direction = (direction + 2) % 4
+    direction = (direction + 2) % 4 
     if direction == 0:
         return 'a-u'
     elif direction == 1:
