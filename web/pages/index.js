@@ -19,58 +19,22 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          Welcome to Truck Agent World!
         </h1>
 
         <p className={styles.description}>
           Check out our docs <a href={docsUrl}>HERE</a>
         </p>
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+        <p className={styles.description}>
+        Truck Agent World is an educational tool that allows users to explore and compare different search algorithms. In this application, we have implemented several algorithms, including depth-first search, breadth-first search, and A* search, and have designed a range of challenges and scenarios to demonstrate how these algorithms work and how they can be applied. With in-depth explanations and interactive simulations, Truck Agent World is a valuable resource for anyone interested in learning about search algorithms and their applications. Whether you are a student, researcher, or professional looking to deepen your understanding of these important algorithms, Truck Agent World is an engaging and informative resource. Try it out today and start exploring the world of search algorithms with Truck Agent World!
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
 
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
 
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
 
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
+        </p>
+
+        </main>
     </div>
   )
 }
