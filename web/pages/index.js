@@ -3,6 +3,12 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
+
+  const DOCS_HOST = process.env.NEXT_PUBLIC_DOCS_IP;
+  const DOCS_PORT = process.env.NEXT_PUBLIC_DOCS_PORT;
+
+  const docsUrl = `http://${DOCS_HOST}:${DOCS_PORT}`;
+
   return (
     <div className={styles.container}>
       <Head>
@@ -17,8 +23,7 @@ export default function Home() {
         </h1>
 
         <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
+          Check out our docs <a href={docsUrl}>HERE</a>
         </p>
 
         <div className={styles.grid}>
