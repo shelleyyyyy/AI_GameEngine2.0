@@ -38,7 +38,7 @@ def input():
         json.dump(bfs_data, f)
 
     with open('dfsdata.json', 'w') as f:
-        json.dump(bfs_data, f)
+        json.dump(dfs_data, f)
 
     with open('dlsdata.json', 'w') as f:
         json.dump(dls_data, f)
