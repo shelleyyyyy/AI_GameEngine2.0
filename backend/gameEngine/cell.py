@@ -12,6 +12,7 @@ class Cell:
         self.truck: TruckAgent = truck
         self.percepts = percepts
         self.found: bool = False
+        
 
     def toString(self):
         print("----------Cell----------")
