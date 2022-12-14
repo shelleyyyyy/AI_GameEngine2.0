@@ -3,6 +3,7 @@ sidebar_label: 'Search-Algorithms'
 sidebar_position: 3
 ---
 import { Mermaid } from 'mdx-mermaid/Mermaid';
+
 <Mermaid chart = 'classDiagram
 class BFS{
 breadFirstSearch(Environment, Cell, Lock): list
@@ -13,6 +14,7 @@ check_frontier(list, Node): bool
 BreadthFirstSearch has a rootNode which is the starting point of the search algorithm. 
 The check explored and check frontier are to check the lists to make sure no duplicated node is added. 
 Will search until a goal if found or its not able to search any new nodes. 
+
 
 <Mermaid chart = 'classDiagram
 class DFS{
