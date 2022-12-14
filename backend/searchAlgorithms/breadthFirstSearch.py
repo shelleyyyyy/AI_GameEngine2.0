@@ -16,7 +16,7 @@ def breadthFirstSearch(environment: Environment, root: Cell, lock: Lock):
     while True:
         if len(frontier) == 0: 
             print("search failed")
-            return None
+            return []
         node: Node = frontier.pop(0)
         key = (node.state.location.x, node.state.location.y, node.state.direction)
         explored[key] = node

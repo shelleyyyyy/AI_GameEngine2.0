@@ -59,7 +59,7 @@ def search_engine(search_type, truck, goals, gridSize, seed, grid, env, root, re
         solution = breadthFirstSearch(environment=env, root=root, lock=lock)
         end = time.time()
         elapsed = end - start
-        path = len(solution) if solution != None else None
+        path = len(solution)
         results.append({
             "position": {"x": root.location.x, "y": root.location.y}, 
             "status": get_status(root.direction),
@@ -67,18 +67,18 @@ def search_engine(search_type, truck, goals, gridSize, seed, grid, env, root, re
             "stats": {
                 "id": 1,
                 "time": elapsed,
-                "path": solution,
+                "path": path,
             } 
         })
 
     elif search_type == "Depth First Search":
         print(truck, goals, gridSize, "seed:", seed)
-        env.toString()
+        
         start = time.time()
         solution = depthFirstSearch(environment=env, root=root, lock=lock)
         end = time.time()
         elapsed = end - start
-        print(solution)
+        path = len(solution)
         results.append({
             "position": {"x": root.location.x, "y": root.location.y}, 
             "status": get_status(root.direction),
@@ -86,18 +86,18 @@ def search_engine(search_type, truck, goals, gridSize, seed, grid, env, root, re
             "stats": {
                 "id": 1,
                 "time": elapsed,
-                "path": len(solution),
+                "path": path,
             } 
         })
 
     elif search_type == "Depth Limit Search":
         print(truck, goals, gridSize, "seed:", seed)
-        env.toString()
+        
         start = time.time()
         solution = depthLimitedSearch(environment=env, root=root, lock=lock, limit=300)
         end = time.time()
         elapsed = end - start
-        print(solution)
+        path = len(solution)
         results.append({
             "position": {"x": root.location.x, "y": root.location.y}, 
             "status": get_status(root.direction),
@@ -105,18 +105,18 @@ def search_engine(search_type, truck, goals, gridSize, seed, grid, env, root, re
             "stats": {
                 "id": 1,
                 "time": elapsed,
-                "path": len(solution),
+                "path": path,
             } 
         })
 
     elif search_type == "Uniform Cost Search":
         print(truck, goals, gridSize, "seed:", seed)
-        env.toString()
+        
         start = time.time()
         solution = uniformed_cost_search(environment=env, root=root, lock=lock)
         end = time.time()
         elapsed = end - start
-        print(solution)
+        path = len(solution)
         results.append({
             "position": {"x": root.location.x, "y": root.location.y}, 
             "status": get_status(root.direction),
@@ -124,18 +124,18 @@ def search_engine(search_type, truck, goals, gridSize, seed, grid, env, root, re
             "stats": {
                 "id": 1,
                 "time": elapsed,
-                "path": len(solution),
+                "path": path,
             } 
         })
 
     elif search_type == "Iterative Depth Limited Search":
         print(truck, goals, gridSize, "seed:", seed)
-        env.toString()
+        
         start = time.time()
-        solution = iterativeDepthLimitedSearch(environment=env, root=root, lock=lock, limit=0, t=start)
+        solution = iterativeDepthLimitedSearch(environment=env, root=root, lock=lock, limit=1, t=start)
         end = time.time()
         elapsed = end - start
-        print(solution)
+        path = len(solution)
         results.append({
             "position": {"x": root.location.x, "y": root.location.y}, 
             "status": get_status(root.direction),
@@ -143,7 +143,7 @@ def search_engine(search_type, truck, goals, gridSize, seed, grid, env, root, re
             "stats": {
                 "id": 1,
                 "time": elapsed,
-                "path": len(solution),
+                "path": path,
             } 
         })
 
