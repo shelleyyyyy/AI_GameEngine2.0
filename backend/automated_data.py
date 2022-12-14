@@ -20,7 +20,7 @@ def input():
     for index in range(0, 20):
         trucks = 1
         seed = random.randint(0, 1000)
-        gridSize = 10
+        gridSize = 5
 
         bfs_result = automated_experiments(trucks=trucks, seed=seed, gridSize=gridSize, search_type="Breadth First Search")
         dfs_result = automated_experiments(trucks=trucks, seed=seed, gridSize=gridSize, search_type="Depth First Search")
