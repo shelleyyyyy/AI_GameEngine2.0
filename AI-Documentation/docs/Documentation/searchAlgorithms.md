@@ -56,6 +56,6 @@ uniformed_cost_search(environment, root): list
 checklist(Node, list, list): bool
 }'/>
 
-DepthFirstSearch has a rootNode which is the starting point of the search algorithm.
+UCS has a rootNode which is the starting point of the search algorithm.
 The check explored and check frontier are to check the lists to make sure no duplicated node is added. 
 Will search until a goal if found or its not able to search any new nodes. 
