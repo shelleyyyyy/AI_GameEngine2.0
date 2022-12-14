@@ -17,22 +17,22 @@ def input():
     ucs_data = []
     idls_data = []
 
-    for index in range(0, 20):
+    for index in range(0, 1):
         trucks = 1
         seed = random.randint(0, 1000)
-        gridSize = 5
+        gridSize = 10
 
         bfs_result = automated_experiments(trucks=trucks, seed=seed, gridSize=gridSize, search_type="Breadth First Search")
         dfs_result = automated_experiments(trucks=trucks, seed=seed, gridSize=gridSize, search_type="Depth First Search")
         dls_result = automated_experiments(trucks=trucks, seed=seed, gridSize=gridSize, search_type="Depth Limit Search")
         ucs_result = automated_experiments(trucks=trucks, seed=seed, gridSize=gridSize, search_type="Uniform Cost Search")
-        #idls_result = automated_experiments(trucks=trucks, seed=seed, gridSize=gridSize, search_type="Iterative Depth Limited Search")
+        idls_result = automated_experiments(trucks=trucks, seed=seed, gridSize=gridSize, search_type="Iterative Depth Limited Search")
         
         bfs_data.append(bfs_result)
         dfs_data.append(dfs_result)
         dls_data.append(dls_result)
         ucs_data.append(ucs_result)
-        #idls_data.append(idls_result)
+        idls_data.append(idls_result)
     
     with open('5bfsdata.json', 'w') as f:
         json.dump(bfs_data, f)
@@ -46,8 +46,8 @@ def input():
     with open('5ucsdata.json', 'w') as f:
         json.dump(ucs_data, f)
 
-    #with open('idlsdata.json', 'w') as f:
-        #json.dump(idls_data, f)
+    with open('idlsdata.json', 'w') as f:
+        json.dump(idls_data, f)
 
 def test():
     trucks = 1
@@ -130,7 +130,7 @@ def search_engine(search_type, truck, goals, gridSize, seed, grid, env, root, re
         print(truck, goals, gridSize, "seed:", seed)
         
         start = time.time()
-        solution = depthLimitedSearch(environment=env, root=root, lock=lock, limit=300)
+        solution = depthLimitedSearch(environment=env, root=root, lock=lock, limit=100)
         end = time.time()
         elapsed = end - start
         path = len(solution)
@@ -168,7 +168,7 @@ def search_engine(search_type, truck, goals, gridSize, seed, grid, env, root, re
         print(truck, goals, gridSize, "seed:", seed)
         
         start = time.time()
-        solution = iterativeDepthLimitedSearch(environment=env, root=root, lock=lock, limit=10, t=start)
+        solution = iterativeDepthLimitedSearch(environment=env, root=root, lock=lock, limit=10, t=start,)
         end = time.time()
         elapsed = end - start
         path = len(solution)
