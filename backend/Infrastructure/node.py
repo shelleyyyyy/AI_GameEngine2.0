@@ -10,6 +10,7 @@ class Node:
         self.actionsList: list = actionsList
         self.pathCost = pathCost
         self.ID = uuid.uuid4()
+        self.hueritic = 0
         # if action is None and parent is None:
         #     self.pathCost = pathCost
         # else:
@@ -21,7 +22,9 @@ class Node:
         #     self.actionsList = parent.actionsList
         #     self.actionsList.add(self.action)
         
-
+    def setHueritic(self,hueritic):
+        self.hueritic = hueritic
+        
     def copyOfNode(self):
         return deepcopy(self)
 

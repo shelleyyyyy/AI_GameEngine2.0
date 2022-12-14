@@ -1,42 +1,78 @@
-from flask import Flask, request, jsonify
+import random
+import json
 from gameEngine.environment import Environment
+import threading
+import time
 from searchAlgorithms.breadthFirstSearch import breadthFirstSearch
 from searchAlgorithms.depthFirstSearch import depthFirstSearch
 from searchAlgorithms.depthLimitedSearch import depthLimitedSearch
-from searchAlgorithms.uniformed_cost_search import uniformed_cost_search
 from searchAlgorithms.interative_depth_limited_search import iterativeDepthLimitedSearch
-from flask_cors import CORS
-from gameEngine.cell import Cell
-import time
-import threading
+from searchAlgorithms.uniformed_cost_search import uniformed_cost_search
+import pandas as pd
 
-app = Flask(__name__)
-cors = CORS(app, resources={r"/*": {"origins": "*"}})
+def input(): 
+    bfs_data = []
+    dfs_data = []
+    dls_data = []
+    ucs_data = []
+    idls_data = []
 
-@app.route("/search", methods=['POST'])
-def run_sim():
+    for index in range(0, 20):
+        trucks = 1
+        seed = random.randint(0, 1000)
+        gridSize = 5
 
-    print("Trucks", request.json.get("trucks", None))
+        bfs_result = automated_experiments(trucks=trucks, seed=seed, gridSize=gridSize, search_type="Breadth First Search")
+        dfs_result = automated_experiments(trucks=trucks, seed=seed, gridSize=gridSize, search_type="Depth First Search")
+        dls_result = automated_experiments(trucks=trucks, seed=seed, gridSize=gridSize, search_type="Depth Limit Search")
+        ucs_result = automated_experiments(trucks=trucks, seed=seed, gridSize=gridSize, search_type="Uniform Cost Search")
+        #idls_result = automated_experiments(trucks=trucks, seed=seed, gridSize=gridSize, search_type="Iterative Depth Limited Search")
+        
+        bfs_data.append(bfs_result)
+        dfs_data.append(dfs_result)
+        dls_data.append(dls_result)
+        ucs_data.append(ucs_result)
+        #idls_data.append(idls_result)
+    
+    with open('bfsdata.json', 'w') as f:
+        json.dump(bfs_data, f)
 
-    trucks = int(request.json.get("trucks", None))
-    seed = request.json.get("seed", None)
-    goals = int(request.json.get("trucks", None))
-    gridSize = int(request.json.get("gridsize", None))
-    search_type = request.json.get("search", None)
+    with open('dfsdata.json', 'w') as f:
+        json.dump(dfs_data, f)
+
+    with open('dlsdata.json', 'w') as f:
+        json.dump(dls_data, f)
+
+    with open('ucsdata.json', 'w') as f:
+        json.dump(ucs_data, f)
+
+    #with open('idlsdata.json', 'w') as f:
+        #json.dump(idls_data, f)
+
+def test():
+    trucks = 1
+    seed = 225
+    gridSize = 5
+    search_type = "Breadth First Search"
+    result = automated_experiments(trucks=trucks, seed=seed, gridSize=gridSize, search_type=search_type)
+    print("results", result)
+
+def automated_experiments(trucks, seed, gridSize, search_type):
+    
+    goals = trucks
 
     print("trucks", trucks, "seed", seed, "goals", goals, "gridSize", gridSize, "searchType", search_type)
 
     env: Environment = Environment(gridSize=gridSize, truckAgentCount=trucks, goalCount=goals, seed=seed)
     grid = env.get_cells_by_type()
     #return search_engine(search_type=search_type, truck=trucks, goals=goals, gridSize=gridSize, seed=seed, grid=grid, env=env)
-    env.toString()
+    
 
     results = []
     lock = threading.Lock()
     threads=[]
     for num in range(0, trucks):
         root: Cell = env.root[num]
-        print(root.location.x, root.location.y)
         t = threading.Thread(target=search_engine, args=(search_type, trucks, goals, gridSize, seed, grid, env, root, results, lock))
         t.start()
         threads.append(t)
@@ -73,12 +109,12 @@ def search_engine(search_type, truck, goals, gridSize, seed, grid, env, root, re
 
     elif search_type == "Depth First Search":
         print(truck, goals, gridSize, "seed:", seed)
-        env.toString()
+        
         start = time.time()
         solution = depthFirstSearch(environment=env, root=root, lock=lock)
         end = time.time()
         elapsed = end - start
-        print(solution)
+        path = len(solution) if solution != None else None
         results.append({
             "position": {"x": root.location.x, "y": root.location.y}, 
             "status": get_status(root.direction),
@@ -86,18 +122,18 @@ def search_engine(search_type, truck, goals, gridSize, seed, grid, env, root, re
             "stats": {
                 "id": 1,
                 "time": elapsed,
-                "path": len(solution),
+                "path": solution,
             } 
         })
 
     elif search_type == "Depth Limit Search":
         print(truck, goals, gridSize, "seed:", seed)
-        env.toString()
+        
         start = time.time()
         solution = depthLimitedSearch(environment=env, root=root, lock=lock, limit=300)
         end = time.time()
         elapsed = end - start
-        print(solution)
+        path = len(solution) if solution != None else None
         results.append({
             "position": {"x": root.location.x, "y": root.location.y}, 
             "status": get_status(root.direction),
@@ -105,18 +141,18 @@ def search_engine(search_type, truck, goals, gridSize, seed, grid, env, root, re
             "stats": {
                 "id": 1,
                 "time": elapsed,
-                "path": len(solution),
+                "path": solution,
             } 
         })
 
     elif search_type == "Uniform Cost Search":
         print(truck, goals, gridSize, "seed:", seed)
-        env.toString()
+        
         start = time.time()
         solution = uniformed_cost_search(environment=env, root=root, lock=lock)
         end = time.time()
         elapsed = end - start
-        print(solution)
+        path = len(solution) if solution != None else None
         results.append({
             "position": {"x": root.location.x, "y": root.location.y}, 
             "status": get_status(root.direction),
@@ -124,18 +160,18 @@ def search_engine(search_type, truck, goals, gridSize, seed, grid, env, root, re
             "stats": {
                 "id": 1,
                 "time": elapsed,
-                "path": len(solution),
+                "path": solution,
             } 
         })
 
     elif search_type == "Iterative Depth Limited Search":
         print(truck, goals, gridSize, "seed:", seed)
-        env.toString()
+        
         start = time.time()
-        solution = iterativeDepthLimitedSearch(environment=env, root=root, lock=lock, limit=0, t=start)
+        solution = iterativeDepthLimitedSearch(environment=env, root=root, lock=lock, limit=1, t=start)
         end = time.time()
         elapsed = end - start
-        print(solution)
+        path = len(solution) if solution != None else None
         results.append({
             "position": {"x": root.location.x, "y": root.location.y}, 
             "status": get_status(root.direction),
@@ -143,7 +179,7 @@ def search_engine(search_type, truck, goals, gridSize, seed, grid, env, root, re
             "stats": {
                 "id": 1,
                 "time": elapsed,
-                "path": len(solution),
+                "path": solution,
             } 
         })
 
@@ -182,3 +218,5 @@ def get_status(direction):
     else:
         return 'a-l'
 
+
+input()
