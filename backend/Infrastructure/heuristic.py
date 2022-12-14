@@ -6,9 +6,9 @@ from Infrastructure.node import Node
 from gameEngine.truckAgent import TruckAgent
 import math
 
-def hueristics(truck: TruckAgent, environment: Environment):
+def hueristics(node: Cell, environment: Environment):
 
-    tl = truck.location
+    tl = node.location
     goals: Cell = environment.goals
     hur = -1
     for g in goals:
