@@ -50,6 +50,8 @@ export default function Table({ d }){
 
     const Modal = ({ data }) => {
 
+        console.log(data.search.agents)
+
         return(
             <>
                 <label htmlFor="my-modal-4" className="btn btn-ghost btn-xs">Details</label>
@@ -93,7 +95,7 @@ export default function Table({ d }){
                         <th>Shortest Path</th>
                         <th>Trucks</th>
                         <th>Size</th>
-                        <th></th>
+                        {/* <th></th> */}
                     </tr>
                 </thead>
                 <tbody>
@@ -107,7 +109,7 @@ export default function Table({ d }){
                             <td>
                                 <div className="flex gap-2">
                                     <div className="tooltip" data-tip="copy to clipboard">
-                                        <FiCopy onClick={() => handleCopy(item.id)} className="h-full w-full cursor-pointer hover:text-gray-200 transition text-xl"/>
+                                        <FiCopy onClick={() => handleCopy(item.id)} className="h-full w-4 cursor-pointer hover:text-gray-200 transition text-xl"/>
                                     </div>
                                     <div>
                                         {item.id}
@@ -130,9 +132,9 @@ export default function Table({ d }){
                             {/* size */}
                             <td>{item.search.stats.size}</td>
 
-                            <td>
+                            {/* <td>
                                 <Modal data={item}/>
-                            </td>
+                            </td> */}
                         </tr>
                     ))} 
                 </tbody>

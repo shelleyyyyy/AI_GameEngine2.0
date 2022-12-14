@@ -3,9 +3,10 @@ from constants import constants
 from Infrastructure.successorFunction import SuccessorFunction
 from threading import Lock
 import time
+from gameEngine.cell import Cell
 
-def iterativeDepthLimitedSearch(lock: Lock, environment, root, limit, t):
-
+def iterativeDepthLimitedSearch(lock: Lock, environment, root, limit, t, ):
+    
     t = time.time()
     
     node = Node(state = root)
@@ -15,13 +16,16 @@ def iterativeDepthLimitedSearch(lock: Lock, environment, root, limit, t):
     frontier = [node]
     explored = dict()
     depth = 0
+    sucFunc = SuccessorFunction()
+
     while True:
-        if len(frontier) == 0:
-            return []
-        shallow = frontier.pop(len(frontier)-1)
-        explored[shallow.state.location.x, shallow.state.location.y, shallow.state.direction] = shallow
         
-        sucFunc = SuccessorFunction()
+        if len(frontier) == 0:
+            return 'no Goal'
+        shallow = frontier.pop(len(frontier)-1)
+        explored[(shallow.state.location.x, shallow.state.location.y, shallow.state.direction)] = shallow
+        
+        
         if depth < limit:
             expand = sucFunc.expand(node = shallow, environment = environment)
             depth = depth + 1
@@ -36,18 +40,22 @@ def iterativeDepthLimitedSearch(lock: Lock, environment, root, limit, t):
                         return n.actionsList
             
                     frontier.append(n)
+        # elif depth == cutoff:
+        #     return 'hit cutoff'
         else:
-            return iterativeDepthLimitedSearch(lock=lock, environment=environment, root=root, limit= limit +1, t=t)
+            return iterativeDepthLimitedSearch(lock=lock, environment=environment, root=root, limit= limit +10, t=t,)
 
 
 def checklist(node, frontier, explored):
-    key = node.state.location.x, node.state.location.y, node.state.direction
+    key = (node.state.location.x, node.state.location.y, node.state.direction)
+    if key in explored.keys():
+            return True
+
     for n in frontier:
         if n.state.location.x == node.state.location.x and n.state.location.y == node.state.location.y and n.state.direction == node.state.direction:
             return True
-    if key in explored.keys():
-            return True
     return False
+
 def checkGoalState(node):
     if node.state == constants['GOAL_CELL']:
         return

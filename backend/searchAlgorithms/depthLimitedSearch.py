@@ -22,7 +22,7 @@ def depthLimitedSearch(environment: Environment, root: Cell, lock: Lock, limit):
 
     while True:
         if len(frontier) == 0:
-            return []
+            return 'no goal'
         shallow = frontier.pop(len(frontier)-1)
         explored[(shallow.state.location.x, shallow.state.location.y, shallow.state.direction)] = shallow
         

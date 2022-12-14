@@ -61,8 +61,8 @@ export default function Stats(){
 
         const fetchData = async () => {
             const pb = new PocketBase(`http://${PB_HOST}:${PB_PORT}`)
-            const authData = await pb.admins.authWithPassword('shelleywr23@mail.vmi.edu', 'rootrootroot');
-            const record = await pb.collection('searchRecords').create(createData);
+            // const authData = await pb.admins.authWithPassword('shelleywr23@mail.vmi.edu', 'rootrootroot');
+            await pb.collection('searchRecords').create(createData);
         }
         fetchData()
 

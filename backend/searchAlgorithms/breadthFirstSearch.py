@@ -14,12 +14,15 @@ def breadthFirstSearch(environment: Environment, root: Cell, lock: Lock):
     explored = dict()
 
     while True:
-        if len(frontier) == 0: return None
+        if len(frontier) == 0: 
+            print("search failed")
+            return []
         node: Node = frontier.pop(0)
-        explored[(node.state.location.x, node.state.location.y, node.state.direction)] = node
+        key = (node.state.location.x, node.state.location.y, node.state.direction)
+        explored[key] = node
         list = expander.expand(environment=environment, node=node)
         for node in list:
-            if check_explored(explored=explored, node=node) or check_frontier(frontier=frontier, node=node):
+            if check_explored(explored=explored, node=node) and check_frontier(frontier=frontier, node=node):
                 current_cell: Cell = environment.cells[node.state.location.x][node.state.location.y]
                 if current_cell.cell_type == constants["GOAL_CELL"] and current_cell.get_found() == False:
                     lock.acquire()
@@ -29,11 +32,11 @@ def breadthFirstSearch(environment: Environment, root: Cell, lock: Lock):
                 else:
                     frontier.append(node)
 
-def check_explored(explored: list, node: Node):
+def check_explored(explored: dict, node: Node):
     key = (node.state.location.x, node.state.location.y, node.state.direction)
     
-    if key in explored:
-            return False
+    if key in explored.keys():
+        return False
     return True
 
 def check_frontier(frontier: list, node: Node):
